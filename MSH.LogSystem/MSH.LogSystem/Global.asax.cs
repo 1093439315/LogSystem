@@ -1,4 +1,5 @@
 ﻿using MSH.LogSystem.App_Start;
+using Rabbitmq.Core;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +15,14 @@ namespace MSH.LogSystem
         {
             GlobalConfiguration.Configure(WebApiConfig.Register);
             GlobalConfiguration.Configure(AutofacConfig.Register);
+            //启动通道
+            RabbitMqChannel.RabbitMqChannelStart();
+        }
+
+        protected void Application_End()
+        {
+            //关闭通道
+            RabbitMqChannel.RabbitMqChannelStop();
         }
     }
 }
