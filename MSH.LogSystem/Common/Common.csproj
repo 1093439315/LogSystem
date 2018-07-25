@@ -49,8 +49,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Config.cs" />
+    <Compile Include="Exceptions.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="Logger.cs" />
+    <Compile Include="NoteAttribute.cs" />
+    <Compile Include="Pagination.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

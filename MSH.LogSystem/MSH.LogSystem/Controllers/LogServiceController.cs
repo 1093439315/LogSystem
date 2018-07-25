@@ -9,6 +9,9 @@ using DTO;
 
 namespace MSH.LogSystem.Controllers
 {
+    /// <summary>
+    /// 日志服务
+    /// </summary>
     public class LogServiceController : ApiController
     {
         /// <summary>
@@ -18,7 +21,10 @@ namespace MSH.LogSystem.Controllers
         [HttpPost]
         public async Task<AjaxReturnInfo> Info([FromBody] LogRequest request)
         {
-            return null;
+            return await Task.Run(() =>
+            {
+                return new AjaxReturnInfo();
+            });
         }
     }
 }
