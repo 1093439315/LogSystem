@@ -30,5 +30,11 @@ namespace MSH.LogSystem.Controllers
                 return new AjaxReturnInfo();
             });
         }
+
+        [HttpGet]
+        public string Test()
+        {
+            return "Hello World";
+        }
     }
 }
