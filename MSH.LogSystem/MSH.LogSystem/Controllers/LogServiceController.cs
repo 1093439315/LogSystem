@@ -5,6 +5,7 @@ using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
+using BusinessLayer.Interface;
 using DTO;
 
 namespace MSH.LogSystem.Controllers
@@ -14,6 +15,8 @@ namespace MSH.LogSystem.Controllers
     /// </summary>
     public class LogServiceController : ApiController
     {
+        public ILogServiceManager LogServiceManager { get; set; }
+
         /// <summary>
         /// 记录Info日志
         /// </summary>
@@ -23,6 +26,7 @@ namespace MSH.LogSystem.Controllers
         {
             return await Task.Run(() =>
             {
+                LogServiceManager.SendInfoLog(request);
                 return new AjaxReturnInfo();
             });
         }
