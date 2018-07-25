@@ -1,5 +1,7 @@
 ﻿using BusinessLayer.Interface;
+using Common;
 using DTO;
+using Rabbitmq.Core;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,12 +14,12 @@ namespace BusinessLayer
     {
         public void SendErrorLog(LogRequest request)
         {
-            throw new NotImplementedException();
+            request.Send(Config.QueueName);
         }
 
         public void SendInfoLog(LogRequest request)
         {
-            throw new NotImplementedException();
+            request.Send(Config.QueueName);
         }
     }
 }

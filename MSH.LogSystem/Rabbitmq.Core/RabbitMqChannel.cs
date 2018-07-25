@@ -70,24 +70,25 @@ namespace Rabbitmq.Core
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="obj"></param>
-        public static void Send<T>(this T obj, string channelName)
+        public static void Send<T>(this T obj, string queueName)
             where T : class
         {
             if (obj == null) return;
             if (Channel == null)
                 throw new Exception("请先开启队列管道");
-            if (string.IsNullOrEmpty(channelName))
+            if (string.IsNullOrEmpty(queueName))
                 throw new Exception("队列管道名称不能为空！");
             var msgStr = obj.ToJson();
             try
             {
-                Channel.QueueDeclare(channelName, false, false, false, null);
+                //第二个参数Ture 表示队列消息持久化
+                Channel.QueueDeclare(queueName, true, false, false, null);
                 var body = Encoding.UTF8.GetBytes(msgStr);
-                Channel.BasicPublish("", channelName, null, body);
+                Channel.BasicPublish("", queueName, null, body);
             }
             catch (Exception ex)
             {
-                Logger.Error($"消息发送到队列管道失败:{ex} 消息体:{obj.ToJson()} 管道名称:{channelName}");
+                Logger.Error($"消息发送到队列管道失败:{ex} 消息体:{obj.ToJson()} 管道名称:{queueName}");
             }
         }
     }

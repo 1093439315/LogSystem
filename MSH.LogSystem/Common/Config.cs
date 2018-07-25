@@ -50,5 +50,19 @@ namespace Common
                 return value;
             }
         }
+
+        /// <summary>
+        /// 消息队列名称
+        /// </summary>
+        public static string QueueName
+        {
+            get
+            {
+                var value = ConfigurationManager.AppSettings[$"{nameof(QueueName)}"];
+                if (string.IsNullOrEmpty(value))
+                    throw new Exception($"请在配置文件中配置{nameof(QueueName)}");
+                return value;
+            }
+        }
     }
 }
