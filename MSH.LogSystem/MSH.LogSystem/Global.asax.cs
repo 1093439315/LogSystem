@@ -16,13 +16,13 @@ namespace MSH.LogSystem
             GlobalConfiguration.Configure(WebApiConfig.Register);
             GlobalConfiguration.Configure(AutofacConfig.Register);
             //启动通道
-            RabbitMqChannel.RabbitMqChannelStart();
+            RabbitMqServiceManage.Start();
         }
 
         protected void Application_End()
         {
             //关闭通道
-            RabbitMqChannel.RabbitMqChannelStop();
+            RabbitMqServiceManage.Stop();
         }
     }
 }

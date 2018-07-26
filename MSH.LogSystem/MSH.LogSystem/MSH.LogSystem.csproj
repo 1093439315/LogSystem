@@ -138,6 +138,9 @@
   <ItemGroup>
     <Content Include="AppSetting.config" />
     <Content Include="Connection.config" />
+    <Content Include="log4net.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <None Include="packages.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

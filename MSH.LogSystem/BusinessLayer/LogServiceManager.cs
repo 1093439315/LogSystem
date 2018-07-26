@@ -12,14 +12,33 @@ namespace BusinessLayer
 {
     public class LogServiceManager : ILogServiceManager
     {
+        #region 向队列插入日志
+
         public void SendErrorLog(LogRequest request)
         {
-            request.Send(Config.QueueName);
+            request.Send(Config.ErrorQueueName);
         }
 
         public void SendInfoLog(LogRequest request)
         {
-            request.Send(Config.QueueName);
+            request.Send(Config.InfoQueueName);
+        }
+        
+        public void SendWarnLog(LogRequest request)
+        {
+            request.Send(Config.WarnQueueName);
+        }
+
+        public void SendDebugLog(LogRequest request)
+        {
+            request.Send(Config.DebugQueueName);
+        }
+
+        #endregion
+
+        public LogRequest GetLog(string queueName)
+        {
+            return null;
         }
     }
 }
