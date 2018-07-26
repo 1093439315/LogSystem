@@ -61,6 +61,7 @@ namespace ConsoleClientTest
         {
             Console.WriteLine($"执行发送请求:{i}");
             var url = "http://192.168.1.61/MSH.LogSystem/api/LogService/Info";
+            //var url = "http://log.jiewit.com/api/LogService/Info";
             url.PostJsonAsync(new LogRequest()
             {
                 BusinessPosition = "1",
