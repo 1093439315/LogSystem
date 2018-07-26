@@ -1,5 +1,6 @@
 ﻿using BusinessLayer.Interface;
 using Common;
+using Configuration;
 using DTO;
 using Rabbitmq.Core;
 using System;
@@ -12,33 +13,64 @@ namespace BusinessLayer
 {
     public class LogServiceManager : ILogServiceManager
     {
+        public event Action<LogRequest> MessageReceivedEvent;
+
         #region 向队列插入日志
 
         public void SendErrorLog(LogRequest request)
         {
-            request.Send(Config.ErrorQueueName);
+            request.Send(LogLevel.Error.ToString());
         }
 
         public void SendInfoLog(LogRequest request)
         {
-            request.Send(Config.InfoQueueName);
+            request.Send(LogLevel.Info.ToString());
         }
         
         public void SendWarnLog(LogRequest request)
         {
-            request.Send(Config.WarnQueueName);
+            request.Send(LogLevel.Warn.ToString());
         }
 
         public void SendDebugLog(LogRequest request)
         {
-            request.Send(Config.DebugQueueName);
+            request.Send(LogLevel.Debug.ToString());
         }
 
         #endregion
 
-        public LogRequest GetLog(string queueName)
+        #region 从队列中接收消息
+
+        public LogRequest GetLog(LogLevel level)
         {
-            return null;
+            var queueName = level.ToString();
+            var obj = RabbitMqMessageManage.Get<LogRequest>(queueName);
+            return obj;
         }
+
+        public void StartGetMsg(LogLevel level)
+        {
+            var queueName = level.ToString();
+            RabbitMqMessageManage.StartGet<LogRequest>(queueName);
+            RabbitMqMessageManage.MessageReceivedEvent += RabbitMqMessageManage_MessageReceivedEvent;
+        }
+
+        /// <summary>
+        /// 处理发送来的日志
+        /// </summary>
+        /// <param name="obj"></param>
+        private void RabbitMqMessageManage_MessageReceivedEvent(object obj)
+        {
+            var log = obj as LogRequest;
+            if (log == null)
+            {
+                Logger.Info($"队列消息反序列化失败:{obj.ToJson()}");
+                return;
+            }
+            //将日志写入MogoDb
+            Console.WriteLine($"从队列中读取了消息:{obj.ToJson()}");
+        }
+
+        #endregion
     }
 }

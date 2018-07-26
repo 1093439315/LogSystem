@@ -19,41 +19,41 @@ namespace ConsoleClientTest
                     Send(i);
                 }
             });
-            Task.Run(() =>
-            {
-                for (int i = 1; i <= 2000; i++)
-                {
-                    Send(i);
-                }
-            });
-            Task.Run(() =>
-            {
-                for (int i = 1; i <= 2000; i++)
-                {
-                    Send(i);
-                }
-            });
-            Task.Run(() =>
-            {
-                for (int i = 1; i <= 2000; i++)
-                {
-                    Send(i);
-                }
-            });
-            Task.Run(() =>
-            {
-                for (int i = 1; i <= 2000; i++)
-                {
-                    Send(i);
-                }
-            });
-            Task.Run(() =>
-            {
-                for (int i = 1; i <= 2000; i++)
-                {
-                    Send(i);
-                }
-            });
+            //Task.Run(() =>
+            //{
+            //    for (int i = 1; i <= 2000; i++)
+            //    {
+            //        Send(i);
+            //    }
+            //});
+            //Task.Run(() =>
+            //{
+            //    for (int i = 1; i <= 2000; i++)
+            //    {
+            //        Send(i);
+            //    }
+            //});
+            //Task.Run(() =>
+            //{
+            //    for (int i = 1; i <= 2000; i++)
+            //    {
+            //        Send(i);
+            //    }
+            //});
+            //Task.Run(() =>
+            //{
+            //    for (int i = 1; i <= 2000; i++)
+            //    {
+            //        Send(i);
+            //    }
+            //});
+            //Task.Run(() =>
+            //{
+            //    for (int i = 1; i <= 2000; i++)
+            //    {
+            //        Send(i);
+            //    }
+            //});
             Console.ReadLine();
         }
 

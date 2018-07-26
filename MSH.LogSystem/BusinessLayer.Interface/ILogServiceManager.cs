@@ -1,4 +1,5 @@
-﻿using DTO;
+﻿using Configuration;
+using DTO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,10 +31,21 @@ namespace BusinessLayer.Interface
         void SendDebugLog(LogRequest request);
 
         /// <summary>
+        /// 开始从队列中获取消息
+        /// </summary>
+        /// <param name="queueName"></param>
+        void StartGetMsg(LogLevel level);
+
+        /// <summary>
+        /// 消息接收事件
+        /// </summary>
+        event Action<LogRequest> MessageReceivedEvent;
+
+        /// <summary>
         /// 从消息队列中获取日志请求
         /// </summary>
         /// <param name="queueName">队列名称</param>
         /// <returns></returns>
-        LogRequest GetLog(string queueName);
+        LogRequest GetLog(LogLevel level);
     }
 }

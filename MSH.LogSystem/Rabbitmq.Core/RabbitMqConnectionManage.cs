@@ -50,6 +50,7 @@ namespace Rabbitmq.Core
                 ConnectionFactory = null;
             if (Connection != null)
             {
+                Connection.Close();
                 Connection.Dispose();
                 Connection = null;
             }

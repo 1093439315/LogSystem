@@ -16,7 +16,7 @@ namespace Rabbitmq.Core
         {
             //队列管道名称为空时使用默认管道
             if (string.IsNullOrEmpty(channelName))
-                channelName = Config.ChannelName;
+                channelName = Config.DefaultQueueName;
             if (Channels == null)
                 Channels = new Dictionary<string, IModel>();
             if (Channels.Keys.Contains(channelName))
@@ -35,7 +35,13 @@ namespace Rabbitmq.Core
         public static void Close()
         {
             if (Channels != null)
+            {
+                foreach (var item in Channels)
+                {
+                    item.Value.Close();
+                }
                 Channels = null;
+            }
         }
     }
 }

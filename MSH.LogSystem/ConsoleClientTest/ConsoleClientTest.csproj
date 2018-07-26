@@ -8,8 +8,9 @@
     <OutputType>Exe</OutputType>
     <RootNamespace>ConsoleClientTest</RootNamespace>
     <AssemblyName>ConsoleClientTest</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -55,9 +56,23 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <Content Include="AppSetting.config" />
+    <Content Include="Connection.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\BusinessLayer.Interface\BusinessLayer.Interface.csproj">
+      <Project>{5f01f959-252c-418d-8287-ae1c39b46ffe}</Project>
+      <Name>BusinessLayer.Interface</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BusinessLayer\BusinessLayer.csproj">
+      <Project>{b79647c6-0bca-4833-80b4-49e516bb7bc3}</Project>
+      <Name>BusinessLayer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Common\Common.csproj">
+      <Project>{7120044e-e2e5-473a-af08-bd3c4264ffa0}</Project>
+      <Name>Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\DTO\DTO.csproj">
       <Project>{CDF9B8F1-268F-448E-8B6D-BCA82EA5F55F}</Project>
       <Name>DTO</Name>

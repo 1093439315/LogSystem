@@ -4,16 +4,16 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{5F01F959-252C-418D-8287-AE1C39B46FFE}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>BusinessLayer.Interface</RootNamespace>
-    <AssemblyName>BusinessLayer.Interface</AssemblyName>
+    <ProjectGuid>{92669E81-465F-4FCC-85C3-D7E63F990202}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>ConsoleServerReceivedTest</RootNamespace>
+    <AssemblyName>ConsoleServerReceivedTest</AssemblyName>
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -23,6 +23,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -41,18 +42,34 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IDependency.cs" />
-    <Compile Include="ILogServiceManager.cs" />
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="App.config" />
+    <Content Include="AppSetting.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Connection.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BusinessLayer.Interface\BusinessLayer.Interface.csproj">
+      <Project>{5f01f959-252c-418d-8287-ae1c39b46ffe}</Project>
+      <Name>BusinessLayer.Interface</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BusinessLayer\BusinessLayer.csproj">
+      <Project>{b79647c6-0bca-4833-80b4-49e516bb7bc3}</Project>
+      <Name>BusinessLayer</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Configuration\Configuration.csproj">
-      <Project>{3F958A68-E56B-4FB5-9187-FC5E73D98D6F}</Project>
+      <Project>{3f958a68-e56b-4fb5-9187-fc5e73d98d6f}</Project>
       <Name>Configuration</Name>
     </ProjectReference>
-    <ProjectReference Include="..\DTO\DTO.csproj">
-      <Project>{CDF9B8F1-268F-448E-8B6D-BCA82EA5F55F}</Project>
-      <Name>DTO</Name>
+    <ProjectReference Include="..\Rabbitmq.Core\Rabbitmq.Core.csproj">
+      <Project>{f8c28c01-1d7d-41b5-ab0b-a77a855a0d5c}</Project>
+      <Name>Rabbitmq.Core</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
