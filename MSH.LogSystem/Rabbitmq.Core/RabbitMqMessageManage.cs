@@ -14,7 +14,7 @@ namespace Rabbitmq.Core
     /// </summary>
     public static class RabbitMqMessageManage
     {
-        public static event Action<object> MessageReceivedEvent;
+        public static event Action<object, string, ulong> MessageReceivedEvent;
 
         /// <summary>
         /// 往队列管道发送消息
@@ -70,9 +70,9 @@ namespace Rabbitmq.Core
         }
 
         /// <summary>
-        /// 确认已经接收到消息
+        /// 发送接收消息状态
         /// </summary>
-        public static void ReceivedSucceedCheck(string queueName, ulong msgId)
+        public static void SendReceivedResult(string queueName, ulong msgId, bool isSucceed = true)
         {
             if (string.IsNullOrEmpty(queueName))
                 throw new Exception("队列管道名称不能为空！");
@@ -81,7 +81,10 @@ namespace Rabbitmq.Core
                 throw new Exception("请先开启队列管道");
 
             //确认已经接收到消息
-            channel.BasicAck(msgId, false);
+            if (isSucceed)
+                channel.BasicAck(msgId, false);
+            else
+                channel.BasicNack(msgId, false, true);
         }
 
         public static void StartGet<T>(string queueName)
@@ -96,7 +99,10 @@ namespace Rabbitmq.Core
             try
             {
                 var consumer = new EventingBasicConsumer(channel);
-                consumer.Received += Consumer_Received<T>;
+                consumer.Received += new EventHandler<BasicDeliverEventArgs>((obj, e) =>
+                {
+                    Consumer_Received<T>(obj, e, queueName);
+                });
                 channel.BasicConsume(queueName, false, consumer);
             }
             catch (Exception ex)
@@ -105,14 +111,14 @@ namespace Rabbitmq.Core
             }
         }
 
-        private static void Consumer_Received<T>(object sender, BasicDeliverEventArgs e)
+        private static void Consumer_Received<T>(object sender, BasicDeliverEventArgs e, string queueName)
             where T : class
         {
             var body = e.Body;
             var msg = Encoding.UTF8.GetString(body);
             var obj = msg.ToObject<T>();
             if (obj != null)
-                MessageReceivedEvent?.Invoke(obj);
+                MessageReceivedEvent?.Invoke(obj, queueName,e.DeliveryTag);
         }
     }
 }

@@ -15,6 +15,11 @@ namespace BusinessLayer
     {
         public event Action<LogRequest> MessageReceivedEvent;
 
+        public LogServiceManager()
+        {
+            RabbitMqMessageManage.MessageReceivedEvent += RabbitMqMessageManage_MessageReceivedEvent;
+        }
+
         #region 向队列插入日志
 
         public void SendErrorLog(LogRequest request)
@@ -52,14 +57,13 @@ namespace BusinessLayer
         {
             var queueName = level.ToString();
             RabbitMqMessageManage.StartGet<LogRequest>(queueName);
-            RabbitMqMessageManage.MessageReceivedEvent += RabbitMqMessageManage_MessageReceivedEvent;
         }
 
         /// <summary>
         /// 处理发送来的日志
         /// </summary>
         /// <param name="obj"></param>
-        private void RabbitMqMessageManage_MessageReceivedEvent(object obj)
+        private void RabbitMqMessageManage_MessageReceivedEvent(object obj, string queueName, ulong msgId)
         {
             var log = obj as LogRequest;
             if (log == null)
@@ -69,6 +73,8 @@ namespace BusinessLayer
             }
             //将日志写入MogoDb
             Console.WriteLine($"从队列中读取了消息:{obj.ToJson()}");
+            //让消息重新回到队列
+            RabbitMqMessageManage.SendReceivedResult(queueName, msgId, false);
         }
 
         #endregion
