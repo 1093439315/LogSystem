@@ -17,7 +17,7 @@ namespace DTO
         /// </summary>
         public string TraceInfo { get; set; }
         /// <summary>
-        /// 业务Id
+        /// 业务位置
         /// </summary>
         public string BusinessPosition { get; set; }
         /// <summary>
