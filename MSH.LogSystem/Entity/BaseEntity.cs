@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Entity
 {
-    public class EntityBase
+    public class BaseEntity
     {
         /// <summary>
         /// 主键

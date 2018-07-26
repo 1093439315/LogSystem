@@ -15,7 +15,7 @@ namespace MSH.LogSystem.Controllers
     /// </summary>
     public class LogServiceController : ApiController
     {
-        public ILogServiceManager LogServiceManager { get; set; }
+        public ILogMQServiceManager LogServiceManager { get; set; }
 
         /// <summary>
         /// 记录Info日志

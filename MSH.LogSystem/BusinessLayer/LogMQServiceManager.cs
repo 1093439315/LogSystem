@@ -11,11 +11,11 @@ using System.Threading.Tasks;
 
 namespace BusinessLayer
 {
-    public class LogServiceManager : ILogServiceManager
+    public class LogMQServiceManager : ILogMQServiceManager
     {
         public event Action<LogRequest> MessageReceivedEvent;
 
-        public LogServiceManager()
+        public LogMQServiceManager()
         {
             RabbitMqMessageManage.MessageReceivedEvent += RabbitMqMessageManage_MessageReceivedEvent;
         }

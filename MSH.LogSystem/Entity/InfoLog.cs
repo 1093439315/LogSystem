@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Entity
 {
-    public class InfoLog : LogBase
+    public class InfoLog : BaseLog
     {
     }
 }

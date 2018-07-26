@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Entity
 {
-    public class LogBase : EntityBase
+    public class BaseLog : BaseEntity
     {
         /// <summary>
         /// 日志级别

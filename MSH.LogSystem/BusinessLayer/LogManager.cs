@@ -1,4 +1,5 @@
 ﻿using BusinessLayer.Interface;
+using DTO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,5 +10,14 @@ namespace BusinessLayer
 {
     public class LogManager : ILogManager
     {
+        public void AddInfoLog(LogRequest logRequest)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void DeleteLog(long id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

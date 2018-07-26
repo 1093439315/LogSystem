@@ -8,7 +8,10 @@ using System.Threading.Tasks;
 
 namespace BusinessLayer.Interface
 {
-    public interface ILogServiceManager : IDependency
+    /// <summary>
+    /// 日志消息队列管理
+    /// </summary>
+    public interface ILogMQServiceManager : IDependency
     {
         /// <summary>
         /// 发送Info日志

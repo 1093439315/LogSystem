@@ -15,7 +15,7 @@ namespace ConsoleServerReceivedTest
         static void Main(string[] args)
         {
             RabbitMqServiceManage.Start();
-            ILogServiceManager manager = new LogServiceManager();
+            ILogMQServiceManager manager = new LogMQServiceManager();
             manager.StartGetMsg(LogLevel.Info);
             Console.ReadLine();
         }

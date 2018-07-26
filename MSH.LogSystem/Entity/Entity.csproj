@@ -43,11 +43,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Business.cs" />
     <Compile Include="DebugLog.cs" />
-    <Compile Include="EntityBase.cs" />
+    <Compile Include="BaseEntity.cs" />
     <Compile Include="ErrorLog.cs" />
     <Compile Include="InfoLog.cs" />
-    <Compile Include="LogBase.cs" />
+    <Compile Include="BaseLog.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WarnLog.cs" />
   </ItemGroup>

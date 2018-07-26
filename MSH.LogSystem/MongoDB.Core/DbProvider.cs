@@ -40,10 +40,10 @@ namespace MongoDB.Core
         /// <param name="collectionName">集合名称</param>
         /// <param name="model">数据对象</param>
         public static void Insert<T>(T model)
-            where T : EntityBase
+            where T : BaseEntity
         {
             if (model == null)
-                throw new ArgumentNullException("model", "待插入数据不能为空");
+                throw new ArgumentNullException(nameof(model), "待插入数据不能为空");
             var collection = IMongoDatabase.GetCollection<T>(typeof(T).Name);
             collection.InsertOne(model);
         }
@@ -56,10 +56,10 @@ namespace MongoDB.Core
         /// <param name="collectionName">集合名称</param>
         /// <param name="models">数据对象</param>
         public static void Insert<T>(List<T> models)
-            where T : EntityBase
+            where T : BaseEntity
         {
             if (models == null)
-                throw new ArgumentNullException("models", "待插入数据不能为空");
+                throw new ArgumentNullException(nameof(models), "待插入数据不能为空");
             var collection = IMongoDatabase.GetCollection<T>(typeof(T).Name);
             collection.InsertMany(models);
         }
@@ -76,7 +76,7 @@ namespace MongoDB.Core
         /// <param name="id">ID</param>
         /// <returns>数据对象</returns>
         public static T GetById<T>(string id)
-            where T : EntityBase
+            where T : BaseEntity
         {
             var collection = IMongoDatabase.GetCollection<T>(typeof(T).Name);
             var filter = Builders<T>.Filter.Eq("Id", new ObjectId(id));
@@ -91,7 +91,7 @@ namespace MongoDB.Core
         /// <param name="id">ID</param>
         /// <returns>数据对象</returns>
         public static T GetById<T>(ObjectId id)
-            where T : EntityBase
+            where T : BaseEntity
         {
             var collection = IMongoDatabase.GetCollection<T>(typeof(T).Name);
             var filter = Builders<T>.Filter.Eq("Id", id);
