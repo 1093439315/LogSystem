@@ -11,7 +11,7 @@ namespace TestProject
         public void IfNotInAdd()
         {
             var dao = new BusinessAccess();
-            var id = dao.IfNotInAdd("94687", "订单.新建");
+            var id = dao.IfNotInAddReturnId("94687", "订单.新建");
         }
     }
 }

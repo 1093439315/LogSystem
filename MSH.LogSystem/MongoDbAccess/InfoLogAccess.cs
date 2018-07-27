@@ -4,6 +4,7 @@ using DTO;
 using Entity;
 using MongoDB.Bson;
 using MongoDB.Core;
+using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,15 +23,24 @@ namespace MongoDbAccess
                 throw new ArgumentException(nameof(logRequest), "日志内容不能为空！");
 
             //取业务Id 如果没有则新建业务
-            var businessId = _BusinessAccess.IfNotInAdd(appId, logRequest.BusinessPosition);
+            var business = _BusinessAccess.IfNotInAddReturnEntity(appId, logRequest.BusinessPosition);
             var entity = new InfoLog()
             {
                 Content = logRequest.Content.ToJson(),
-                BusinessId = new ObjectId(businessId),
+                BusinessId = business.Id,
+                BusinessPosition=business.BusinessLink,
+                PlatformId = business.PlatformId,
                 TraceInfo = logRequest.TraceInfo,
-                CreationTime=logRequest.CreatTime,
+                CreationTime = logRequest.CreatTime,
             };
             DbProvider.Insert(entity);
+        }
+
+        public List<LogRequest> QueryLogRequest(LogQuery logQuery)
+        {
+            var collection = DbProvider.Collection<InfoLog>();
+            //var filter = Builders<T>.Filter.Eq("Id", new ObjectId(""));
+            return null;
         }
     }
 }

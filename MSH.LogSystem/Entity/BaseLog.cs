@@ -25,5 +25,13 @@ namespace Entity
         /// 业务Id
         /// </summary>
         public ObjectId BusinessId { get; set; }
+        /// <summary>
+        /// 业务位置
+        /// </summary>
+        public string BusinessPosition { get; set; }
+        /// <summary>
+        /// 平台Id
+        /// </summary>
+        public ObjectId PlatformId { get; set; }
     }
 }
