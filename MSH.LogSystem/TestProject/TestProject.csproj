@@ -67,7 +67,7 @@
       <HintPath>..\packages\MongoDB.Driver.Core.2.7.0\lib\net45\MongoDB.Driver.Core.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.11.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="RabbitMQ.Client, Version=5.0.0.0, Culture=neutral, PublicKeyToken=89e7d7c5feba84ce, processorArchitecture=MSIL">
       <HintPath>..\packages\RabbitMQ.Client.5.1.0\lib\net451\RabbitMQ.Client.dll</HintPath>
@@ -87,14 +87,23 @@
     <Compile Include="RabbitmqCoreTest.cs" />
     <Compile Include="HttpLogTest.cs" />
     <Compile Include="MongoDbCoreTest.cs" />
+    <Compile Include="MongoDbAccessTest.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="AppSetting.config" />
-    <Content Include="Connection.config" />
+    <Content Include="AppSetting.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Connection.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Configuration\Configuration.csproj">
+      <Project>{3F958A68-E56B-4FB5-9187-FC5E73D98D6F}</Project>
+      <Name>Configuration</Name>
+    </ProjectReference>
     <ProjectReference Include="..\DTO\DTO.csproj">
       <Project>{cdf9b8f1-268f-448e-8b6d-bca82ea5f55f}</Project>
       <Name>DTO</Name>
@@ -106,6 +115,10 @@
     <ProjectReference Include="..\MongoDB.Core\MongoDB.Core.csproj">
       <Project>{e70f380f-4bd6-4abe-b97b-625136ab690a}</Project>
       <Name>MongoDB.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MongoDbAccess\MongoDbAccess.csproj">
+      <Project>{C310BB2D-2A2C-4C09-B000-35626D0C24D3}</Project>
+      <Name>MongoDbAccess</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />

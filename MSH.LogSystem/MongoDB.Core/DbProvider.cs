@@ -2,6 +2,7 @@
 using Entity;
 using MongoDB.Bson;
 using MongoDB.Driver;
+using Linq = MongoDB.Driver.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,6 +29,19 @@ namespace MongoDB.Core
                 //  根据数据库名称实例化数据库
                 return _client.GetDatabase(databaseName);
             }
+        }
+
+        public static IMongoCollection<T> Collection<T>()
+        {
+            var co = IMongoDatabase.GetCollection<T>(typeof(T).Name);
+            return co;
+        }
+
+        public static Linq.IMongoQueryable<T> Queryable<T>()
+            where T : class
+        {
+            var qu = IMongoDatabase.GetCollection<T>(typeof(T).Name).AsQueryable();
+            return qu;
         }
 
         #region 插入
@@ -80,7 +94,7 @@ namespace MongoDB.Core
         {
             var collection = IMongoDatabase.GetCollection<T>(typeof(T).Name);
             var filter = Builders<T>.Filter.Eq("Id", new ObjectId(id));
-            return collection.Find(filter).Single();
+            return collection.Find(filter).SingleOrDefault();
         }
 
         /// <summary>
@@ -95,7 +109,7 @@ namespace MongoDB.Core
         {
             var collection = IMongoDatabase.GetCollection<T>(typeof(T).Name);
             var filter = Builders<T>.Filter.Eq("Id", id);
-            return collection.Find(filter).Single();
+            return collection.Find(filter).SingleOrDefault();
         }
 
         #endregion

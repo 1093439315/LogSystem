@@ -42,7 +42,14 @@
   <ItemGroup>
     <Compile Include="AjaxReturnInfo.cs" />
     <Compile Include="LogRequest.cs" />
+    <Compile Include="Platform.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Configuration\Configuration.csproj">
+      <Project>{3F958A68-E56B-4FB5-9187-FC5E73D98D6F}</Project>
+      <Name>Configuration</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
