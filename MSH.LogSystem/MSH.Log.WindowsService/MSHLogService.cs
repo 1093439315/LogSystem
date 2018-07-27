@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Common;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -22,22 +23,29 @@ namespace MSH.Log.WindowsService
         {
             InitializeComponent();
 
-            _config = new HttpSelfHostConfiguration(ServiceAddress);
-            _config.Routes.MapHttpRoute("DefaultApi",
-                "api/{controller}/{action}/{id}",
-                new { id = RouteParameter.Optional });
+            //_config = new HttpSelfHostConfiguration(ServiceAddress);
+            //_config.Routes.MapHttpRoute("DefaultApi",
+            //    "api/{controller}/{action}/{id}",
+            //    new { id = RouteParameter.Optional });
         }
 
         protected override void OnStart(string[] args)
         {
-            _server = new HttpSelfHostServer(_config);
-            _server.OpenAsync();
+            //_server = new HttpSelfHostServer(_config);
+            //_server.OpenAsync();
+            //启动日志落地服务
+            if (LogToDbService.Start())
+            {
+                Logger.Info("日志落地服务启动成功!");
+            }
         }
 
         protected override void OnStop()
         {
-            _server.CloseAsync().Wait();
-            _server.Dispose();
+            //_server.CloseAsync().Wait();
+            //_server.Dispose();
+            //停止日志落地服务
+            LogToDbService.Stop();
         }
     }
 }

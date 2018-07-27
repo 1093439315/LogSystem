@@ -93,7 +93,7 @@ namespace BusinessLayer
             }
             catch (Exception ex)
             {
-                Logger.Error($"保存日志发生错误:{ex}  日志内容:{logRequest.ToJson()}");
+                Logger.Error($"{nameof(appId)}:{appId} 保存日志发生错误:{ex}  日志内容:{logRequest.ToJson()}");
                 return false;
             }
         }
