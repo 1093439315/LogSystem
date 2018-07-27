@@ -10,10 +10,6 @@ namespace Entity
     public class BaseLog : BaseEntity
     {
         /// <summary>
-        /// 日志级别
-        /// </summary>
-        public short LogLevel { get; set; }
-        /// <summary>
         /// 生成时间
         /// </summary>
         public DateTime CreationTime { get; set; }

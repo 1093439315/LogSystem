@@ -62,6 +62,10 @@
       <Project>{CDF9B8F1-268F-448E-8B6D-BCA82EA5F55F}</Project>
       <Name>DTO</Name>
     </ProjectReference>
+    <ProjectReference Include="..\MongoDbAccess\MongoDbAccess.csproj">
+      <Project>{C310BB2D-2A2C-4C09-B000-35626D0C24D3}</Project>
+      <Name>MongoDbAccess</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Rabbitmq.Core\Rabbitmq.Core.csproj">
       <Project>{F8C28C01-1D7D-41B5-AB0B-A77A855A0D5C}</Project>
       <Name>Rabbitmq.Core</Name>

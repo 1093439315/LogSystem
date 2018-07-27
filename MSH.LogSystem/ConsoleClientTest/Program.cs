@@ -19,41 +19,6 @@ namespace ConsoleClientTest
                     Send(i);
                 }
             });
-            //Task.Run(() =>
-            //{
-            //    for (int i = 1; i <= 2000; i++)
-            //    {
-            //        Send(i);
-            //    }
-            //});
-            //Task.Run(() =>
-            //{
-            //    for (int i = 1; i <= 2000; i++)
-            //    {
-            //        Send(i);
-            //    }
-            //});
-            //Task.Run(() =>
-            //{
-            //    for (int i = 1; i <= 2000; i++)
-            //    {
-            //        Send(i);
-            //    }
-            //});
-            //Task.Run(() =>
-            //{
-            //    for (int i = 1; i <= 2000; i++)
-            //    {
-            //        Send(i);
-            //    }
-            //});
-            //Task.Run(() =>
-            //{
-            //    for (int i = 1; i <= 2000; i++)
-            //    {
-            //        Send(i);
-            //    }
-            //});
             Console.ReadLine();
         }
 
@@ -64,10 +29,10 @@ namespace ConsoleClientTest
             //var url = "http://log.jiewit.com/api/LogService/Info";
             url.PostJsonAsync(new LogRequest()
             {
-                BusinessPosition = "1",
-                Content = "qweqwe",
+                BusinessPosition = "订单.删除",
+                Content = "这是一个测试删除日志内容",
                 CreatTime = DateTime.Now,
-                TraceInfo = "qweqwe",
+                TraceInfo = "这是测试堆栈信息",
             }).Wait();
         }
     }

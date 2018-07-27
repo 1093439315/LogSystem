@@ -10,10 +10,10 @@ namespace TestProject
         [TestMethod]
         public void AddInfoLog()
         {
-            var dao = new LogAccess();
+            var dao = new InfoLogAccess();
             dao.AddInfoLog("94687", new DTO.LogRequest()
             {
-                BusinessPosition = "订单.新建",
+                BusinessPosition = "订单.删除",
                 Content = "这是一个测试的信息日志",
                 TraceInfo = "这是一个测试的堆栈信息",
                 CreatTime = DateTime.Now,

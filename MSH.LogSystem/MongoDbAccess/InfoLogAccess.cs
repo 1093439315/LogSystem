@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace MongoDbAccess
 {
-    public class LogAccess
+    public class InfoLogAccess
     {
         private BusinessAccess _BusinessAccess = new BusinessAccess();
 
@@ -27,8 +27,8 @@ namespace MongoDbAccess
             {
                 Content = logRequest.Content.ToJson(),
                 BusinessId = new ObjectId(businessId),
-                LogLevel = (short)LogLevel.Info,
                 TraceInfo = logRequest.TraceInfo,
+                CreationTime=logRequest.CreatTime,
             };
             DbProvider.Insert(entity);
         }

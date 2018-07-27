@@ -2,6 +2,7 @@
 using Common;
 using Configuration;
 using DTO;
+using MongoDbAccess;
 using Rabbitmq.Core;
 using System;
 using System.Collections.Generic;
@@ -13,6 +14,7 @@ namespace BusinessLayer
 {
     public class LogMQServiceManager : ILogMQServiceManager
     {
+        private InfoLogAccess _InfoLogAccess = new InfoLogAccess();
         public event Action<LogRequest> MessageReceivedEvent;
 
         public LogMQServiceManager()
@@ -68,13 +70,32 @@ namespace BusinessLayer
             var log = obj as LogRequest;
             if (log == null)
             {
+                //让消息重新回到队列
+                RabbitMqMessageManage.SendReceivedResult(queueName, msgId, false);
                 Logger.Info($"队列消息反序列化失败:{obj.ToJson()}");
                 return;
             }
             //将日志写入MogoDb
             Console.WriteLine($"从队列中读取了消息:{obj.ToJson()}");
-            //让消息重新回到队列
-            RabbitMqMessageManage.SendReceivedResult(queueName, msgId, false);
+            var res = SaveLog("94687", log);
+            if (res)
+                RabbitMqMessageManage.SendReceivedResult(queueName, msgId, true);
+            else
+                RabbitMqMessageManage.SendReceivedResult(queueName, msgId, false);
+        }
+
+        private bool SaveLog(string appId, LogRequest logRequest)
+        {
+            try
+            {
+                _InfoLogAccess.AddInfoLog("94687", logRequest);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Logger.Error($"保存日志发生错误:{ex}  日志内容:{logRequest.ToJson()}");
+                return false;
+            }
         }
 
         #endregion
