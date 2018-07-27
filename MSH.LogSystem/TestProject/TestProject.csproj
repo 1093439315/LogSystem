@@ -87,7 +87,8 @@
     <Compile Include="RabbitmqCoreTest.cs" />
     <Compile Include="HttpLogTest.cs" />
     <Compile Include="MongoDbCoreTest.cs" />
-    <Compile Include="MongoDbAccessTest.cs" />
+    <Compile Include="PlatformAccessTest.cs" />
+    <Compile Include="BusinessAccessTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="AppSetting.config">

@@ -5,13 +5,13 @@ using MongoDbAccess;
 namespace TestProject
 {
     [TestClass]
-    public class MongoDbAccessTest
+    public class BusinessAccessTest
     {
         [TestMethod]
-        public void GetPlatformByAppId()
+        public void IfNotInAdd()
         {
-            var dao = new PlatformAccess();
-            var dto = dao.GetPlatformByAppId("94687");
+            var dao = new BusinessAccess();
+            var id = dao.IfNotInAdd("94687", "订单", "新建");
         }
     }
 }

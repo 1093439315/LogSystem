@@ -20,6 +20,6 @@ namespace Entity
         /// <summary>
         /// 业务链路 例如：收银服务-订单-新建
         /// </summary>
-        public List<string> BusinessLink { get; set; }
+        public string BusinessLink { get; set; }
     }
 }

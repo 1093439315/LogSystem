@@ -61,6 +61,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BusinessAccess.cs" />
     <Compile Include="LogAccess.cs" />
     <Compile Include="PlatformAccess.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
