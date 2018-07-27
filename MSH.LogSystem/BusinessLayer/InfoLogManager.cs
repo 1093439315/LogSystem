@@ -1,5 +1,6 @@
 ﻿using BusinessLayer.Interface;
 using DTO;
+using MongoDbAccess;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace BusinessLayer
 {
-    public class LogManager : ILogManager
+    public class InfoLogManager : IInfoLogManager
     {
         public void AddInfoLog(LogRequest logRequest)
         {
@@ -18,6 +19,12 @@ namespace BusinessLayer
         public void DeleteLog(long id)
         {
             throw new NotImplementedException();
+        }
+
+        public List<LogInfo> QueryLogRequest(LogQuery logQuery)
+        {
+            var dao = new InfoLogAccess();
+            return dao.QueryLogRequest(logQuery);
         }
     }
 }
