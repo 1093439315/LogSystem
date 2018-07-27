@@ -49,6 +49,7 @@
     <Compile Include="ErrorLog.cs" />
     <Compile Include="InfoLog.cs" />
     <Compile Include="BaseLog.cs" />
+    <Compile Include="Platform.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WarnLog.cs" />
   </ItemGroup>

@@ -16,7 +16,7 @@ namespace Entity
         /// 平台Id
         /// </summary>
         public ObjectId PlatformId { get; set; }
-
+        
         /// <summary>
         /// 业务链路 例如：收银服务-订单-新建
         /// </summary>

@@ -12,7 +12,7 @@ namespace MongoDB.Core
 {
     public static class DbProvider
     {
-        public static IMongoDatabase IMongoDatabase
+        private static IMongoDatabase IMongoDatabase
         {
             get
             {

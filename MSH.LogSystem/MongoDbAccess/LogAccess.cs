@@ -14,7 +14,6 @@ namespace MongoDbAccess
         public void AddInfoLog(LogRequest logRequest)
         {
             //取业务Id 如果没有则新建业务
-
             var entity = new InfoLog()
             {
                 
