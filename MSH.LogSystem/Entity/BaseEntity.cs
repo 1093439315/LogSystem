@@ -15,5 +15,7 @@ namespace Entity
         /// </summary>
         [BsonId]
         public ObjectId Id { get; set; }
+
+        public DateTime RowCreatTime { get; set; } = DateTime.Now;
     }
 }

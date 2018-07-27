@@ -15,14 +15,15 @@ namespace MongoDbAccess
     {
         private PlatformAccess _PlatformAccess = new PlatformAccess();
 
-        public string IfNotInAdd(string appId, params string[] businessItems)
+        public string IfNotInAdd(string appId, string businessPosition)
         {
             if (string.IsNullOrEmpty(appId))
                 throw new ArgumentException(nameof(appId), $"{nameof(appId)}不允许为空！");
 
             string businessLink = Constants.DefaultBusiness;
-            if (businessItems != null && businessItems.Length > 0)
-                businessLink = string.Join(".", businessItems);
+            if (!string.IsNullOrEmpty(businessPosition))
+                businessLink = businessPosition;
+
             //先根据AppId获取业务平台Id
             var platform = _PlatformAccess.GetPlatformByAppId(appId);
             if (platform == null)
