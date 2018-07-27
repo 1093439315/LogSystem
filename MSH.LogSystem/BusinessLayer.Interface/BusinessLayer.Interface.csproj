@@ -42,7 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IDependency.cs" />
-    <Compile Include="ILogManager.cs" />
+    <Compile Include="IInfoLogManager.cs" />
     <Compile Include="ILogMQServiceManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
