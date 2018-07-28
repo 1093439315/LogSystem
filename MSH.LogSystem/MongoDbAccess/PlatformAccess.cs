@@ -37,7 +37,10 @@ namespace MongoDbAccess
             var collection = DbProvider.Collection<Entity.Platform>();
             var condition = CreatCondition(query);
             var entities = collection.AsQueryable().Where(condition).ToList();
-            return entities.RobotMap<Entity.Platform, Platform>();
+            return entities.RobotMap<Entity.Platform, Platform>(cf =>
+            {
+                cf.Bind(x => x.Id.ToString(), y => y.Id);
+            });
         }
 
         public void AddPlatform(Platform platform)
@@ -50,12 +53,10 @@ namespace MongoDbAccess
             DbProvider.Insert(entity);
         }
 
-        public void DeletePlatform(string id)
+        public void DeletePlatform(List<string> ids)
         {
             var collection = DbProvider.Collection<Entity.Platform>();
-            if (collection.AsQueryable().Any(a => a.Id == new ObjectId(id)))
-                throw new BaseCustomException("该记录已不存在！");
-            DbProvider.DeleteById<Entity.Platform>(id);
+            DbProvider.DeleteByIds<Entity.Platform>(ids);
         }
 
         private Expression<Func<Entity.Platform, bool>> CreatCondition(PlatformQuery query)

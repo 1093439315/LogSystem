@@ -42,5 +42,17 @@ namespace MSH.LogSystem.Controllers
             IPlatformManager.AddPlatform(platform);
             return new AjaxReturnInfo();
         }
+
+        /// <summary>
+        /// 删除(可批量)
+        /// </summary>
+        /// <param name="ids">Id列表</param>
+        /// <returns></returns>
+        [HttpDelete]
+        public AjaxReturnInfo Delete([FromUri] List<string> ids)
+        {
+            IPlatformManager.DeletePlatform(ids);
+            return new AjaxReturnInfo();
+        }
     }
 }

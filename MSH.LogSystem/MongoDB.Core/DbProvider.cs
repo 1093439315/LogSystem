@@ -122,6 +122,13 @@ namespace MongoDB.Core
             var filter = Builders<T>.Filter.Eq("Id", new ObjectId(id));
             collection.DeleteOne(filter);
         }
+        
+        public static void DeleteByIds<T>(List<string> ids)
+        {
+            var collection = IMongoDatabase.GetCollection<T>(typeof(T).Name);
+            var filter = Builders<T>.Filter.In("Id", ids);
+            collection.DeleteMany(filter);
+        }
 
         #endregion
     }

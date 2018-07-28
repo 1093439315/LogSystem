@@ -23,9 +23,9 @@ namespace BusinessLayer
             _PlatformAccess.AddPlatform(platform);
         }
 
-        public void DeletePlatform(string id)
+        public void DeletePlatform(List<string> ids)
         {
-            _PlatformAccess.DeletePlatform(id);
+            _PlatformAccess.DeletePlatform(ids);
         }
     }
 }

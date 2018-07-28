@@ -28,6 +28,6 @@ namespace BusinessLayer.Interface
         /// 删除平台
         /// </summary>
         /// <param name="id"></param>
-        void DeletePlatform(string id);
+        void DeletePlatform(List<string> ids);
     }
 }
