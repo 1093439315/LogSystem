@@ -33,6 +33,7 @@ namespace MongoDbAccess
 
         public List<Platform> QueryPlatform(PlatformQuery query)
         {
+            if (query == null) return new List<Platform>();
             var collection = DbProvider.Collection<Entity.Platform>();
             var condition = CreatCondition(query);
             var entities = collection.AsQueryable().Where(condition).ToList();

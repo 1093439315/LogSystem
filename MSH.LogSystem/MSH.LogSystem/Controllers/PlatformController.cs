@@ -22,7 +22,7 @@ namespace MSH.LogSystem.Controllers
         /// <param name="query">查询条件</param>
         /// <returns></returns>
         [HttpGet]
-        public AjaxReturnInfo Query(PlatformQuery query)
+        public AjaxReturnInfo Query([FromUri] PlatformQuery query)
         {
             var datas = IPlatformManager.QueryPlatform(query);
             return new AjaxReturnInfo()
