@@ -45,6 +45,7 @@
     <Compile Include="LogMQServiceManager.cs" />
     <Compile Include="PlatformManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UserManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BusinessLayer.Interface\BusinessLayer.Interface.csproj">

@@ -11,7 +11,7 @@ namespace Configuration
     /// 日志级别
     /// </summary>
     [Flags]
-    public enum LogLevel : short
+    public enum LogLevel : int
     {
         [Note("信息")]
         Info = 1,

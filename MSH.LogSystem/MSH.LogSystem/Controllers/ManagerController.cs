@@ -9,7 +9,7 @@ using System.Web.Http;
 namespace MSH.LogSystem.Controllers
 {
     /// <summary>
-    /// 管理端控制器
+    /// 管理端控制器、采用Token认证
     /// </summary>
     [JwtAuth]
     public class ManagerController : ApiController

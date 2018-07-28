@@ -1,8 +1,10 @@
-﻿using Microsoft.IdentityModel.Tokens;
+﻿using Microsoft.IdentityModel.Logging;
+using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -21,7 +23,8 @@ namespace Common
         /// </summary>
         public static string Generate(Dictionary<string, dynamic> payload)
         {
-            var securityKey = new SymmetricSecurityKey(Encoding.Default.GetBytes(Secret));
+            IdentityModelEventSource.ShowPII = true;
+            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Secret));
             var now = DateTime.UtcNow;
             var expiresTime = DateTime.UtcNow.AddMinutes(ExpireMinutes);
             var signingCredentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256Signature);
@@ -38,7 +41,7 @@ namespace Common
             var jwt = handler.WriteToken(jwtToken);
             return jwt;
         }
-
+        
         /// <summary>
         /// 解码Token 并返回过期时间
         /// </summary>
@@ -46,7 +49,7 @@ namespace Common
         {
             try
             {
-                var securityKey = new SymmetricSecurityKey(Encoding.Default.GetBytes(Secret));
+                var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Secret));
 
                 var validateParam = new TokenValidationParameters()
                 {
@@ -68,7 +71,6 @@ namespace Common
                 };
                 SecurityToken validToken = null;
                 var handler = new JwtSecurityTokenHandler();
-                //handler.TokenLifetimeInMinutes = ExpireMinutes;
                 var principle = handler.ValidateToken(token, validateParam, out validToken);
                 var result = (validToken as JwtSecurityToken).Payload;
                 result.Add(ValidateFrom, result.ValidFrom);

@@ -45,6 +45,7 @@
     <Compile Include="IInfoLogManager.cs" />
     <Compile Include="ILogMQServiceManager.cs" />
     <Compile Include="IPlatformManager.cs" />
+    <Compile Include="IUserManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

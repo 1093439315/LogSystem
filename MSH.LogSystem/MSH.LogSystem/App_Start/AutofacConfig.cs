@@ -20,7 +20,6 @@ namespace MSH.LogSystem.App_Start
             var contatiner = RegisterService();
             contatiner.RegisterWebApiFilterProvider(config);
             config.DependencyResolver = new AutofacWebApiDependencyResolver(contatiner.Build());
-            //config.DependencyResolver.
         }
 
         /// <summary>

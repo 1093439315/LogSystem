@@ -127,10 +127,12 @@
     <Compile Include="App_Start\AutofacConfig.cs" />
     <Compile Include="App_Start\SwaggerConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\CommonDataController.cs" />
     <Compile Include="Controllers\LogServiceController.cs" />
     <Compile Include="Controllers\LogClientController.cs" />
     <Compile Include="Controllers\ManagerController.cs" />
     <Compile Include="Controllers\PlatformController.cs" />
+    <Compile Include="Controllers\VertificationController.cs" />
     <Compile Include="Filters\DeflateCompressionAttribute.cs" />
     <Compile Include="Filters\HandleCustomExceptionAttribute.cs" />
     <Compile Include="Filters\JwtAuthAttribute.cs" />

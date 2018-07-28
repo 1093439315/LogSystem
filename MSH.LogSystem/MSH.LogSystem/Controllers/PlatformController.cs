@@ -12,7 +12,7 @@ namespace MSH.LogSystem.Controllers
     /// <summary>
     /// 平台管理服务
     /// </summary>
-    public class PlatformController : ApiController
+    public class PlatformController : ManagerController
     {
         public IPlatformManager IPlatformManager { get; set; }
 

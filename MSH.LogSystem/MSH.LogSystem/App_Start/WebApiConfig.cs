@@ -21,7 +21,6 @@ namespace MSH.LogSystem
             config.Filters.AddRange(new List<IFilter>()
             {
                 new HandleCustomExceptionAttribute(),
-                //new JwtAuthAttribute(),
                 new DeflateCompressionAttribute()
             });
 
