@@ -72,9 +72,37 @@ namespace Common
         {
             get
             {
-                var value = ConfigurationManager.ConnectionStrings[$"{nameof(MongoDbConnStr)}"].ConnectionString;
+                var value = ConfigurationManager.ConnectionStrings[$"{nameof(MongoDbConnStr)}"]?.ConnectionString;
                 if (string.IsNullOrEmpty(value))
                     throw new Exception($"请在连接字符串配置文件中配置{nameof(MongoDbConnStr)}");
+                return value;
+            }
+        }
+
+        /// <summary>
+        /// 系统Secrect 非常重要
+        /// </summary>
+        public static string SystemSecrect
+        {
+            get
+            {
+                var value = ConfigurationManager.AppSettings[$"{nameof(SystemSecrect)}"];
+                if (string.IsNullOrEmpty(value))
+                    throw new Exception($"请在配置文件中配置{nameof(SystemSecrect)}");
+                return value;
+            }
+        }
+
+        /// <summary>
+        /// Token过期时间 非常重要
+        /// </summary>
+        public static string TokenExpireMinutes
+        {
+            get
+            {
+                var value = ConfigurationManager.AppSettings[$"{nameof(TokenExpireMinutes)}"];
+                if (string.IsNullOrEmpty(value))
+                    throw new Exception($"请在配置文件中配置{nameof(TokenExpireMinutes)}");
                 return value;
             }
         }

@@ -13,5 +13,14 @@ namespace TestProject
             var dao = new PlatformAccess();
             var dto = dao.GetPlatformByAppId("94687");
         }
+
+        [TestMethod]
+        public void QueryPlatform()
+        {
+            var dao = new PlatformAccess();
+            var dtos = dao.QueryPlatform(new DTO.PlatformQuery()
+            {
+            });
+        }
     }
 }

@@ -21,7 +21,7 @@ namespace BusinessLayer
             throw new NotImplementedException();
         }
 
-        public List<LogInfo> QueryLogRequest(LogQuery logQuery)
+        public List<LogInfo> QueryLogInfo(LogQuery logQuery)
         {
             var dao = new InfoLogAccess();
             return dao.QueryLogRequest(logQuery);

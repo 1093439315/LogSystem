@@ -14,6 +14,11 @@ namespace BusinessLayer.Interface
     public interface ILogMQServiceManager : IDependency
     {
         /// <summary>
+        /// AppId
+        /// </summary>
+        string AppId { get; set; }
+
+        /// <summary>
         /// 发送Info日志
         /// </summary>
         void SendInfoLog(LogRequest request);

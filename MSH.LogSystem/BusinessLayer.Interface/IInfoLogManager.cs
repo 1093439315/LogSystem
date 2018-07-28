@@ -28,6 +28,6 @@ namespace BusinessLayer.Interface
         /// </summary>
         /// <param name="logQuery">查询条件</param>
         /// <returns>日志信息</returns>
-        List<LogInfo> QueryLogRequest(LogQuery logQuery);
+        List<LogInfo> QueryLogInfo(LogQuery logQuery);
     }
 }

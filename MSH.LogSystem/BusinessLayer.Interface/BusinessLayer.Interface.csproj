@@ -44,6 +44,7 @@
     <Compile Include="IDependency.cs" />
     <Compile Include="IInfoLogManager.cs" />
     <Compile Include="ILogMQServiceManager.cs" />
+    <Compile Include="IPlatformManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -55,6 +56,9 @@
       <Project>{CDF9B8F1-268F-448E-8B6D-BCA82EA5F55F}</Project>
       <Name>DTO</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

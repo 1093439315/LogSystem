@@ -17,6 +17,8 @@ namespace BusinessLayer
         private InfoLogAccess _InfoLogAccess = new InfoLogAccess();
         public event Action<LogRequest> MessageReceivedEvent;
 
+        public string AppId { get; set; }
+
         public LogMQServiceManager()
         {
             RabbitMqMessageManage.MessageReceivedEvent += RabbitMqMessageManage_MessageReceivedEvent;
@@ -72,7 +74,7 @@ namespace BusinessLayer
             {
                 //让消息重新回到队列
                 RabbitMqMessageManage.SendReceivedResult(queueName, msgId, false);
-                Logger.Info($"队列消息反序列化失败:{obj.ToJson()}");
+                Logger.Error($"队列消息反序列化失败:{obj.ToJson()}");
                 return;
             }
             //将日志写入MogoDb

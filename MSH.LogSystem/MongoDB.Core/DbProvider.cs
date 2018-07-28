@@ -113,5 +113,16 @@ namespace MongoDB.Core
         }
 
         #endregion
+
+        #region 删除
+
+        public static void DeleteById<T>(string id)
+        {
+            var collection = IMongoDatabase.GetCollection<T>(typeof(T).Name);
+            var filter = Builders<T>.Filter.Eq("Id", new ObjectId(id));
+            collection.DeleteOne(filter);
+        }
+
+        #endregion
     }
 }

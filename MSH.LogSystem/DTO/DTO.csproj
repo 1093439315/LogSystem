@@ -45,6 +45,7 @@
     <Compile Include="LogQuery.cs" />
     <Compile Include="LogRequest.cs" />
     <Compile Include="Platform.cs" />
+    <Compile Include="PlatformQuery.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -56,6 +57,9 @@
       <Project>{3F958A68-E56B-4FB5-9187-FC5E73D98D6F}</Project>
       <Name>Configuration</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

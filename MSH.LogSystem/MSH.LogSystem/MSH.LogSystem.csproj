@@ -44,6 +44,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\MSH.LogSystem.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Aop.Autofac, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -127,12 +128,17 @@
     <Compile Include="App_Start\SwaggerConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\LogServiceController.cs" />
+    <Compile Include="Controllers\LogClientController.cs" />
+    <Compile Include="Controllers\ManagerController.cs" />
+    <Compile Include="Controllers\PlatformController.cs" />
     <Compile Include="Filters\DeflateCompressionAttribute.cs" />
     <Compile Include="Filters\HandleCustomExceptionAttribute.cs" />
+    <Compile Include="Filters\JwtAuthAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\CompressionHelper.cs" />
+    <Compile Include="Models\UserPrincipal.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -165,6 +171,10 @@
     <ProjectReference Include="..\Common\Common.csproj">
       <Project>{7120044E-E2E5-473A-AF08-BD3C4264FFA0}</Project>
       <Name>Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Configuration\Configuration.csproj">
+      <Project>{3F958A68-E56B-4FB5-9187-FC5E73D98D6F}</Project>
+      <Name>Configuration</Name>
     </ProjectReference>
     <ProjectReference Include="..\DTO\DTO.csproj">
       <Project>{cdf9b8f1-268f-448e-8b6d-bca82ea5f55f}</Project>
