@@ -1,3 +1,3 @@
-src/router.js
+src/router/routers.js
 src/libs/util.js
 src/vendors.js
