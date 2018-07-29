@@ -38,7 +38,7 @@
                 </h1>
                 <h2>
                     <p>Welcome to your iView app!</p>
-                    <Button @click="handleStart">Start iView</Button>
+                    <Button type="ghost" @click="handleStart">Start iView</Button>
                 </h2>
             </Col>
         </Row>
@@ -46,7 +46,6 @@
 </template>
 <script>
     export default {
-        name:'index',
         methods: {
             handleStart() {
                 this.$Modal.info({
