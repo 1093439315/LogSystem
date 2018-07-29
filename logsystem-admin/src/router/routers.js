@@ -1,11 +1,21 @@
 const routers = [
+    //首页，也是默认页
     {
         path: '/',
         name: 'home',
         meta: {
-            title: ''
+            title: '首页'
         },
-        component: (resolve) => require(['../views/index.vue'], resolve)
+        component: (resolve) => require(['../views/Index/index.vue'], resolve)
+    },
+    //登录页
+    {
+        path: '/login',
+        name: 'login',
+        meta: {
+            title: '登录'
+        },
+        component: (resolve) => require(['../views/login/login.vue'], resolve)
     }
 ];
 
