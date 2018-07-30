@@ -1,8 +1,9 @@
-import Axios from 'axios'
-import baseURL from '_conf/url'
-import { Message } from 'iview'
-import Cookies from 'js-cookie'
-import { TOKEN_KEY } from '@/libs/util'
+import Axios from 'axios';
+import baseURL from '_conf/url';
+import { Message } from 'iview';
+import Cookies from 'js-cookie';
+import { TOKEN_KEY } from '@/libs/util';
+import  router from '@/router';
 
 class httpRequest {
     constructor () {
@@ -38,27 +39,46 @@ class httpRequest {
 
         // 添加响应拦截器
         instance.interceptors.response.use((res) => {
-            let { data } = res
+
+            let { data } = res;
             const is = this.destroy(url)
             if (!is) {
                 setTimeout(() => {
                     // Spin.hide()
                 }, 500)
             }
-            if (!(data instanceof Blob)) {
-                if (data.code !== 200) {
-                    // 后端服务在个别情况下回报201，待确认
-                    if (data.code === 401) {
-                        Cookies.remove(TOKEN_KEY)
-                        window.location.href = '/#/login'
-                        Message.error('未登录，或登录失效，请登录')
-                    } else {
-                        if (data.msg) Message.error(data.msg)
-                    }
-                    return false
-                }
+
+            //401 未登录
+            if (res.status == 401) {
+                Cookies.remove(TOKEN_KEY);
+                Message.error(data.Message);
+                //跳转到登录页
+                router.go('/login');
+                return false;
             }
-            return data
+
+            //501 自定义的错误
+            if (res.status == 501) {
+                Message.error(data.Message);
+                return false;
+            }
+
+            //非200 其他错误
+            if (res.status != 200) {
+                Message.error(data.Message);
+                return false;
+            }
+
+            //请求正常但是状态不对
+            if (res.status == 200) {
+                if (!data.Status){
+                    Message.error(data.Message);
+                    return false;
+                }
+                return data.Data;
+            }
+
+            return data;
         }, (error) => {
             Message.error('服务内部错误')
             // 对响应错误做点什么

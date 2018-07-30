@@ -30,6 +30,8 @@
             ]),
             handleSubmit ({ userName, password }) {
                 this.handleLogin({ userName, password }).then(res => {
+                    console.log(userName);
+                    console.log(password);
                     // this.getUserInfo().then(res => {
                     //     this.$router.push({
                     //         name: 'home'
