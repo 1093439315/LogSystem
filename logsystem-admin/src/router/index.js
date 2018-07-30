@@ -2,6 +2,7 @@ import Vue from 'vue';
 import Router from 'vue-router';
 import routes from './routers';
 import iView from 'iview';
+import Util from '../libs/util';
 
 Vue.use(Router);
 
@@ -12,6 +13,7 @@ const router = new Router({
 
 router.beforeEach((to, from, next) => {
     iView.LoadingBar.start();
+    Util.title(to.meta.title);
     next();
 });
 
