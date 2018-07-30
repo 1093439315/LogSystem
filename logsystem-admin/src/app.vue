@@ -5,10 +5,9 @@
 </template>
 <script>
     export default {
+        name: 'App',
         data() {
-            return {
-
-            };
+            return {};
         },
         mounted() {
 
@@ -16,8 +15,6 @@
         beforeDestroy() {
 
         },
-        methods: {
-
-        }
+        methods: {}
     };
 </script>

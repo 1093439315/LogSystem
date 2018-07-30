@@ -1,6 +1,6 @@
 {
   "name": "logsystem-admin",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "日志系统管理端",
   "main": "index.js",
   "scripts": {

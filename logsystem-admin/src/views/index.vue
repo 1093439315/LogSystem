@@ -29,6 +29,7 @@
         height: 100%;
     }
 </style>
+
 <template>
     <div class="index">
         <Row type="flex" justify="center" align="middle">
@@ -44,6 +45,7 @@
         </Row>
     </div>
 </template>
+
 <script>
     export default {
         methods: {
