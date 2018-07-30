@@ -3,7 +3,7 @@ import baseURL from '_conf/url';
 import { Message } from 'iview';
 import Cookies from 'js-cookie';
 import { TOKEN_KEY } from '@/libs/util';
-import  router from '@/router';
+import  router from '@/router/routers';
 
 class httpRequest {
     constructor () {

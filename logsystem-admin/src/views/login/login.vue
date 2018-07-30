@@ -16,8 +16,8 @@
 </template>
 
 <script>
-    import  LoginForm from '_c/login-form';
-    import { mapActions } from 'vuex';
+    import LoginForm from '_c/login-form';
+    import {mapActions} from 'vuex';
 
     export default {
         name: 'login',
@@ -28,16 +28,19 @@
             ...mapActions([
                 'handleLogin'
             ]),
-            handleSubmit ({ userName, password }) {
-                this.handleLogin({ userName, password }).then(res => {
-                    console.log(userName);
-                    console.log(password);
+            handleSubmit({userName, password}) {
+                this.handleLogin({userName, password}).then(res => {
+                    //登录成功跳转到首页
+                    let redirect = decodeURIComponent(this.$route.query.redirect || '/');
+                    this.$router.push({
+                        path: redirect ? redirect : '/',
+                    });
                     // this.getUserInfo().then(res => {
                     //     this.$router.push({
                     //         name: 'home'
                     //     })
                     // })
-                })
+                });
             }
         }
     };
