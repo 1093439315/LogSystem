@@ -10,7 +10,7 @@ const ajaxUrl = env === 'development' ?
         'https://www.url.com' :
         'https://debug.url.com';
 
-const TOKEN_KEY = 'token';
+export const TOKEN_KEY='token';
 
 let util = {};
 
@@ -35,3 +35,5 @@ util.setToken = (token) => {
 };
 
 export  default  util;
+
+

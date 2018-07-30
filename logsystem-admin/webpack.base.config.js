@@ -15,31 +15,32 @@ module.exports = {
         path: path.join(__dirname, './dist')
     },
     module: {
-        rules: [{
-            test: /.vue$/,
-            use: [{
-                loader: 'vue-loader',
-                options: {
-                    loaders: {
-                        less: ExtractTextPlugin.extract({
-                            use: ['css-loader?minimize', 'autoprefixer-loader', 'less-loader'],
-                            fallback: 'vue-style-loader'
-                        }),
-                        css: ExtractTextPlugin.extract({
-                            use: ['css-loader', 'autoprefixer-loader', 'less-loader'],
-                            fallback: 'vue-style-loader'
-                        })
-                    }
-                }
-            },
-                {
-                    loader: 'iview-loader',
+        rules: [
+            {
+                test: /.vue$/,
+                use: [{
+                    loader: 'vue-loader',
                     options: {
-                        prefix: true
+                        loaders: {
+                            less: ExtractTextPlugin.extract({
+                                use: ['css-loader?minimize', 'autoprefixer-loader', 'less-loader'],
+                                fallback: 'vue-style-loader'
+                            }),
+                            css: ExtractTextPlugin.extract({
+                                use: ['css-loader', 'autoprefixer-loader', 'less-loader'],
+                                fallback: 'vue-style-loader'
+                            })
+                        }
                     }
-                }
-            ]
-        },
+                },
+                    {
+                        loader: 'iview-loader',
+                        options: {
+                            prefix: true
+                        }
+                    }
+                ]
+            },
             {
                 test: /iview\/.*?js$/,
                 loader: 'babel-loader'
@@ -56,7 +57,6 @@ module.exports = {
                     fallback: 'style-loader'
                 })
             },
-
             {
                 test: /\.less/,
                 use: ExtractTextPlugin.extract({
@@ -64,7 +64,6 @@ module.exports = {
                     fallback: 'style-loader'
                 })
             },
-
             {
                 test: /\.(gif|jpg|png|woff|svg|eot|ttf)\??.*$/,
                 loader: 'url-loader?limit=1024'
@@ -80,7 +79,8 @@ module.exports = {
         alias: {
             'vue': 'vue/dist/vue.esm.js',
             '@': resolve('src'),
-            '_c': resolve('src/components')
+            '_c': resolve('src/components'),
+            '_conf':resolve('config')
         }
     }
 };

@@ -17,19 +17,24 @@
 
 <script>
     import  LoginForm from '_c/login-form';
+    import { mapActions } from 'vuex';
+
     export default {
         name: 'login',
         components: {
             LoginForm
         },
         methods: {
+            ...mapActions([
+                'handleLogin'
+            ]),
             handleSubmit ({ userName, password }) {
                 this.handleLogin({ userName, password }).then(res => {
-                    this.getUserInfo().then(res => {
-                        this.$router.push({
-                            name: 'home'
-                        })
-                    })
+                    // this.getUserInfo().then(res => {
+                    //     this.$router.push({
+                    //         name: 'home'
+                    //     })
+                    // })
                 })
             }
         }
