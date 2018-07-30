@@ -2,6 +2,7 @@ const routers = [
     //首页 默认页
     {
         path: '/',
+        name: 'home',
         meta: {
             title: '首页'
         },
@@ -10,6 +11,7 @@ const routers = [
     //登录页
     {
         path: '/login',
+        name: 'login',
         meta: {
             title: '登录'
         },
