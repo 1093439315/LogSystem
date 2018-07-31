@@ -1,51 +1,76 @@
 <template>
-    <div>
-        <Layout>
+    <div class="home">
+        <Layout style="height: 100%">
+
             <!--左侧菜单栏-->
-            <Sider collapsible :width="256" :collapsed-width="64" v-model="collapsed">
+            <Sider hide-trigger collapsible :width="256" :collapsed-width="64" v-model="collapsed">
+
                 <div class="logo-con">
-                    <!--<img v-show="!collapsed" :src="maxLogo" key="max-logo"/>-->
-                    <!--<img v-show="collapsed" :src="minLogo" key="min-logo"/>-->
+                    <img v-show="!collapsed" :src="maxLogo" key="max-logo"/>
+                    <img v-show="collapsed" :src="minLogo" key="min-logo"/>
                 </div>
-                <Menu active-name="1-2" theme="dark" width="auto" :class="menuitemClasses">
-                    <MenuItem name="1-1">
-                        <Icon type="ios-navigate"></Icon>
-                        <span>Option 1</span>
-                    </MenuItem>
-                    <MenuItem name="1-2">
-                        <Icon type="ios-search"></Icon>
-                        <span>Option 2</span>
-                    </MenuItem>
-                    <MenuItem name="1-3">
-                        <Icon type="ios-settings"></Icon>
-                        <span>Option 3</span>
-                    </MenuItem>
+
+                <Menu theme="dark">
+                    <Submenu name="1">
+                        <template slot="title">
+                            <Icon type="md-settings"/>
+                            系统设置
+                        </template>
+                        <MenuItem name="1-1">
+                            <Icon type="md-cloud-done"/>
+                            平台设置
+                        </MenuItem>
+                        <MenuItem name="1-2">
+                            <Icon type="md-shuffle"/>
+                            日志设置
+                        </MenuItem>
+                    </Submenu>
                 </Menu>
+
             </Sider>
 
             <!--右边内容-->
             <Layout>
+
                 <!--头部内容-->
-                <Header></Header>
+                <Header class="header-con">
+                    <!--<header-bar></header-bar>-->
+                </Header>
+
                 <!--内容-->
                 <Content></Content>
+
             </Layout>
+
         </Layout>
     </div>
 </template>
 
 <script>
+
+    import minLogo from '@/assets/images/logo-min.jpg';
+    import maxLogo from '@/assets/images/logo.jpg';
+    // import HeaderBar from'../shared/header-bar';
+
     export default {
-        name: 'home',
-        components: {},
+        name: 'Home',
+        components: {
+            // HeaderBar
+        },
         data() {
             return {
-                collapsed: false
+                collapsed: false,
+                minLogo,
+                maxLogo
             };
         },
         computed: {},
         methods: {},
-        watch: {},
-        mounted: {}
+        watch: {}
+        // mounted: {}
     };
 </script>
+
+<style lang="less">
+    @import "./home.less";
+</style>
