@@ -25,6 +25,28 @@
                             日志设置
                         </MenuItem>
                     </Submenu>
+                    <Submenu name="2">
+                        <template slot="title">
+                            <Icon type="md-document"/>
+                            系统日志
+                        </template>
+                        <MenuItem name="2-1">
+                            <Icon type="ios-information-circle"/>
+                            信息日志
+                        </MenuItem>
+                        <MenuItem name="2-2">
+                            <Icon type="md-warning" />
+                            警告日志
+                        </MenuItem>
+                        <MenuItem name="2-3">
+                            <Icon type="ios-close-circle" />
+                            错误日志
+                        </MenuItem>
+                        <MenuItem name="2-4">
+                            <Icon type="ios-flask" />
+                            调试日志
+                        </MenuItem>
+                    </Submenu>
                 </Menu>
 
             </Sider>
