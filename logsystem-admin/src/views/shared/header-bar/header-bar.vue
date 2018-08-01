@@ -4,7 +4,6 @@
         <sider-trigger :collapsed="collapsed" icon="md-menu" @on-change="handleCollpasedChange"></sider-trigger>
         <!--左侧面包屑导航-->
         <custom-bread-crumb show-icon style="margin-left: 30px;" :list="breadCrumbList"></custom-bread-crumb>
-
         <!--顶部右边内容-->
         <div class="custom-content-con">
             <slot></slot>

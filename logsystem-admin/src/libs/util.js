@@ -52,7 +52,7 @@ export const getBreadCrumbList = (routeMetched) => {
     return [{
         name: homeRoute.name,
         to: homeRoute.path,
-        icon:homeRoute.meta.icon,
+        icon: homeRoute.meta.icon,
     }, ...res];
 };
 
@@ -123,4 +123,32 @@ const showThisMenuEle = (item, access) => {
         if (hasOneOf(item.meta.access, access)) return true;
         else return false;
     } else return true;
+};
+
+/**
+ * @param {Array} list 标签列表
+ * @param {String} name 当前关闭的标签的name
+ */
+export const getNextName = (list, name) => {
+    let res = '';
+    if (list.length === 2) {
+        res = 'home';
+    } else {
+        if (list.findIndex(item => item.name === name) === list.length - 1) res = list[list.length - 2].name;
+        else res = list[list.findIndex(item => item.name === name) + 1].name;
+    }
+    return res;
+};
+
+/**
+ * @param {*} list 现有标签导航列表
+ * @param {*} newRoute 新添加的路由原信息对象
+ * @description 如果该newRoute已经存在则不再添加
+ */
+export const getNewTagList = (list, newRoute) => {
+    const {name, path, meta} = newRoute;
+    let newList = [...list];
+    if (newList.findIndex(item => item.name === name) >= 0) return newList;
+    else newList.push({name, path, meta});
+    return newList;
 };

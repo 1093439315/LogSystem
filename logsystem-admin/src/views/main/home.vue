@@ -63,14 +63,23 @@
 
                 <!--内容-->
                 <Content>
+
                     <Layout>
-                        <div>内容头部的快速导航</div>
+                        <!--快速导航-->
+                        <div class="tag-nav-wrapper">
+                            <tags-nav :value="$route" @input="handleClick" :list="tagNavList"
+                                      @on-close="handleCloseTag"/>
+                        </div>
+
+                        <!--内容的真正内容-->
+                        <Content class="content-wrapper">
+                            <keep-alive :include="cacheList">
+                                <router-view/>
+                            </keep-alive>
+                        </Content>
                     </Layout>
-                    <!--内容的真正内容-->
-                    <Content>
-                        <p>下面是子路由内容</p>
-                        <router-view></router-view>
-                    </Content>
+
+
                 </Content>
 
             </Layout>
@@ -85,13 +94,16 @@
     import minLogo from '@/assets/images/logo-min.jpg';
     import maxLogo from '@/assets/images/logo.jpg';
     import HeaderBar from '../shared/header-bar';
+    import TagsNav from '../shared/tags-nav';
     import User from '../shared/user';
+    import {getNewTagList, getNextName} from '@/libs/util'
 
     export default {
         name: 'Home',
         components: {
             HeaderBar,
-            User
+            User,
+            TagsNav
         },
         data() {
             return {
@@ -101,37 +113,67 @@
             };
         },
         computed: {
-            rotateIcon () {
+            tagNavList() {
+                return this.$store.state.app.tagNavList;
+            },
+            rotateIcon() {
                 return [
                     'menu-icon',
                     this.collapsed ? 'rotate-icon' : ''
                 ];
             },
-            userAvator () {
-                return this.$store.state.vertification.avatorImgPath
+            userAvator() {
+                return this.$store.state.vertification.avatorImgPath;
             },
-            menuitemClasses () {
+            cacheList() {
+                return this.tagNavList.length ? this.tagNavList.filter(item => !(item.meta && item.meta.notCache)).map(item => item.name) : []
+            },
+            menuitemClasses() {
                 return [
                     'menu-item',
                     this.collapsed ? 'collapsed-menu' : ''
-                ]
+                ];
             }
         },
         methods: {
             ...mapMutations([
-                'setBreadCrumb'
+                'setBreadCrumb',
+                'setTagNavList',
+                'addTag'
             ]),
+            turnToPage(name) {
+                if (name.indexOf('isTurnByHref_') > -1) {
+                    window.open(name.split('_')[1]);
+                    return;
+                }
+                this.$router.push({
+                    name: name
+                })
+            },
             handleCollapsedChange(state) {
                 this.collapsed = state;
             },
+            handleCloseTag(res, type, name) {
+                const nextName = getNextName(this.tagNavList, name)
+                this.setTagNavList(res)
+                if (type === 'all')
+                    this.turnToPage('home')
+                else if (this.$route.name === name)
+                    this.$router.push({name: nextName})
+            },
+            handleClick(item) {
+                this.turnToPage(item.name)
+            }
         },
         watch: {
             '$route'(newRoute) {
                 this.setBreadCrumb(newRoute.matched);
-                // this.setTagNavList(getNewTagList(this.tagNavList, newRoute))
+                this.setTagNavList(getNewTagList(this.tagNavList, newRoute))
             }
         },
         mounted() {
+            this.setTagNavList();
+            this.addTag(this.$store.state.app.homeRoute);
             this.setBreadCrumb(this.$route.matched);
         }
     };
