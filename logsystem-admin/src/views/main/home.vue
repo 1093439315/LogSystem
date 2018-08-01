@@ -56,7 +56,9 @@
 
                 <!--头部内容-->
                 <Header class="header-con">
-                    <header-bar :collapsed="collapsed" @on-coll-change="handleCollapsedChange"></header-bar>
+                    <header-bar :collapsed="collapsed" @on-coll-change="handleCollapsedChange">
+                        <user :user-avator="userAvator"/>
+                    </header-bar>
                 </Header>
 
                 <!--内容-->
@@ -83,11 +85,13 @@
     import minLogo from '@/assets/images/logo-min.jpg';
     import maxLogo from '@/assets/images/logo.jpg';
     import HeaderBar from '../shared/header-bar';
+    import User from '../shared/user';
 
     export default {
         name: 'Home',
         components: {
-            HeaderBar
+            HeaderBar,
+            User
         },
         data() {
             return {
@@ -102,6 +106,9 @@
                     'menu-icon',
                     this.collapsed ? 'rotate-icon' : ''
                 ];
+            },
+            userAvator () {
+                return this.$store.state.vertification.avatorImgPath
             },
             menuitemClasses () {
                 return [
