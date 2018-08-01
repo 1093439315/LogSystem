@@ -4,6 +4,7 @@ import config from '../config/config';
 import axios from 'axios';
 import env from '../config/env';
 import {forEach, hasOneOf} from '@/libs/tools';
+import routers from '@/router/routers';
 
 const ajaxUrl = env === 'development' ?
     'http://127.0.0.1:8888' :
@@ -59,9 +60,12 @@ export const getBreadCrumbList = (routeMetched) => {
     res = res.filter(item => {
         return !item.meta.hideInMenu;
     });
+    //获取home路由
+    let homeRoute = getHomeRoute(routers);
     return [{
-        name: 'home',
-        to: '/'
+        name: homeRoute.name,
+        to: homeRoute.path,
+        icon:homeRoute.meta.icon,
     }, ...res];
 };
 
@@ -124,12 +128,12 @@ export const getTagNavListFromLocalstorage = () => {
 };
 
 export const hasChild = (item) => {
-    return item.children && item.children.length !== 0
+    return item.children && item.children.length !== 0;
 };
 
 const showThisMenuEle = (item, access) => {
     if (item.meta && item.meta.access && item.meta.access.length) {
-        if (hasOneOf(item.meta.access, access)) return true
-        else return false
-    } else return true
+        if (hasOneOf(item.meta.access, access)) return true;
+        else return false;
+    } else return true;
 };

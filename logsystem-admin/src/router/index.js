@@ -3,6 +3,8 @@ import Router from 'vue-router';
 import routes from './routers';
 import iView from 'iview';
 import Util from '../libs/util';
+import store from '@/store';
+
 
 Vue.use(Router);
 
@@ -16,7 +18,6 @@ const router = new Router({
 router.beforeEach((to, from, next) => {
     iView.LoadingBar.start();
     const token = Util.getToken();
-    console.log(token);
     // 未登录且要跳转的页面不是登录页 则跳转到登录页
     if (!token && to.name !== LOGIN_PAGE_NAME) {
         next({

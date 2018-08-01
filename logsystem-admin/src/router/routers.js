@@ -4,6 +4,8 @@ const routers = [
         path: '/',
         name: 'home',
         meta: {
+            hideInMenu: true,
+            icon: 'md-home',
             title: '首页'
         },
         component: (resolve) => require(['../views/main'], resolve)

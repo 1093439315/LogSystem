@@ -70,6 +70,7 @@
 
 <script>
 
+    import { mapMutations, mapActions } from 'vuex';
     import minLogo from '@/assets/images/logo-min.jpg';
     import maxLogo from '@/assets/images/logo.jpg';
     import HeaderBar from'../shared/header-bar';
@@ -87,9 +88,20 @@
             };
         },
         computed: {},
-        methods: {},
-        watch: {}
-        // mounted: {}
+        methods: {
+            ...mapMutations([
+                'setBreadCrumb'
+            ]),
+        },
+        watch: {
+            '$route' (newRoute) {
+                this.setBreadCrumb(newRoute.matched);
+                // this.setTagNavList(getNewTagList(this.tagNavList, newRoute))
+            }
+        },
+        mounted () {
+            this.setBreadCrumb(this.$route.matched);
+        }
     };
 </script>
 
