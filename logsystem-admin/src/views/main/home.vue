@@ -56,7 +56,7 @@
 
                 <!--头部内容-->
                 <Header class="header-con">
-                    <!--<header-bar></header-bar>-->
+                    <header-bar></header-bar>
                 </Header>
 
                 <!--内容-->
@@ -72,12 +72,12 @@
 
     import minLogo from '@/assets/images/logo-min.jpg';
     import maxLogo from '@/assets/images/logo.jpg';
-    // import HeaderBar from'../shared/header-bar';
+    import HeaderBar from'../shared/header-bar';
 
     export default {
         name: 'Home',
         components: {
-            // HeaderBar
+            HeaderBar
         },
         data() {
             return {
