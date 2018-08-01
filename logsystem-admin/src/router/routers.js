@@ -1,18 +1,22 @@
 import Home from '@/views/main';
 
 const routers = [
-    //首页 默认页
     {
         path: '/',
-        name: 'home',
-        meta: {
-            hideInMenu: true,
-            icon: 'md-home',
-            title: '首页'
-        },
         component: Home,
-        children:[
-            
+        children: [
+            //首页 默认页
+            {
+                path: '/',
+                name: 'home',
+                meta: {
+                    hideInMenu: true,
+                    notCache: true,
+                    icon: 'md-home',
+                    title: '首页'
+                },
+                component: (resolve) => require(['@/views/console-main'], resolve)
+            }
         ],
     },
     //登录页
@@ -43,6 +47,16 @@ const routers = [
                     title: '平台设置'
                 },
                 component: (resolve) => require(['@/views/setting/platform-setting'], resolve)
+            },
+            //日志设置
+            {
+                path: 'logSetting',
+                name: 'logSetting',
+                meta: {
+                    icon: 'md-shuffle',
+                    title: '日志设置'
+                },
+                component: (resolve) => require(['@/views/setting/log-setting'], resolve)
             }
         ]
     },

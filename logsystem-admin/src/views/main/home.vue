@@ -60,7 +60,16 @@
                 </Header>
 
                 <!--内容-->
-                <Content></Content>
+                <Content>
+                    <Layout>
+                        <div>内容头部的快速导航</div>
+                    </Layout>
+                    <!--内容的真正内容-->
+                    <Content>
+                        <p>下面是子路由内容</p>
+                        <router-view></router-view>
+                    </Content>
+                </Content>
 
             </Layout>
 

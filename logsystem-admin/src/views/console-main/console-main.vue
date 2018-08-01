@@ -1,5 +1,5 @@
 <template>
-    <p>这是首页控制台</p>
+    <h1>我是首页控制台</h1>
 </template>
 
 <script>
