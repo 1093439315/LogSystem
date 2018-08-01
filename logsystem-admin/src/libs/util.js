@@ -1,25 +1,12 @@
 import Cookies from 'js-cookie';
 // cookie保存的天数
 import config from '../config/config';
-import axios from 'axios';
-import env from '../config/env';
 import {forEach, hasOneOf} from '@/libs/tools';
 import routers from '@/router/routers';
-
-const ajaxUrl = env === 'development' ?
-    'http://127.0.0.1:8888' :
-    env === 'production' ?
-        'https://www.url.com' :
-        'https://debug.url.com';
 
 export const TOKEN_KEY = 'token';
 
 let util = {};
-
-util.ajax = axios.create({
-    baseURL: ajaxUrl,
-    timeout: 30000
-});
 
 util.title = (title) => {
     title = title ? title : '日志管理系统';

@@ -1,3 +1,5 @@
+import Home from '@/views/main';
+
 const routers = [
     //首页 默认页
     {
@@ -8,7 +10,10 @@ const routers = [
             icon: 'md-home',
             title: '首页'
         },
-        component: (resolve) => require(['../views/main'], resolve)
+        component: Home,
+        children:[
+            
+        ],
     },
     //登录页
     {
@@ -17,7 +22,29 @@ const routers = [
         meta: {
             title: '登录'
         },
-        component: (resolve) => require(['../views/login/login.vue'], resolve)
-    }
+        component: (resolve) => require(['@/views/login'], resolve)
+    },
+    //系统设置
+    {
+        path: '/setting',
+        name: 'setting',
+        meta: {
+            title: '系统设置',
+            icon: 'md-settings',
+        },
+        component: Home,
+        children: [
+            //平台设置
+            {
+                path: 'platformSetting',
+                name: 'platformSetting',
+                meta: {
+                    icon: 'md-cloud-done',
+                    title: '平台设置'
+                },
+                component: (resolve) => require(['@/views/setting/platform-setting'], resolve)
+            }
+        ]
+    },
 ];
 export default routers;

@@ -1,9 +1,10 @@
 <template>
     <div class="header-bar">
-        <!--左边侧边切换-->
+        <!--左边侧边切换菜单的关闭和打开-->
         <sider-trigger :collapsed="collapsed" icon="md-menu" @on-change="handleCollpasedChange"></sider-trigger>
-        <custom-bread-crumb show-icon style="margin-left: 30px;" :list="breadCrumbList"></custom-bread-crumb>
         <!--左侧面包屑导航-->
+        <custom-bread-crumb show-icon style="margin-left: 30px;" :list="breadCrumbList"></custom-bread-crumb>
+
         <!--顶部右边内容-->
         <div class="custom-content-con">
             <slot></slot>
