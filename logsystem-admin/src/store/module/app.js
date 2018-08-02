@@ -3,9 +3,11 @@ import {
     setTagNavListInLocalstorage,
     getMenuByRouter,
     getTagNavListFromLocalstorage,
+    getMenuListByConfig,
     getHomeRoute
 } from '@/libs/util';
 import routers from '@/router/routers';
+import {menuListConfig} from '@/config/config';
 
 export default {
     state: {
@@ -17,7 +19,7 @@ export default {
         local: ''
     },
     getters: {
-        menuList: (state, getters, rootState) => getMenuByRouter(routers, '')//rootState.user.access
+        menuList: (state, getters, rootState) => getMenuListByConfig(menuListConfig, routers)
     },
     mutations: {
         //设置面包肩列表

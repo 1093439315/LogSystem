@@ -5,49 +5,14 @@
             <!--左侧菜单栏-->
             <Sider hide-trigger collapsible :width="256" :collapsed-width="64" v-model="collapsed">
 
-                <div class="logo-con">
-                    <img v-show="!collapsed" :src="maxLogo" key="max-logo"/>
-                    <img v-show="collapsed" :src="minLogo" key="min-logo"/>
-                </div>
-
-                <Menu theme="dark" v-show="!collapsed" :class="menuitemClasses">
-                    <Submenu name="1" :class="menuitemClasses">
-                        <template slot="title">
-                            <Icon type="md-settings"/>
-                            系统设置
-                        </template>
-                        <MenuItem name="1-1">
-                            <Icon type="md-cloud-done"/>
-                            平台设置
-                        </MenuItem>
-                        <MenuItem name="1-2">
-                            <Icon type="md-shuffle"/>
-                            日志设置
-                        </MenuItem>
-                    </Submenu>
-                    <Submenu name="2" :class="menuitemClasses">
-                        <template slot="title">
-                            <Icon type="md-document"/>
-                            系统日志
-                        </template>
-                        <MenuItem name="2-1">
-                            <Icon type="ios-information-circle"/>
-                            信息日志
-                        </MenuItem>
-                        <MenuItem name="2-2">
-                            <Icon type="md-warning"/>
-                            警告日志
-                        </MenuItem>
-                        <MenuItem name="2-3">
-                            <Icon type="ios-close-circle"/>
-                            错误日志
-                        </MenuItem>
-                        <MenuItem name="2-4">
-                            <Icon type="ios-flask"/>
-                            调试日志
-                        </MenuItem>
-                    </Submenu>
-                </Menu>
+                <side-menu accordion :active-name="$route.name" :collapsed="collapsed"
+                           @on-select="turnToPage"
+                           :menu-list="menuList">
+                    <div class="logo-con">
+                        <img v-show="!collapsed" :src="maxLogo" key="max-logo"/>
+                        <img v-show="collapsed" :src="minLogo" key="min-logo"/>
+                    </div>
+                </side-menu>
 
             </Sider>
 
@@ -96,14 +61,16 @@
     import HeaderBar from '../shared/header-bar';
     import TagsNav from '../shared/tags-nav';
     import User from '../shared/user';
-    import {getNewTagList, getNextName} from '@/libs/util'
+    import SideMenu from '../shared/side-menu';
+    import {getNewTagList, getNextName} from '@/libs/util';
 
     export default {
         name: 'Home',
         components: {
             HeaderBar,
             User,
-            TagsNav
+            TagsNav,
+            SideMenu
         },
         data() {
             return {
@@ -126,7 +93,11 @@
                 return this.$store.state.vertification.avatorImgPath;
             },
             cacheList() {
-                return this.tagNavList.length ? this.tagNavList.filter(item => !(item.meta && item.meta.notCache)).map(item => item.name) : []
+                return this.tagNavList.length ?
+                    this.tagNavList.filter(item => !(item.meta && item.meta.notCache)).map(item => item.name) : [];
+            },
+            menuList() {
+                return this.$store.getters.menuList;
             },
             menuitemClasses() {
                 return [
@@ -148,27 +119,27 @@
                 }
                 this.$router.push({
                     name: name
-                })
+                });
             },
             handleCollapsedChange(state) {
                 this.collapsed = state;
             },
             handleCloseTag(res, type, name) {
-                const nextName = getNextName(this.tagNavList, name)
-                this.setTagNavList(res)
+                const nextName = getNextName(this.tagNavList, name);
+                this.setTagNavList(res);
                 if (type === 'all')
-                    this.turnToPage('home')
+                    this.turnToPage('home');
                 else if (this.$route.name === name)
-                    this.$router.push({name: nextName})
+                    this.$router.push({name: nextName});
             },
             handleClick(item) {
-                this.turnToPage(item.name)
+                this.turnToPage(item.name);
             }
         },
         watch: {
             '$route'(newRoute) {
                 this.setBreadCrumb(newRoute.matched);
-                this.setTagNavList(getNewTagList(this.tagNavList, newRoute))
+                this.setTagNavList(getNewTagList(this.tagNavList, newRoute));
             }
         },
         mounted() {

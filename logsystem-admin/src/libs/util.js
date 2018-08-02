@@ -1,8 +1,8 @@
 import Cookies from 'js-cookie';
-// cookie保存的天数
 import config from '../config/config';
 import {forEach, hasOneOf} from '@/libs/tools';
 import routers from '@/router/routers';
+import Enumerable from 'linq';
 
 export const TOKEN_KEY = 'token';
 
@@ -151,4 +151,99 @@ export const getNewTagList = (list, newRoute) => {
     if (newList.findIndex(item => item.name === name) >= 0) return newList;
     else newList.push({name, path, meta});
     return newList;
+};
+
+/**
+ * 通过配置和路由的配置获取菜单列表
+ * @param menuConfig
+ * @param routes
+ */
+export const getMenuListByConfig = (menuConfig, routes) => {
+    let res = [];
+
+    //遍历配置获取顶级菜单
+    let topMenus = Enumerable.from(menuConfig)
+        .select(item => item.parent)
+        .distinct()
+        .where(item => Enumerable.from(menuConfig).any(cf => cf.name != item))
+        .toArray();
+
+    //开始遍历菜单
+    Enumerable.from(topMenus)
+        .forEach(item => {
+            //获取菜单项
+            let menuItem = getMenuItems(item, routes, menuConfig);
+            res.push(menuItem);
+        });
+
+    return res;
+};
+
+/**
+ * 根据菜单项获取菜单的所有菜单和子菜单
+ * @param menuRouteName
+ * @param routes
+ */
+export const getMenuItems = (menuRouteName, routes, menuConfig) => {
+    let menuItem = undefined;
+
+    //获取菜单项
+    menuItem = convertToMenuItem(menuRouteName, routes, menuConfig);
+    if (menuItem) {
+        //遍历孩子
+        if (!menuItem.canRediect) {
+            menuItem.children = [];
+            let children = Enumerable.from(menuConfig).where(cf => cf.parent == menuRouteName).toArray();
+            Enumerable.from(children).forEach(child => {
+                var childMenuItems = getMenuItems(child.name, routes, children);
+                menuItem.children.push(childMenuItems);
+            });
+        }
+    }
+    return menuItem;
+};
+
+/**
+ * 根据name从路由配置中获取路由
+ * @param name 路由地址
+ * @param routes 路由配置
+ */
+export const getRouteByName = (name, routes) => {
+    let findRoute = undefined;
+    Enumerable.from(routes)
+        .forEach(item => {
+            if (item.name == name) {
+                findRoute = item;
+                return false;
+            }
+            else {
+                if (item.children) {
+                    findRoute = getRouteByName(name, item.children);
+                    if (findRoute) return false;
+                }
+            }
+        });
+    return findRoute;
+};
+
+/**
+ * 根据name从路由配置中获取菜单项
+ * @param name
+ * @param routes
+ * @param menuConfig
+ * @returns {*}
+ */
+export const convertToMenuItem = (name, routes, menuConfig) => {
+    let findRoute = getRouteByName(name, routes);
+    if (findRoute) {
+        var hasChild = Enumerable.from(menuConfig).any(cf => cf.parent == name);
+        return {
+            name: findRoute.name,//路由Id
+            routePath: findRoute.path,//路由地址
+            title: findRoute.meta.title,//标题
+            icon: findRoute.meta.icon,//图标
+            canRediect: !hasChild,//是否可导航，有孩子不可导航
+        };
+    }
+    return false;
 };

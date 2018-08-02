@@ -7,9 +7,11 @@ let config = {
 export default config;
 
 //菜单列表
-let customMenuList=[
-    {routeName:'home'},
-    {routeName:'home',parent:''},
+let customMenuList = [
+    //系统设置-平台设置
+    {name: 'platformSetting', parent: 'setting'},
+    //系统设置-日志设置
+    {name: 'logSetting', parent: 'setting'},
 ];
 
-export const menuList=customMenuList;
+export const menuListConfig = customMenuList;

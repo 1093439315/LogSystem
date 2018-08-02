@@ -12,7 +12,7 @@
 
 <script>
 
-    import { mapActions } from 'vuex';
+    import {mapActions} from 'vuex';
 
     export default {
         name: 'User',
@@ -26,7 +26,7 @@
             ...mapActions([
                 'handleLogOut'
             ]),
-            handleClick (name) {
+            handleClick(name) {
                 switch (name) {
                     case 'logout':
                         this.handleLogOut().then(() => {
@@ -34,11 +34,11 @@
                                 name: 'login'
                             });
                         });
-                        break
+                        break;
                 }
             }
         }
-    }
+    };
 </script>
 
 <style lang="less">
