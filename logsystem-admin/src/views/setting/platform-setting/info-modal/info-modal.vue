@@ -1,9 +1,7 @@
 <template>
-    <div>
-        <m-modal v-model="infoModalShow">
-            <p>我是内容</p>
-        </m-modal>
-    </div>
+    <m-modal v-model="infoModalShow">
+        <p>我是内容</p>
+    </m-modal>
 </template>
 
 <script>
