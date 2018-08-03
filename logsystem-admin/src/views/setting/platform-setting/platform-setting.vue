@@ -14,69 +14,44 @@
 
         <br/>
 
-        <table-result-panel>
-            <Table :columns="columns1" :data="data1"></Table>
-        </table-result-panel>
+        <Card>
+            <tables ref="tables" editable searchable search-place="top" v-model="tableData"
+                    :columns="columns"
+                    @on-delete="handleDelete"/>
+        </Card>
     </div>
 </template>
 
 <script>
 
+    import Tables from '_c/tables';
     import QueryPanel from '_s/query-panel';
     import Query from './query';
-    import TableResultPanel from '_s/table-result-panel';
+    import columns from './table-columns';
 
     export default {
         name: 'PlatformSetting',
         components: {
             QueryPanel,
             Query,
-            TableResultPanel
+            Tables
         },
         data() {
             return {
                 value1: '1',
-                columns1: [
-                    {
-                        title: 'Name',
-                        key: 'name'
-                    },
-                    {
-                        title: 'Age',
-                        key: 'age'
-                    },
-                    {
-                        title: 'Address',
-                        key: 'address'
-                    }
-                ],
-                data1: [
-                    {
-                        name: 'John Brown',
-                        age: 18,
-                        address: 'New York No. 1 Lake Park',
-                        date: '2016-10-03'
-                    },
-                    {
-                        name: 'Jim Green',
-                        age: 24,
-                        address: 'London No. 1 Lake Park',
-                        date: '2016-10-01'
-                    },
-                    {
-                        name: 'Joe Black',
-                        age: 30,
-                        address: 'Sydney No. 1 Lake Park',
-                        date: '2016-10-02'
-                    },
-                    {
-                        name: 'Jon Snow',
-                        age: 26,
-                        address: 'Ottawa No. 2 Lake Park',
-                        date: '2016-10-04'
-                    }
-                ]
+                columns: columns,
+                tableData: []
             };
+        },
+        methods: {
+            handleDelete(params) {
+                console.log(params);
+            }
+        },
+        mounted() {
+            // getTableData().then(res => {
+                // this.tableData = res.data
+            // });
         }
     };
 </script>
