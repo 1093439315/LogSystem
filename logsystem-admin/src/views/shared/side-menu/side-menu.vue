@@ -35,8 +35,10 @@
 
         <div class="menu-collapsed" v-show="collapsed" :list="menuList">
             <template v-for="item in menuList">
-                <collapsed-menu v-if="item.children && item.children.length > 1" @on-click="handleSelect" hide-title
-                                :root-icon-size="rootIconSize" :icon-size="iconSize" :theme="theme" :parent-item="item"
+                <collapsed-menu v-if="item.children && item.children.length > 0 " @on-click="handleSelect"
+                                hide-title
+                                :root-icon-size="rootIconSize" :icon-size="iconSize"
+                                :theme="theme" :parent-item="item"
                                 :key="`drop-menu-${item.name}`">
                 </collapsed-menu>
                 <Tooltip v-else

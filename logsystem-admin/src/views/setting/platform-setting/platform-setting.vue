@@ -8,7 +8,7 @@
 
         <Row>
             <Col>
-                <Button type="success" icon="md-add">新 增</Button>
+                <Button type="success" icon="md-add" @click="handleAdd">新 增</Button>
                 <Button type="error" icon="md-close">删 除</Button>
             </Col>
         </Row>
@@ -21,6 +21,9 @@
                     @on-delete="handleDelete">
             </tables>
         </Card>
+
+        <info-modal></info-modal>
+
     </div>
 </template>
 
@@ -31,20 +34,25 @@
     import Query from './query';
     import columns from './table-columns';
     import {query} from '@/api/platform';
+    import InfoModal from './info-modal';
+    import MModal from '_c/m-modal';
 
     export default {
         name: 'PlatformSetting',
         components: {
             QueryPanel,
             Query,
-            Tables
+            Tables,
+            InfoModal,
+            MModal,
         },
         data() {
             return {
                 value1: '1',
                 columns: columns,
                 tableData: [],
-                queryData: {}
+                queryData: {},
+                infoModalShow: false
             };
         },
         methods: {
@@ -57,6 +65,13 @@
                 query(queryData).then(res => {
                     this.tableData = res;
                 });
+            },
+            //新增时显示模态框
+            handleAdd() {
+                this.infoModalShow = true;
+            },
+            handleConfim() {
+                alert('你点击了确定');
             }
         },
         mounted() {

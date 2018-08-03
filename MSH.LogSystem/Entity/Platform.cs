@@ -23,7 +23,7 @@ namespace Entity
         /// <summary>
         /// 最后更新时间
         /// </summary>
-        public DateTime LastUpdateTime { get; set; } = DateTime.Now;
+        public DateTime LastUpdateTime { get; set; }
         /// <summary>
         /// 最后更新者
         /// </summary>

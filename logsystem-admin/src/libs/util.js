@@ -166,6 +166,7 @@ export const getMenuListByConfig = (menuConfig, routes) => {
         .select(item => item.parent)
         .distinct()
         .where(item => Enumerable.from(menuConfig).any(cf => cf.name != item))
+        .where(item => Enumerable.from(routes).any(ro => ro.name == item))
         .toArray();
 
     //开始遍历菜单

@@ -60,5 +60,27 @@ const routers = [
             }
         ]
     },
+    //日志管理
+    {
+        path: '/logManage',
+        name: 'logManage',
+        meta: {
+            title: '日志管理',
+            icon: 'md-book',
+        },
+        component: Home,
+        children: [
+            //info日志
+            {
+                path: 'infoLog',
+                name: 'infoLog',
+                meta: {
+                    icon: 'ios-information-circle-outline',
+                    title: 'Info日志'
+                },
+                component: (resolve) => require(['@/views/log-manage/info-log'], resolve)
+            }
+        ]
+    },
 ];
 export default routers;
