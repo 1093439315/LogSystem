@@ -1,7 +1,7 @@
 <template>
     <div class="user-avator-dropdown">
         <Dropdown @on-click="handleClick">
-            <Avatar :src="userAvator"/>
+            <Avatar style="background-color: #87d068" :src="userAvator" icon="ios-person"/>
             <Icon :size="18" type="md-arrow-dropdown"></Icon>
             <DropdownMenu slot="list">
                 <DropdownItem name="logout">退出登录</DropdownItem>

@@ -80,7 +80,8 @@ module.exports = {
             'vue': 'vue/dist/vue.esm.js',
             '@': resolve('src'),
             '_c': resolve('src/components'),
-            '_conf': resolve('config')
+            '_conf': resolve('config'),
+            '_s': resolve('src/views/shared'),
         }
     }
 };
