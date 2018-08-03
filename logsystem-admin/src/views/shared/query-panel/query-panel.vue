@@ -5,8 +5,8 @@
         <Panel name="1" content="哈哈哈哈">
             查询条件
             <Icon type="ios-search"/>
-            <p slot="content">
-                <slot></slot>
+            <p slot="content" style="margin: 5px 20px">
+                <slot style="margin: 20px"></slot>
             </p>
         </Panel>
     </Collapse>

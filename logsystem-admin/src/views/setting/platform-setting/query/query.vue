@@ -1,14 +1,19 @@
 <template>
-    <div>
+    <div class="">
         <Row :gutter="16">
-            <Col span="12">
-                <Row>
-                    <Col><label>平台名称：</label></Col>
-                    <Col>
+            <Col span="8">
+                <Row class-name="row">
+                    <Col span="5">
+                        <label style="font-weight: bold">平台名称：</label>
+                    </Col>
+                    <Col span="12">
                         <Input v-model="queryData.platformName" placeholder="输入平台名称" clearable
                                style="width: 200px"/>
                     </Col>
                 </Row>
+            </Col>
+            <Col span="12">
+
             </Col>
         </Row>
 
@@ -19,8 +24,15 @@
 </template>
 
 <script>
+    import CollapsedMenu from '@/views/shared/side-menu/collapsed-menu';
+    import MLabel from '_c/m-label';
+
     export default {
         name: 'Query',
+        components: {
+            CollapsedMenu,
+            MLabel
+        },
         data() {
             return {
                 //查询条件数据
@@ -36,5 +48,8 @@
 </script>
 
 <style scoped>
-
+    .row {
+        line-height: 28px;
+        height: 28px;
+    }
 </style>
