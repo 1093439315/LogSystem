@@ -18,7 +18,7 @@
         </Row>
 
         <br>
-        <Button type="primary" icon="ios-search" style="float: right" @click="search">查询</Button>
+        <Button type="primary" icon="ios-search" style="float: right" @click="handleQuery">查询</Button>
         <br>
     </div>
 </template>
@@ -40,8 +40,8 @@
             };
         },
         methods: {
-            search() {
-                this.$emit('on-search-click', this.queryData);
+            handleQuery() {
+                this.$emit('on-handleQuery-click', this.queryData);
             }
         }
     };

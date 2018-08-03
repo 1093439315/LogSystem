@@ -2,7 +2,7 @@
     <div>
         <div v-if="searchable && searchPlace === 'top'" class="search-con search-con-top">
             <Select v-model="searchKey" class="search-col">
-                <Option v-for="item in columns" v-if="item.key !== 'handle'" :value="item.key"
+                <Option v-for="item in columns" v-if="item.key !== 'handle' && item.key!=='index'" :value="item.key"
                         :key="`search-col-${item.key}`">
                     {{ item.title }}
                 </Option>
@@ -62,6 +62,7 @@
 <script>
     import TablesEdit from './edit.vue';
     import handleBtns from './handle-btns';
+    import Enumerable from 'linq';
 
     export default {
         name: 'Tables',
@@ -222,7 +223,10 @@
                 if (e.target.value === '') this.insideTableData = this.value;
             },
             handleSearch() {
-                this.insideTableData = this.value.filter(item => item[this.searchKey].indexOf(this.searchValue) > -1);
+                if (this.searchKey === 'index') return;
+                this.insideTableData = this.value.filter(item => {
+                    return item[this.searchKey].indexOf(this.searchValue) > -1;
+                });
             },
             handleTableData() {
                 this.insideTableData = this.value.map((item, index) => {

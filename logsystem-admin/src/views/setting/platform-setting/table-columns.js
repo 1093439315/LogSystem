@@ -1,30 +1,9 @@
 const columns = [
-    {title: 'Name', key: 'name', sortable: true},
-    {title: 'Email', key: 'email', editable: true},
-    {title: 'Create-Time', key: 'createTime'},
-    {
-        title: 'Handle',
-        key: 'handle',
-        options: ['delete'],
-        button: [
-            (h, params, vm) => {
-                return h('Poptip', {
-                    props: {
-                        confirm: true,
-                        title: '你确定要删除吗?'
-                    },
-                    on: {
-                        'on-ok': () => {
-                            vm.$emit('on-delete', params);
-                            vm.$emit('input', params.tableData.filter((item, index) => index !== params.row.initRowIndex));
-                        }
-                    }
-                }, [
-                    h('Button', '自定义删除')
-                ]);
-            }
-        ]
-    }
+    {title: '序号', type: 'index', align: 'center', key: 'index', sortable: true, width: 80},
+    {title: '平台名称', key: 'Name', sortable: true},
+    {title: '创建时间', key: 'CreatTime', sortable: true},
+    {title: '最后更新时间', key: 'LastUpdateTime', sortable: true},
+    {title: '最后更新者', key: 'LastUpdateBy'}
 ];
 
 export default columns;
