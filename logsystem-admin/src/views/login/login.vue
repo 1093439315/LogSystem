@@ -35,11 +35,6 @@
                     this.$router.push({
                         path: redirect ? redirect : '/',
                     });
-                    // this.getUserInfo().then(res => {
-                    //     this.$router.push({
-                    //         name: 'home'
-                    //     })
-                    // })
                 });
             }
         }

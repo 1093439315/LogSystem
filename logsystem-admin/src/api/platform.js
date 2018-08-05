@@ -10,3 +10,12 @@ export const query = (queryData) => {
         method: 'get'
     });
 };
+
+export const add = (saveData) => {
+    const data = saveData;
+    return axios.request({
+        url: controller + 'Add',
+        data,
+        method: 'post'
+    });
+};

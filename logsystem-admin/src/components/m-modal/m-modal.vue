@@ -12,7 +12,7 @@
 
             <div slot="footer">
                 <Button @click="handleCancel">取消</Button>
-                <Button type="primary" icon="checkmark-round" @click="handleConfirmAdd">确定</Button>
+                <Button type="primary" icon="md-checkmark" @click="handleConfirmAdd">确定</Button>
             </div>
 
         </Modal>

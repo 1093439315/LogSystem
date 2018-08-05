@@ -22,7 +22,7 @@
             </tables>
         </Card>
 
-        <info-modal></info-modal>
+        <info-modal v-model="saveData" :show="infoModalShow" :add="add" @on-hide="handleHide"></info-modal>
 
     </div>
 </template>
@@ -52,7 +52,9 @@
                 columns: columns,
                 tableData: [],
                 queryData: {},
-                infoModalShow: false
+                infoModalShow: false,
+                add: true,
+                saveData: {}
             };
         },
         methods: {
@@ -69,6 +71,10 @@
             //新增时显示模态框
             handleAdd() {
                 this.infoModalShow = true;
+                this.saveData = {name: '嘿嘿'};
+            },
+            handleHide() {
+                this.infoModalShow = false;
             },
             handleConfim() {
                 alert('你点击了确定');
