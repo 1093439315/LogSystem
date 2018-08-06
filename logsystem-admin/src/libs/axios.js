@@ -108,7 +108,7 @@ class httpRequest {
                 Message.error(data.Message);
                 return false;
             }
-            return data.Data;
+            return data;
         }
         return data;
     }

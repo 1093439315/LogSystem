@@ -1,8 +1,16 @@
 <template>
-    <m-modal v-model="infoModalShow" :title="title">
+    <m-modal v-model="infoModalShow" :title="title"
+             @on-cancel="handleCancel"
+             @on-confirm="handleConfirm">
         <Form ref="infoData" :model="infoData" :rules="ruleValidate" :label-width="80">
             <FormItem label="平台名称" prop="name">
                 <Input v-model="infoData.name" placeholder="输入平台名称"/>
+            </FormItem>
+            <FormItem label="AppId">
+                <Input v-model="infoData.appId" placeholder="输入AppId"/>
+            </FormItem>
+            <FormItem label="Secrect">
+                <Input v-model="infoData.secrect" placeholder="输入Secrect"/>
             </FormItem>
         </Form>
     </m-modal>
@@ -51,15 +59,15 @@
             title() {
                 return this.add ? '新建平台' : '更新平台';
             },
-            saveData() {
-                return this.$store.state.platform.saveData;
-            }
         },
         methods: {
-            handleConfirmAdd() {
-                alert('确认保存!');
+            handleConfirm() {
+                this.$refs['infoData'].validate((valid) => {
+                    this.$emit('on-confirm', valid, this.infoData);
+                });
             },
             handleCancel() {
+                this.$refs['infoData'].resetFields();
             },
         },
         watch: {
@@ -85,9 +93,3 @@
     };
 </script>
 
-<style scoped>
-    .row {
-        line-height: 28px;
-        height: 28px;
-    }
-</style>

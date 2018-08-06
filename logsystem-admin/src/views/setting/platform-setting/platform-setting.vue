@@ -22,13 +22,15 @@
             </tables>
         </Card>
 
-        <info-modal v-model="saveData" :show="infoModalShow" :add="add" @on-hide="handleHide"></info-modal>
+        <info-modal v-model="saveData" :show="infoModalShow" :add="add"
+                    @on-hide="handleHide" @on-confirm="handleConfirm"></info-modal>
 
     </div>
 </template>
 
 <script>
 
+    import {mapActions} from 'vuex';
     import Tables from '_c/tables';
     import QueryPanel from '_s/query-panel';
     import Query from './query';
@@ -58,26 +60,35 @@
             };
         },
         methods: {
+            ...mapActions([
+                'handleConfirmAdd'
+            ]),
             handleDelete(params) {
                 console.log(params);
             },
             handleQuery(queryData) {
-                console.log(queryData);
                 this.queryData = queryData;
                 query(queryData).then(res => {
-                    this.tableData = res;
+                    this.tableData = res.Data;
                 });
             },
             //新增时显示模态框
             handleAdd() {
                 this.infoModalShow = true;
-                this.saveData = {name: '嘿嘿'};
             },
             handleHide() {
                 this.infoModalShow = false;
             },
-            handleConfim() {
-                alert('你点击了确定');
+            //确定保存
+            handleConfirm(validate, data) {
+                if (validate) {
+                    this.handleConfirmAdd(data).then(res => {
+                        if (res.Status) {
+                            this.infoModalShow = false;
+                            this.handleQuery(this.queryData);
+                        }
+                    });
+                }
             }
         },
         mounted() {

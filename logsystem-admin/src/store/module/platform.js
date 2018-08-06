@@ -10,10 +10,10 @@ export default {
     },
     actions: {
         // 添加操作
-        handleAdd(state) {
+        handleConfirmAdd(state, saveData) {
             return new Promise((resolve, reject) => {
-                add(state.saveData).then(res => {
-                    resolve();
+                add(saveData).then(res => {
+                    resolve(res);
                 }).catch(err => {
                     reject(err);
                 });

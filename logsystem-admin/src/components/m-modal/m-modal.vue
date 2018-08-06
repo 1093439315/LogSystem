@@ -12,7 +12,7 @@
 
             <div slot="footer">
                 <Button @click="handleCancel">取消</Button>
-                <Button type="primary" icon="md-checkmark" @click="handleConfirmAdd">确定</Button>
+                <Button type="primary" icon="md-checkmark" @click="handleConfirm">确定</Button>
             </div>
 
         </Modal>
@@ -37,14 +37,16 @@
         methods: {
             handleCancel() {
                 this.infoModalShow = false;
+                this.$emit('on-cancel');
             },
-            handleConfirmAdd() {
+            handleConfirm() {
                 this.$emit('on-confirm');
             }
         },
         watch: {
             infoModalShow(newVal) {
                 this.$emit('input', newVal);
+                if (!newVal) this.$emit('on-cancel');
             },
             value(val) {
                 this.infoModalShow = val;

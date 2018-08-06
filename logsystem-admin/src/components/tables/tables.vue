@@ -45,7 +45,9 @@
         </Table>
         <div v-if="searchable && searchPlace === 'bottom'" class="search-con search-con-top">
             <Select v-model="searchKey" class="search-col">
-                <Option v-for="item in columns" v-if="item.key !== 'handle'" :value="item.key"
+                <Option v-for="item in columns"
+                        v-if="item.type !== 'index' && item.type!=='selection'"
+                        :value="item.key"
                         :key="`search-col-${item.key}`">
                     {{ item.title }}
                 </Option>
@@ -217,13 +219,15 @@
                 });
             },
             setDefaultSearchKey() {
-                this.searchKey = this.columns[0].key !== 'handle' ? this.columns[0].key : (this.columns.length > 1 ? this.columns[1].key : '');
+                this.searchKey = this.columns[0].key !== 'handle' ?
+                    this.columns[0].key : (this.columns.length > 1 ? this.columns[1].key : '');
             },
             handleClear(e) {
                 if (e.target.value === '') this.insideTableData = this.value;
             },
             handleSearch() {
                 if (this.searchKey === 'index') return;
+                if (this.searchKey === 'selection') return;
                 this.insideTableData = this.value.filter(item => {
                     return item[this.searchKey].indexOf(this.searchValue) > -1;
                 });
