@@ -12,41 +12,18 @@ tableColumns.columns = (vue) => {
             key: 'selection',
             sortable: false
         },
-        {title: '序号', type: 'index', align: 'center', key: 'index', sortable: false, width: 80},
-        {title: '平台名称', key: 'Name', sortable: true},
-        {title: 'AppId', key: 'AppId', sortable: true},
-        {title: 'AppSecrect', key: 'AppSecrect', sortable: false},
+        {title: '来源平台', type: 'index', align: 'center', key: 'Platform', sortable: true},
+        {title: '业务位置', key: 'BusinessPosition', sortable: true},
+        {title: '日志内容', key: 'Content', sortable: false},
+        {title: '堆栈信息', key: 'TraceInfo', sortable: false},
         {
-            title: '创建时间',
-            key: 'CreatTime',
+            title: '生成时间',
+            key: 'CreationTime',
             sortable: true,
             render: (h, params) => {
                 return h(
                     'div',
-                    formatDate(params.row.CreatTime, dateTimeFmt)
-                );
-            }
-        },
-        {
-            title: '最后更新时间',
-            key: 'LastUpdateTime',
-            sortable: true,
-            render: (h, params) => {
-                return h(
-                    'div',
-                    formatDate(params.row.CreatTime, dateTimeFmt)
-                );
-            }
-        },
-        {title: '最后更新者', key: 'LastUpdateBy'},
-        {
-            title: '启用',
-            sortable: false,
-            key: 'action',
-            render: (h, params) => {
-                return h(
-                    'div',
-                    vue.$refs.tables.$scopedSlots.action(params.row)
+                    formatDate(params.row.CreationTime, dateTimeFmt)
                 );
             }
         }

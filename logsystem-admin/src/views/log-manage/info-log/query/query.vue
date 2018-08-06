@@ -21,18 +21,13 @@
 </template>
 
 <script>
-    import CollapsedMenu from '@/views/shared/side-menu/collapsed-menu';
-    import MLabel from '_c/m-label';
     import {createNamespacedHelpers} from 'vuex';
 
-    const {mapActions, mapState, mapMutations, mapGetters} = createNamespacedHelpers('platform');
+    const {mapActions, mapState, mapMutations, mapGetters} = createNamespacedHelpers('infolog');
 
     export default {
         name: 'Query',
-        components: {
-            CollapsedMenu,
-            MLabel
-        },
+        components: {},
         data() {
             return {
                 //查询条件数据
@@ -40,9 +35,6 @@
             };
         },
         methods: {
-            // ...mapActions([
-            //     'handleLogin'
-            // ]),
             ...mapMutations([
                 'setQueryData'
             ]),
