@@ -4,6 +4,7 @@ import {Message} from 'iview';
 import Cookies from 'js-cookie';
 import {TOKEN_KEY} from '@/libs/util';
 import iView from 'iview';
+import {paramMatch} from '@/libs/tools';
 
 class httpRequest {
     constructor() {
@@ -76,6 +77,8 @@ class httpRequest {
         var instance = this.create();
         this.interceptors(instance, options.url);
         options = Object.assign({}, options);
+        options.params = paramMatch(options.params);
+        options.data = paramMatch(options.data);
         this.queue[options.url] = instance;
         return instance(options);
     }

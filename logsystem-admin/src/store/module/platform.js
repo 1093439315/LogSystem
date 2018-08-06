@@ -17,10 +17,11 @@ export default {
             state.pagination = pagination;
         },
         setPageSize(state, pageSize) {
-            state.pagination.pageSize=pageSize;
+            console.log(pageSize);
+            state.pagination.PageSize=pageSize;
         },
         setPageIndex(state, pageIndex) {
-            state.pagination.pageIndex=pageIndex;
+            state.pagination.PageIndex=pageIndex;
         }
     },
     actions: {

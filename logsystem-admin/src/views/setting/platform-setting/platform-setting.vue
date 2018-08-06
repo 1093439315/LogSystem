@@ -102,6 +102,7 @@
             },
             handleQuery() {
                 this.loading = true;
+                console.log(this.queryData);
                 this.handleStoreQuery(this.queryData).then(res => {
                     this.tableData = res.Data.List;
                     this.setPagination(res.Data.Pagination);
@@ -131,9 +132,11 @@
             },
             handlePageIndexChange(pageIndex) {
                 this.setPageIndex(pageIndex);
+                this.handleQuery();
             },
             handlePageSizeChange(pageSize) {
                 this.setPageSize(pageSize);
+                this.handleQuery();
             }
         },
         mounted() {
