@@ -1,11 +1,26 @@
-import {add} from '@/api/platform';
+import {add, query} from '@/api/platform';
 
 export default {
+    namespaced: true,
     state: {
+        queryData: {},
+        pagination: {},
         saveData: {},
+        resultList: [],
     },
     mutations: {
-        add(state) {
+        setQueryData(state, queryData) {
+            console.log(queryData);
+            state.queryData = queryData;
+        },
+        setPagination(state, pagination) {
+            state.pagination = pagination;
+        },
+        setPageSize(state, pageSize) {
+            state.pagination.pageSize=pageSize;
+        },
+        setPageIndex(state, pageIndex) {
+            state.pagination.pageIndex=pageIndex;
         }
     },
     actions: {
@@ -19,5 +34,14 @@ export default {
                 });
             });
         },
+        handleStoreQuery(state, queryData) {
+            return new Promise((resolve, reject) => {
+                query(queryData).then(res => {
+                    resolve(res);
+                }).catch(err => {
+                    reject(err);
+                });
+            });
+        }
     }
 };

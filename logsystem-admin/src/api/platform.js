@@ -6,7 +6,7 @@ export const query = (queryData) => {
     const data = queryData;
     return axios.request({
         url: controller + 'Query',
-        data,
+        params: data,
         method: 'get'
     });
 };

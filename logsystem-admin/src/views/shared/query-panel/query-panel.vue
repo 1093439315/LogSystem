@@ -7,6 +7,9 @@
             <Icon type="ios-search"/>
             <p slot="content" style="margin: 5px 20px">
                 <slot style="margin: 20px"></slot>
+                <br>
+                <Button type="primary" icon="ios-search" style="float: right" @click="handleQuery">查询</Button>
+                <br>
             </p>
         </Panel>
     </Collapse>
@@ -31,6 +34,9 @@
                     this.$refs.queryContent.style.height = '0';
                     this.changeTitle = '关闭';
                 }
+            },
+            handleQuery() {
+                this.$emit('on-query');
             }
         }
     };

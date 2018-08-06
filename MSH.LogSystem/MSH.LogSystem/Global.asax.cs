@@ -1,4 +1,5 @@
-﻿using MSH.LogSystem.App_Start;
+﻿using MapperConfiguration;
+using MSH.LogSystem.App_Start;
 using Rabbitmq.Core;
 using System;
 using System.Collections.Generic;
@@ -15,6 +16,7 @@ namespace MSH.LogSystem
         {
             GlobalConfiguration.Configure(WebApiConfig.Register);
             GlobalConfiguration.Configure(AutofacConfig.Register);
+            MapperConfig.Initial();
             //启动通道
             RabbitMqServiceManage.Start();
         }

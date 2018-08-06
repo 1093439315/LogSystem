@@ -1,7 +1,7 @@
 <template>
     <div>
-        <query-panel>
-            <query @on-handleQuery-click="handleQuery"></query>
+        <query-panel @on-query="handleQuery">
+            <query></query>
         </query-panel>
 
         <br/>
@@ -9,17 +9,28 @@
         <Row>
             <Col>
                 <Button type="success" icon="md-add" @click="handleAdd">新 增</Button>
-                <Button type="error" icon="md-close">删 除</Button>
+                <!--<Button type="error" icon="md-close">删 除</Button>-->
             </Col>
         </Row>
 
         <br/>
 
         <Card>
-            <tables ref="tables" searchable search-place="top" v-model="tableData"
+            <tables ref="tables" searchable search-place="top"
+                    v-model="tableData"
                     :columns="columns"
+                    :loading="loading"
                     @on-delete="handleDelete">
+                <template slot="action" slot-scope="props">
+                    <Switch :value="props.Disabled" @on-change="handleDisableChange(props)"/>
+                </template>
             </tables>
+            <page :total="pagination.DataCount"
+                  :page-size="pagination.PageSize"
+                  :current="pagination.PageIndex"
+                  show-elevator show-sizer show-total
+                  @on-change="handlePageIndexChange"
+                  @on-page-size-change="handlePageSizeChange"></page>
         </Card>
 
         <info-modal v-model="saveData" :show="infoModalShow" :add="add"
@@ -30,14 +41,15 @@
 
 <script>
 
-    import {mapActions} from 'vuex';
     import Tables from '_c/tables';
     import QueryPanel from '_s/query-panel';
     import Query from './query';
-    import columns from './table-columns';
-    import {query} from '@/api/platform';
+    import tableColumns from './table-columns';
     import InfoModal from './info-modal';
     import MModal from '_c/m-modal';
+    import {createNamespacedHelpers} from 'vuex';
+
+    const {mapActions, mapMutations} = createNamespacedHelpers('platform');
 
     export default {
         name: 'PlatformSetting',
@@ -51,25 +63,48 @@
         data() {
             return {
                 value1: '1',
-                columns: columns,
                 tableData: [],
-                queryData: {},
                 infoModalShow: false,
                 add: true,
-                saveData: {}
+                saveData: {},
+                //表格是否正在加载
+                loading: false,
             };
+        },
+        computed: {
+            columns() {
+                return tableColumns.columns(this);
+            },
+            pagination() {
+                let pagination = this.$store.state.platform.pagination;
+                if (!pagination) return {DataCount: 0};
+                return pagination;
+            },
+            queryData() {
+                let query = this.$store.state.platform.queryData;
+                query.Pagination = this.pagination;
+                return query;
+            }
         },
         methods: {
             ...mapActions([
-                'handleConfirmAdd'
+                'handleConfirmAdd',
+                'handleStoreQuery'
+            ]),
+            ...mapMutations([
+                'setPagination',
+                'setPageSize',
+                'setPageIndex'
             ]),
             handleDelete(params) {
                 console.log(params);
             },
-            handleQuery(queryData) {
-                this.queryData = queryData;
-                query(queryData).then(res => {
-                    this.tableData = res.Data;
+            handleQuery() {
+                this.loading = true;
+                this.handleStoreQuery(this.queryData).then(res => {
+                    this.tableData = res.Data.List;
+                    this.setPagination(res.Data.Pagination);
+                    this.loading = false;
                 });
             },
             //新增时显示模态框
@@ -89,10 +124,19 @@
                         }
                     });
                 }
+            },
+            handleDisableChange(props) {
+                console.log(props);
+            },
+            handlePageIndexChange(pageIndex) {
+                this.setPageIndex(pageIndex);
+            },
+            handlePageSizeChange(pageSize) {
+                this.setPageSize(pageSize);
             }
         },
         mounted() {
-            this.handleQuery(this.queryData);
+            this.handleQuery();
         }
     };
 </script>

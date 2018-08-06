@@ -15,6 +15,18 @@ namespace DTO
         /// </summary>
         public string Name { get; set; }
         /// <summary>
+        /// 应用Id
+        /// </summary>
+        public string AppId { get; set; }
+        /// <summary>
+        /// 应用密钥
+        /// </summary>
+        public string AppSecrect { get; set; }
+        /// <summary>
+        /// 是否禁用
+        /// </summary>
+        public bool Disabled { get; set; }
+        /// <summary>
         /// 创建时间
         /// </summary>
         public DateTime CreatTime { get; set; }

@@ -2,7 +2,9 @@
     <div>
         <div v-if="searchable && searchPlace === 'top'" class="search-con search-con-top">
             <Select v-model="searchKey" class="search-col">
-                <Option v-for="item in columns" v-if="item.key !== 'handle' && item.key!=='index'" :value="item.key"
+                <Option v-for="item in columns"
+                        v-if="item.type !== 'handle' && item.type!=='index' && item.key!=='action'"
+                        :value="item.key"
                         :key="`search-col-${item.key}`">
                     {{ item.title }}
                 </Option>

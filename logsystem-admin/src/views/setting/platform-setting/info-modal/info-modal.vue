@@ -6,11 +6,14 @@
             <FormItem label="平台名称" prop="name">
                 <Input v-model="infoData.name" placeholder="输入平台名称"/>
             </FormItem>
-            <FormItem label="AppId">
-                <Input v-model="infoData.appId" placeholder="输入AppId"/>
+            <FormItem label="AppId" prop="AppId">
+                <Input v-model="infoData.AppId" placeholder="输入AppId"/>
             </FormItem>
-            <FormItem label="Secrect">
-                <Input v-model="infoData.secrect" placeholder="输入Secrect"/>
+            <FormItem label="Secrect" prop="AppSecrect">
+                <Input v-model="infoData.AppSecrect" placeholder="输入Secrect"/>
+            </FormItem>
+            <FormItem label="启用">
+                <Switch v-model="infoData.Disabled"/>
             </FormItem>
         </Form>
     </m-modal>
@@ -32,6 +35,12 @@
                 ruleValidate: {
                     name: [
                         {required: true, message: '平台名称不能为空', trigger: 'blur'}
+                    ],
+                    AppId: [
+                        {required: true, message: 'AppId不能为空', trigger: 'blur'}
+                    ],
+                    AppSecrect: [
+                        {required: true, message: 'AppSecrect不能为空', trigger: 'blur'}
                     ],
                 }
             };
@@ -89,6 +98,9 @@
                 },
                 deep: true
             }
+        },
+        mounted() {
+            this.infoData.Disabled = true;
         }
     };
 </script>

@@ -7,7 +7,7 @@
                         <label style="font-weight: bold">平台名称：</label>
                     </Col>
                     <Col span="12">
-                        <Input v-model="queryData.platformName" placeholder="输入平台名称" clearable
+                        <Input v-model="queryData.Name" placeholder="输入平台名称" clearable
                                style="width: 200px"/>
                     </Col>
                 </Row>
@@ -17,15 +17,15 @@
             </Col>
         </Row>
 
-        <br>
-        <Button type="primary" icon="ios-search" style="float: right" @click="handleQuery">查询</Button>
-        <br>
     </div>
 </template>
 
 <script>
     import CollapsedMenu from '@/views/shared/side-menu/collapsed-menu';
     import MLabel from '_c/m-label';
+    import {createNamespacedHelpers} from 'vuex';
+
+    const {mapActions, mapState, mapMutations, mapGetters} = createNamespacedHelpers('platform');
 
     export default {
         name: 'Query',
@@ -36,14 +36,25 @@
         data() {
             return {
                 //查询条件数据
-                queryData: {}
+                queryData: {},
             };
         },
         methods: {
-            handleQuery() {
-                this.$emit('on-handleQuery-click', this.queryData);
-            }
-        }
+            // ...mapActions([
+            //     'handleLogin'
+            // ]),
+            ...mapMutations([
+                'setQueryData'
+            ]),
+        },
+        watch: {
+            queryData: {
+                handler(newValue, oldValue) {
+                    this.setQueryData(newValue);
+                },
+                deep: true
+            },
+        },
     };
 </script>
 

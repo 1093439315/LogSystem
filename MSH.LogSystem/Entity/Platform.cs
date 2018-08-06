@@ -17,6 +17,10 @@ namespace Entity
         /// </summary>
         public string Name { get; set; }
         /// <summary>
+        /// 是否禁用
+        /// </summary>
+        public bool Disabled { get; set; }
+        /// <summary>
         /// 创建时间
         /// </summary>
         public DateTime CreatTime { get; set; }

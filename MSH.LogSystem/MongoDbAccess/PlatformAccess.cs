@@ -4,14 +4,10 @@ using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Configuration;
 using RobotMapper;
 using DTO;
 using System.Linq.Expressions;
 using Common;
-using MongoDB.Bson;
 
 namespace MongoDbAccess
 {
@@ -25,7 +21,7 @@ namespace MongoDbAccess
 
             if (entity == null)
                 return null;
-            return entity.RobotMap<Entity.Platform, DTO.Platform>(cf=> 
+            return entity.RobotMap<Entity.Platform, DTO.Platform>(cf =>
             {
                 cf.Bind(x => x.Id.ToString(), y => y.Id);
             });
@@ -34,13 +30,21 @@ namespace MongoDbAccess
         public List<Platform> QueryPlatform(PlatformQuery query)
         {
             if (query == null) return new List<Platform>();
-            var collection = DbProvider.Collection<Entity.Platform>();
-            var condition = CreatCondition(query);
-            var entities = collection.AsQueryable().Where(condition).ToList();
-            return entities.RobotMap<Entity.Platform, Platform>(cf =>
+
+            var queryAble = CreatQueryAble(query);
+            query.Pagination.DataCount = queryAble.Count();
+
+            if (!query.Pagination.IsPaging)
             {
-                cf.Bind(x => x.Id.ToString(), y => y.Id);
-            });
+                var allResult = queryAble.ToList();
+                return allResult.RobotMap<Entity.Platform, Platform>();
+            }
+
+            var entities = queryAble
+                .Take(query.Pagination.Take)
+                .Skip(query.Pagination.Skip)
+                .ToList();
+            return entities.RobotMap<Entity.Platform, Platform>();
         }
 
         public void AddPlatform(Platform platform)
@@ -49,6 +53,8 @@ namespace MongoDbAccess
             var collection = DbProvider.Collection<Entity.Platform>();
             if (collection.AsQueryable().Any(a => a.Name == platform.Name))
                 throw new BaseCustomException($"名称为{platform.Name}的平台已存在!");
+            if (collection.AsQueryable().Any(a => a.Config.AppId == platform.AppId))
+                throw new BaseCustomException($"AppId为{platform.AppId}的平台已存在!");
             var entity = platform.RobotMap<Platform, Entity.Platform>();
             DbProvider.Insert(entity);
         }
@@ -67,6 +73,17 @@ namespace MongoDbAccess
             if (!string.IsNullOrEmpty(query.Name))
                 condition.And(a => a.Name.Contains(query.Name));
             return condition;
+        }
+
+        private IMongoQueryable<Entity.Platform> CreatQueryAble(PlatformQuery query)
+        {
+            var collection = DbProvider.Collection<Entity.Platform>();
+            var queryAble = collection.AsQueryable().Where(a => 1 == 1);
+            if (!string.IsNullOrEmpty(query.Name))
+                queryAble = queryAble.Where(a => a.Name.Contains(query.Name));
+            if (!string.IsNullOrEmpty(query.AppId))
+                queryAble = queryAble.Where(a => a.Config.AppId == query.AppId);
+            return queryAble;
         }
     }
 }

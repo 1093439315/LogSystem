@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Common;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +9,8 @@ namespace DTO
 {
     public class PlatformQuery
     {
+        public Pagination Pagination { get; set; } = new Pagination();
+
         public string Id { get; set; }
         /// <summary>
         /// 名称

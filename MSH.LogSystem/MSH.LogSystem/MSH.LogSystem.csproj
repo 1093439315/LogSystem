@@ -182,6 +182,10 @@
       <Project>{cdf9b8f1-268f-448e-8b6d-bca82ea5f55f}</Project>
       <Name>DTO</Name>
     </ProjectReference>
+    <ProjectReference Include="..\MapperConfiguration\MapperConfiguration.csproj">
+      <Project>{c728032e-a064-41c9-afa3-a6191b7f5bfb}</Project>
+      <Name>MapperConfiguration</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Rabbitmq.Core\Rabbitmq.Core.csproj">
       <Project>{F8C28C01-1D7D-41B5-AB0B-A77A855A0D5C}</Project>
       <Name>Rabbitmq.Core</Name>

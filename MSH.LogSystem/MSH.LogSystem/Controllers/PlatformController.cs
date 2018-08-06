@@ -27,7 +27,11 @@ namespace MSH.LogSystem.Controllers
             var datas = IPlatformManager.QueryPlatform(query);
             return new AjaxReturnInfo()
             {
-                Data = datas
+                Data = new
+                {
+                    List = datas,
+                    query.Pagination,
+                }
             };
         }
 
