@@ -1,3 +1,6 @@
+import {formatDate} from '@/libs/tools';
+
+const dateTimeFmt = 'yyyy-MM-dd HH:mm:ss';
 let tableColumns = {};
 
 tableColumns.columns = (vue) => {
@@ -13,8 +16,28 @@ tableColumns.columns = (vue) => {
         {title: '平台名称', key: 'Name', sortable: true},
         {title: 'AppId', key: 'AppId', sortable: true},
         {title: 'AppSecrect', key: 'AppSecrect', sortable: false},
-        {title: '创建时间', key: 'CreatTime', sortable: true},
-        {title: '最后更新时间', key: 'LastUpdateTime', sortable: true},
+        {
+            title: '创建时间',
+            key: 'CreatTime',
+            sortable: true,
+            render: (h, params) => {
+                return h(
+                    'div',
+                    formatDate(params.row.CreatTime, dateTimeFmt)
+                );
+            }
+        },
+        {
+            title: '最后更新时间',
+            key: 'LastUpdateTime',
+            sortable: true,
+            render: (h, params) => {
+                return h(
+                    'div',
+                    formatDate(params.row.CreatTime, dateTimeFmt)
+                );
+            }
+        },
         {title: '最后更新者', key: 'LastUpdateBy'},
         {
             title: '启用',

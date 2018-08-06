@@ -25,6 +25,7 @@
                     <Switch :value="props.Disabled" @on-change="handleDisableChange(props)"/>
                 </template>
             </tables>
+            <br/>
             <page :total="pagination.DataCount"
                   :page-size="pagination.PageSize"
                   :current="pagination.PageIndex"
