@@ -1,4 +1,5 @@
-﻿using SuperSocket.SocketBase;
+﻿using Common;
+using SuperSocket.SocketBase;
 using SuperSocket.SocketBase.Protocol;
 using System;
 using System.Collections.Generic;
@@ -34,11 +35,13 @@ namespace SocketService
 
         protected override void OnNewSessionConnected(LogSession session)
         {
+            Console.WriteLine("新客户端连接！");
             base.OnNewSessionConnected(session);
         }
 
         protected override void OnSessionClosed(LogSession session, CloseReason reason)
         {
+            Console.WriteLine($"客户端关闭，关闭原因：{reason}");
             base.OnSessionClosed(session, reason);
         }
 

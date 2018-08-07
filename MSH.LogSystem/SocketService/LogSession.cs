@@ -17,16 +17,24 @@ namespace SocketService
 
         protected override void OnSessionStarted()
         {
+            Console.WriteLine("客户端已连接！");
             base.OnSessionStarted();
+        }
+
+        public override void Initialize(IAppServer<LogSession, StringRequestInfo> appServer, ISocketSession socketSession)
+        {
+            base.Initialize(appServer, socketSession);
         }
 
         public override void Close()
         {
+            Console.WriteLine("客户端已关闭！");
             base.Close();
         }
 
         public override void Close(CloseReason reason)
         {
+            Console.WriteLine($"客户端已关闭,关闭原因:{reason}");
             base.Close(reason);
         }
 
@@ -59,5 +67,6 @@ namespace SocketService
         {
             base.HandleUnknownRequest(requestInfo);
         }
+
     }
 }

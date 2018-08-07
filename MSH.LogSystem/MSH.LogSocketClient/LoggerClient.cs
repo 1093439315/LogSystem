@@ -28,6 +28,8 @@ namespace MSH.LogSocketClient
             });
             client.ConnectAsync(new IPEndPoint(IPAddress.Parse(ip), port)).Wait();
             Console.Read();
+
+            client.Close();
         }
 
         private static void Client_Error(object sender, ErrorEventArgs e)
@@ -38,7 +40,7 @@ namespace MSH.LogSocketClient
         private static void Client_Connected(object sender, EventArgs e)
         {
             Console.WriteLine("客户端连接");
-            //client.Send(Encoding.UTF8.GetBytes("LOGIN kerry"));
+            client.Send(Encoding.UTF8.GetBytes("!LOGIN kerry$"));
         }
 
         private static void Client_Closed(object sender, EventArgs e)
