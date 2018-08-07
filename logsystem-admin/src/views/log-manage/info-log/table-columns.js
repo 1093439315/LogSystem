@@ -1,6 +1,6 @@
 import {formatDate} from '@/libs/tools';
 
-const dateTimeFmt = 'yyyy-MM-dd HH:mm:ss';
+const dateTimeFmt = 'yyyy-MM-dd hh:mm:ss';
 let tableColumns = {};
 
 tableColumns.columns = (vue) => {
@@ -12,8 +12,9 @@ tableColumns.columns = (vue) => {
             key: 'selection',
             sortable: false
         },
-        {title: '来源平台', type: 'index', align: 'center', key: 'Platform', sortable: true},
-        {title: '业务位置', key: 'BusinessPosition', sortable: true},
+        {title: '序号', type: 'index', align: 'center', key: 'index', sortable: false, width: 50},
+        {title: '来源平台', align: 'center', key: 'Platform', sortable: true, width: 120},
+        {title: '业务位置', key: 'BusinessPosition', sortable: true, width: 120},
         {title: '日志内容', key: 'Content', sortable: false},
         {title: '堆栈信息', key: 'TraceInfo', sortable: false},
         {
@@ -25,7 +26,8 @@ tableColumns.columns = (vue) => {
                     'div',
                     formatDate(params.row.CreationTime, dateTimeFmt)
                 );
-            }
+            },
+            width: 220
         }
     ];
 };

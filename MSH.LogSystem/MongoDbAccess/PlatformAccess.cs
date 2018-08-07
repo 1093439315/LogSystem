@@ -31,7 +31,7 @@ namespace MongoDbAccess
         {
             if (query == null) return new List<Platform>();
 
-            var queryAble = CreatQueryAble(query);
+            var queryAble = CreatQueryAble(query).OrderByDescending(a => a.CreatTime);
             query.Pagination.DataCount = queryAble.Count();
 
             if (!query.Pagination.IsPaging)
@@ -41,8 +41,8 @@ namespace MongoDbAccess
             }
 
             var entities = queryAble
-                .Take(query.Pagination.Take)
                 .Skip(query.Pagination.Skip)
+                .Take(query.Pagination.Take)
                 .ToList();
             return entities.RobotMap<Entity.Platform, Platform>();
         }

@@ -102,7 +102,6 @@
             },
             handleQuery() {
                 this.loading = true;
-                console.log(this.queryData);
                 this.handleStoreQuery(this.queryData).then(res => {
                     this.tableData = res.Data.List;
                     this.setPagination(res.Data.Pagination);
@@ -135,6 +134,7 @@
                 this.handleQuery();
             },
             handlePageSizeChange(pageSize) {
+                this.setPageIndex(1);
                 this.setPageSize(pageSize);
                 this.handleQuery();
             }

@@ -14,12 +14,12 @@
                     @on-delete="handleDelete">
             </tables>
             <br/>
-            <!--<page :total="pagination.DataCount"-->
-                  <!--:page-size="pagination.PageSize"-->
-                  <!--:current="pagination.PageIndex"-->
-                  <!--show-elevator show-sizer show-total-->
-                  <!--@on-change="handlePageIndexChange"-->
-                  <!--@on-page-size-change="handlePageSizeChange"></page>-->
+            <page :total="pagination.DataCount"
+                  :page-size="pagination.PageSize"
+                  :current="pagination.PageIndex"
+                  show-elevator show-sizer show-total
+                  @on-change="handlePageIndexChange"
+                  @on-page-size-change="handlePageSizeChange"></page>
         </Card>
 
     </div>
@@ -32,6 +32,8 @@
     import Query from './query';
     import tableColumns from './table-columns';
     import {createNamespacedHelpers} from 'vuex';
+
+    const {mapActions, mapMutations} = createNamespacedHelpers('infolog');
 
     export default {
         name: 'InfoLog',
@@ -53,21 +55,47 @@
                 return tableColumns.columns(this);
             },
             pagination() {
-                let pagination = this.$store.state.platform.pagination;
+                let pagination = this.$store.state.infolog.pagination;
                 if (!pagination) return {DataCount: 0};
                 return pagination;
             },
             queryData() {
-                let query = this.$store.state.platform.queryData;
+                let query = this.$store.state.infolog.queryData;
                 query.Pagination = this.pagination;
                 return query;
             }
         },
         methods: {
+            ...mapActions([
+                'handleStoreQuery'
+            ]),
+            ...mapMutations([
+                'setPagination',
+                'setPageSize',
+                'setPageIndex'
+            ]),
             handleQuery() {
+                this.loading = true;
+                this.handleStoreQuery(this.queryData).then(res => {
+                    this.tableData = res.Data.List;
+                    this.setPagination(res.Data.Pagination);
+                    this.loading = false;
+                });
             },
             handleDelete() {
+            },
+            handlePageIndexChange(pageIndex) {
+                this.setPageIndex(pageIndex);
+                this.handleQuery();
+            },
+            handlePageSizeChange(pageSize) {
+                this.setPageIndex(1);
+                this.setPageSize(pageSize);
+                this.handleQuery();
             }
+        },
+        mounted() {
+            this.handleQuery();
         }
     };
 </script>

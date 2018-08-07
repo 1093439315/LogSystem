@@ -12,6 +12,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Linq.Expressions;
 using RobotMapper;
+using MongoDB.Driver.Linq;
 
 namespace MongoDbAccess
 {
@@ -38,25 +39,24 @@ namespace MongoDbAccess
             DbProvider.Insert(entity);
         }
 
-        public List<LogInfo> QueryLogRequest(LogQuery logQuery)
+        public List<LogInfo> QueryLogRequest(LogQuery query)
         {
-            var collection = DbProvider.Collection<InfoLog>();
-            var condition = CreatCondition(logQuery);
+            if (query == null) return new List<LogInfo>();
 
-            if (!logQuery.Pagination.IsPaging)
+            var queryAble = CreatQueryAble(query).OrderByDescending(a => a.CreationTime);
+            query.Pagination.DataCount = queryAble.Count();
+
+            if (!query.Pagination.IsPaging)
             {
-                var allResult = collection.AsQueryable().Where(condition).ToList();
-                return allResult.RobotMap<InfoLog, LogInfo>();
+                var allResult = queryAble.ToList();
+                return allResult.RobotMap<Entity.InfoLog, LogInfo>();
             }
 
-            var result = collection.AsQueryable()
-                .OrderByDescending(a => a.CreationTime)
-                .Where(condition)
-                .Skip(logQuery.Pagination.Skip)
-                .Take(logQuery.Pagination.Take)
+            var entities = queryAble
+                .Skip(query.Pagination.Skip)
+                .Take(query.Pagination.Take)
                 .ToList();
-
-            return result.RobotMap<InfoLog, LogInfo>();
+            return entities.RobotMap<Entity.InfoLog, LogInfo>();
         }
 
         public Expression<Func<InfoLog, bool>> CreatCondition(LogQuery logQuery)
@@ -75,6 +75,25 @@ namespace MongoDbAccess
             if (!string.IsNullOrEmpty(logQuery.TraceInfo))
                 condition.And(a => a.TraceInfo.Contains(logQuery.TraceInfo));
             return condition;
+        }
+
+        private IMongoQueryable<Entity.InfoLog> CreatQueryAble(LogQuery query)
+        {
+            var collection = DbProvider.Collection<Entity.InfoLog>();
+            var queryAble = collection.AsQueryable().Where(a => 1 == 1);
+            if (!string.IsNullOrEmpty(query.Content))
+                queryAble = queryAble.Where(a => a.Content.Contains(query.Content));
+            if (query.CreatTimeFrom.HasValue)
+                queryAble = queryAble.Where(a => a.CreationTime >= query.CreatTimeFrom);
+            if (query.CreatTmeTo.HasValue)
+                queryAble = queryAble.Where(a => a.CreationTime <= query.CreatTmeTo);
+            if (!string.IsNullOrEmpty(query.PlatformId))
+                queryAble = queryAble.Where(a => a.PlatformId == new ObjectId(query.PlatformId));
+            if (!string.IsNullOrEmpty(query.BusinessPosition))
+                queryAble = queryAble.Where(a => a.BusinessPosition.Contains(query.BusinessPosition));
+            if (!string.IsNullOrEmpty(query.TraceInfo))
+                queryAble = queryAble.Where(a => a.TraceInfo.Contains(query.TraceInfo));
+            return queryAble;
         }
     }
 }
