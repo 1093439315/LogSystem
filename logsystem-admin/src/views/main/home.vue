@@ -3,7 +3,7 @@
         <Layout style="height: 100%">
 
             <!--左侧菜单栏-->
-            <Sider hide-trigger collapsible :width="256" :collapsed-width="64" v-model="collapsed">
+            <Sider hide-trigger collapsible :width="220" :collapsed-width="64" v-model="collapsed">
 
                 <side-menu accordion :active-name="$route.name" :collapsed="collapsed"
                            @on-select="turnToPage"
