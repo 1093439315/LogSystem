@@ -106,5 +106,21 @@ namespace Common
                 return value;
             }
         }
+
+        /// <summary>
+        /// Socket监听端口
+        /// </summary>
+        public static int SocketPort
+        {
+            get
+            {
+                var value = ConfigurationManager.AppSettings[$"{nameof(SocketPort)}"];
+                if (string.IsNullOrEmpty(value))
+                    throw new Exception($"请在配置文件中配置{nameof(SocketPort)}");
+                if (int.TryParse(value, out int res))
+                    return res;
+                throw new Exception($"{nameof(SocketPort)}必须为整数");
+            }
+        }
     }
 }
