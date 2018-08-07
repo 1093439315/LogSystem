@@ -64,9 +64,14 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <Content Include="App.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <None Include="Config\log4net.config" />
     <None Include="Config\log4net.unix.config" />
+    <None Include="LogServiceConfig.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="packages.config" />
     <None Include="supersocket.cmd" />
     <None Include="supersocket.sh" />

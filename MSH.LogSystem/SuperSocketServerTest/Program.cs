@@ -2,11 +2,14 @@
 using SuperSocket.SocketBase;
 using SuperSocket.SocketBase.Command;
 using SuperSocket.SocketBase.Protocol;
+using SuperSocket.SocketEngine;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Configuration;
+using SuperSocket.SocketBase.Config;
 
 namespace SuperSocketServerTest
 {
@@ -14,29 +17,32 @@ namespace SuperSocketServerTest
     {
         static void Main(string[] args)
         {
-            var logServer = new LogServer();
-            logServer.NewSessionConnected += LogServer_NewSessionConnected;
-            //logServer.NewRequestReceived += LogServer_NewRequestReceived;
-            logServer.SessionClosed += LogServer_SessionClosed;
-            if (!logServer.Setup(2012))
+            //var config = ConfigurationManager.GetSection("superSocket") as IConfigurationSource;
+            var bootstrap = BootstrapFactory.CreateBootstrapFromConfigFile("LogServiceConfig.config");
+            //var bootstrap = BootstrapFactory.CreateBootstrap(config);
+            if (!bootstrap.Initialize())
             {
-                Console.WriteLine("日志服务启动失败！");
-                Console.ReadLine();
-                return;
-            }
-
-            if (!logServer.Start())
-            {
-                Console.WriteLine("日志服务启动失败");
+                Console.WriteLine("日志服务初始化失败");
                 Console.ReadKey();
                 return;
             }
 
-            Console.WriteLine("按任意键终止服务！");
-            Console.ReadKey();
+            var result = bootstrap.Start();
+            Console.WriteLine($"启动结果：{result}");
 
-            logServer.Stop();
+            if (result == StartResult.Failed)
+            {
+                Console.WriteLine("日志服务启动失败!");
+                Console.ReadKey();
+                return;
+            }
+            
+            Console.Read();
 
+            //Stop the appServer
+            bootstrap.Stop();
+
+            Console.WriteLine("The server was stopped!");
             Console.ReadKey();
         }
 
@@ -72,7 +78,7 @@ namespace SuperSocketServerTest
         private static void LogServer_NewSessionConnected(LogSession session)
         {
             Console.WriteLine("客户端已连接");
-            session.Send("哈哈");
+            //session.Send("哈哈");
         }
     }
 }

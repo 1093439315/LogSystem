@@ -38,7 +38,7 @@ namespace MSH.LogSocketClient
         private static void Client_Connected(object sender, EventArgs e)
         {
             Console.WriteLine("客户端连接");
-            client.Send(Encoding.UTF8.GetBytes("LOGIN kerry"));
+            //client.Send(Encoding.UTF8.GetBytes("LOGIN kerry"));
         }
 
         private static void Client_Closed(object sender, EventArgs e)
