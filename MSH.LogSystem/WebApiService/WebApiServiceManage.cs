@@ -1,4 +1,5 @@
 ﻿using Common;
+using MapperConfiguration;
 using Microsoft.Owin.Hosting;
 using System;
 using System.Collections.Generic;
@@ -39,6 +40,7 @@ namespace WebApiService
                 GlobalConfiguration.Configure(config => WebApiConfig.Register(config));
                 GlobalConfiguration.Configure(config => AutofacConfig.Register(config, true));
                 GlobalConfiguration.Configure(config => SwaggerConfig.Register(config, true));
+                MapperConfig.Initial();
                 return true;
             }
             catch (Exception ex)

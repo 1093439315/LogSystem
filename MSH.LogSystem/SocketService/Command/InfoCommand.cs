@@ -22,6 +22,7 @@ namespace SocketService
             if (string.IsNullOrEmpty(body)) return;
             var logRequest = body.ToObject<LogRequest>();
             Console.WriteLine(logRequest.ToJson());
+            //将日志内容插入队列
         }
     }
 }

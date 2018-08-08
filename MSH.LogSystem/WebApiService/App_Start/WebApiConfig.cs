@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
+using System.Web.Http.Cors;
 using System.Web.Http.Filters;
 using WebApiService.Filters;
 
@@ -13,6 +14,9 @@ namespace WebApiService
         public static void Register(HttpConfiguration config)
         {
             Logger.Info("开始注册WebApi");
+
+            //跨域配置
+            config.EnableCors(new EnableCorsAttribute("*", "*", "*"));
 
             // Web API 路由
             config.MapHttpAttributeRoutes();
