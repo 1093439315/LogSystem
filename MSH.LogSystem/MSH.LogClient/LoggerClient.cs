@@ -10,7 +10,7 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MSH.LogSocketClient
+namespace MSH.LogClient
 {
     public class LoggerClient
     {

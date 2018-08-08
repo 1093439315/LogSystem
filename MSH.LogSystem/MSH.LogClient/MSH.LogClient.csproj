@@ -7,8 +7,8 @@
     <ProjectGuid>{0B209C12-720C-4BC4-9C31-69901605C9A9}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>MSH.LogSocketClient</RootNamespace>
-    <AssemblyName>MSH.LogSocketClient</AssemblyName>
+    <RootNamespace>MSH.LogClient</RootNamespace>
+    <AssemblyName>MSH.LogClient</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -52,6 +52,7 @@
   <ItemGroup>
     <Compile Include="BeiginEndReceiveFilter.cs" />
     <Compile Include="LoggerClient.cs" />
+    <Compile Include="MshLog4netSocketAppender.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

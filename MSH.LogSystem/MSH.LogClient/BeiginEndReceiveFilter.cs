@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MSH.LogSocketClient
+namespace MSH.LogClient
 {
     public class BeiginEndReceiveFilter : BeginEndMarkReceiveFilter<StringPackageInfo>
     {
