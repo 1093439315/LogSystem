@@ -37,7 +37,7 @@ namespace WebApiService
             try
             {
                 GlobalConfiguration.Configure(config => WebApiConfig.Register(config));
-                GlobalConfiguration.Configure(AutofacConfig.Register);
+                GlobalConfiguration.Configure(config => AutofacConfig.Register(config, true));
                 GlobalConfiguration.Configure(config => SwaggerConfig.Register(config, true));
                 return true;
             }

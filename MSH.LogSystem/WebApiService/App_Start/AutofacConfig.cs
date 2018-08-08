@@ -16,10 +16,10 @@ namespace WebApiService
 {
     public class AutofacConfig
     {
-        public static void Register(HttpConfiguration config)
+        public static void Register(HttpConfiguration config, bool isWeb = false)
         {
             Logger.Info("开始注册Autofac");
-            var contatiner = RegisterService();
+            var contatiner = RegisterService(isWeb);
             contatiner.RegisterWebApiFilterProvider(config);
             config.DependencyResolver = new AutofacWebApiDependencyResolver(contatiner.Build());
         }
@@ -28,20 +28,18 @@ namespace WebApiService
         /// 注入实现
         /// </summary>
         /// <returns></returns>
-        private static ContainerBuilder RegisterService()
+        private static ContainerBuilder RegisterService(bool isWeb)
         {
             var builder = new ContainerBuilder();
             var baseType = typeof(IDependency);
 
             string path = "";
-
-            var environmentPath = Path.Combine(Environment.CurrentDirectory, "1");
-            var currentDomainPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "1");
-
-            if (environmentPath.Equals(currentDomainPath))//Windows应用程序则相等
-                path = AppDomain.CurrentDomain.BaseDirectory;
-            else
+            
+            if (isWeb)
                 path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "bin");
+            else
+                path = AppDomain.CurrentDomain.BaseDirectory;
+
 
             Assembly[] assemblies = Directory.GetFiles(path, "*.dll").Select(Assembly.LoadFrom).ToArray();
 
