@@ -19,7 +19,7 @@ namespace WebApiService
 {
     public class SwaggerConfig
     {
-        public static void Register(HttpConfiguration configuration)
+        public static void Register(HttpConfiguration configuration, bool isWeb = false)
         {
             Logger.Info("¿ªÊ¼×¢²áswagger");
             var thisAssembly = typeof(SwaggerConfig).Assembly;
@@ -113,7 +113,10 @@ namespace WebApiService
                     // those comments into the generated docs and UI. You can enable this by providing the path to one or
                     // more Xml comment files.
                     //
-                    c.IncludeXmlComments(string.Format(@"{0}\WebApiService.xml", AppDomain.CurrentDomain.BaseDirectory));
+                    if (isWeb)
+                        c.IncludeXmlComments(string.Format(@"{0}\bin\WebApiService.xml", AppDomain.CurrentDomain.BaseDirectory));
+                    else
+                        c.IncludeXmlComments(string.Format(@"{0}\WebApiService.xml", AppDomain.CurrentDomain.BaseDirectory));
                     //c.IncludeXmlComments(string.Format(@"{0}\App_Data\DTO.XML", System.AppDomain.CurrentDomain.BaseDirectory));
 
                     // Swashbuckle makes a best attempt at generating Swagger compliant JSON schemas for the various types

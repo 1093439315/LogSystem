@@ -101,6 +101,9 @@
     <Reference Include="System.Web.Http.Cors, Version=5.2.6.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Cors.5.2.6\lib\net45\System.Web.Http.Cors.dll</HintPath>
     </Reference>
+    <Reference Include="System.Web.Http.WebHost, Version=5.2.6.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.5.2.6\lib\net45\System.Web.Http.WebHost.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Web.Services" />
@@ -111,37 +114,18 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="System.Web.Http.WebHost">
-      <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.5.2.4\lib\net45\System.Web.Http.WebHost.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform">
       <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.8\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Global.asax" />
-    <EmbeddedResource Include="Scripts\swagger_lang.js" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="App_Start\AutofacConfig.cs" />
-    <Compile Include="App_Start\SwaggerConfig.cs" />
-    <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="Controllers\CommonDataController.cs" />
-    <Compile Include="Controllers\InfoLogController.cs" />
-    <Compile Include="Controllers\LogServiceController.cs" />
-    <Compile Include="Controllers\LogClientController.cs" />
-    <Compile Include="Controllers\ManagerController.cs" />
-    <Compile Include="Controllers\PlatformController.cs" />
-    <Compile Include="Controllers\VertificationController.cs" />
-    <Compile Include="Filters\DeflateCompressionAttribute.cs" />
-    <Compile Include="Filters\HandleCustomExceptionAttribute.cs" />
-    <Compile Include="Filters\JwtAuthAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Helpers\CompressionHelper.cs" />
-    <Compile Include="Models\UserPrincipal.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -163,33 +147,17 @@
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\BusinessLayer.Interface\BusinessLayer.Interface.csproj">
-      <Project>{5F01F959-252C-418D-8287-AE1C39B46FFE}</Project>
-      <Name>BusinessLayer.Interface</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\BusinessLayer\BusinessLayer.csproj">
-      <Project>{b79647c6-0bca-4833-80b4-49e516bb7bc3}</Project>
-      <Name>BusinessLayer</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Common\Common.csproj">
-      <Project>{7120044E-E2E5-473A-AF08-BD3C4264FFA0}</Project>
+      <Project>{7120044e-e2e5-473a-af08-bd3c4264ffa0}</Project>
       <Name>Common</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Configuration\Configuration.csproj">
-      <Project>{3F958A68-E56B-4FB5-9187-FC5E73D98D6F}</Project>
-      <Name>Configuration</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\DTO\DTO.csproj">
-      <Project>{cdf9b8f1-268f-448e-8b6d-bca82ea5f55f}</Project>
-      <Name>DTO</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\MapperConfiguration\MapperConfiguration.csproj">
-      <Project>{c728032e-a064-41c9-afa3-a6191b7f5bfb}</Project>
-      <Name>MapperConfiguration</Name>
     </ProjectReference>
     <ProjectReference Include="..\Rabbitmq.Core\Rabbitmq.Core.csproj">
       <Project>{F8C28C01-1D7D-41B5-AB0B-A77A855A0D5C}</Project>
       <Name>Rabbitmq.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WebApiService\WebApiService.csproj">
+      <Project>{39a60aa8-4c64-4f3f-909f-efc540a58c0a}</Project>
+      <Name>WebApiService</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

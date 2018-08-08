@@ -119,7 +119,7 @@
       <Project>{F8C28C01-1D7D-41B5-AB0B-A77A855A0D5C}</Project>
       <Name>Rabbitmq.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\SignalRService\WebApiService.csproj">
+    <ProjectReference Include="..\WebApiService\WebApiService.csproj">
       <Project>{39a60aa8-4c64-4f3f-909f-efc540a58c0a}</Project>
       <Name>WebApiService</Name>
     </ProjectReference>

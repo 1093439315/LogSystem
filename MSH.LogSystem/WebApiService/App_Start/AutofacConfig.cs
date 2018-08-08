@@ -41,7 +41,7 @@ namespace WebApiService
             if (environmentPath.Equals(currentDomainPath))//Windows应用程序则相等
                 path = AppDomain.CurrentDomain.BaseDirectory;
             else
-                path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory);
+                path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "bin");
 
             Assembly[] assemblies = Directory.GetFiles(path, "*.dll").Select(Assembly.LoadFrom).ToArray();
 

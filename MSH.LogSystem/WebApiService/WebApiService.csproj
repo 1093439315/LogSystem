@@ -169,5 +169,8 @@
   <ItemGroup>
     <Folder Include="Hubs\" />
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Scripts\swagger_lang.js" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

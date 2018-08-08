@@ -25,7 +25,7 @@ namespace MSH.Log.WindowsService
         {
             Logger.Info("准备启动服务！");
             //启动WebApi服务
-            if (!WebApiServiceManage.Start(ServiceAddress))
+            if (!WebApiServiceManage.SelfHostStart(ServiceAddress))
             {
                 this.Stop();
             }
@@ -39,7 +39,7 @@ namespace MSH.Log.WindowsService
         protected override void OnStop()
         {
             //终止WebApi服务
-            WebApiServiceManage.Stop();
+            WebApiServiceManage.SelfHostStop();
             //停止日志落地服务
             //LogToDbService.Stop();
         }
