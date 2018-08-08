@@ -1,4 +1,5 @@
-﻿using SuperSocket.ClientEngine;
+﻿using Common;
+using SuperSocket.ClientEngine;
 using SuperSocket.ProtoBase;
 using System;
 using System.Collections.Generic;
@@ -15,13 +16,12 @@ namespace MSH.LogSocketClient
 
         public static void Connect()
         {
-            //AsyncTcpSession
-            string ip = "127.0.0.1";
-            int port = 2012;
+            string ip = Config.LogServerIp;
+            int port = Config.LogServerPort;
             client.Error += Client_Error;
             client.Connected += Client_Connected;
             client.Closed += Client_Closed;
-
+            client.Security.Credential = new NetworkCredential("123", "456");
             client.Initialize(new BeiginEndReceiveFilter(), (request) => 
             {
                 Console.WriteLine(request.Key);

@@ -41,7 +41,7 @@
             // 
             this.serviceInstaller.Description = "MSHLogService";
             this.serviceInstaller.DisplayName = "MSHLogService";
-            this.serviceInstaller.ServiceName = "Service";
+            this.serviceInstaller.ServiceName = "MSHLogService";
             // 
             // ProjectInstaller
             // 

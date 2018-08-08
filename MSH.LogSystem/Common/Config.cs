@@ -108,18 +108,32 @@ namespace Common
         }
 
         /// <summary>
-        /// Socket监听端口
+        /// 日志服务IP地址
         /// </summary>
-        public static int SocketPort
+        public static string LogServerIp
         {
             get
             {
-                var value = ConfigurationManager.AppSettings[$"{nameof(SocketPort)}"];
+                var value = ConfigurationManager.AppSettings[$"{nameof(LogServerIp)}"];
                 if (string.IsNullOrEmpty(value))
-                    throw new Exception($"请在配置文件中配置{nameof(SocketPort)}");
+                    throw new Exception($"请在配置文件中配置{nameof(LogServerIp)}");
+                return value;
+            }
+        }
+
+        /// <summary>
+        /// 日志服务端口
+        /// </summary>
+        public static int LogServerPort
+        {
+            get
+            {
+                var value = ConfigurationManager.AppSettings[$"{nameof(LogServerPort)}"];
+                if (string.IsNullOrEmpty(value))
+                    throw new Exception($"请在配置文件中配置{nameof(LogServerPort)}");
                 if (int.TryParse(value, out int res))
                     return res;
-                throw new Exception($"{nameof(SocketPort)}必须为整数");
+                throw new Exception($"{nameof(LogServerPort)}必须为整数");
             }
         }
     }

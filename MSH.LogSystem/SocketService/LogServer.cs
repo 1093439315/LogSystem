@@ -30,6 +30,7 @@ namespace SocketService
 
         protected override bool RegisterSession(string sessionID, LogSession appSession)
         {
+            Console.WriteLine("注册Session");
             return base.RegisterSession(sessionID, appSession);
         }
 

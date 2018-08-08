@@ -8,44 +8,40 @@ using System.Linq;
 using System.ServiceProcess;
 using System.Text;
 using System.Threading.Tasks;
-using System.Web.Http;
-using System.Web.Http.SelfHost;
+using WebApiService;
 
 namespace MSH.Log.WindowsService
 {
     public partial class MSHLogService : ServiceBase
     {
-        private HttpSelfHostServer _server;
-        private HttpSelfHostConfiguration _config;
         public const string ServiceAddress = "http://localhost:1345";
 
         public MSHLogService()
         {
             InitializeComponent();
-
-            //_config = new HttpSelfHostConfiguration(ServiceAddress);
-            //_config.Routes.MapHttpRoute("DefaultApi",
-            //    "api/{controller}/{action}/{id}",
-            //    new { id = RouteParameter.Optional });
         }
 
         protected override void OnStart(string[] args)
         {
-            //_server = new HttpSelfHostServer(_config);
-            //_server.OpenAsync();
-            //启动日志落地服务
-            if (LogToDbService.Start())
+            Logger.Info("准备启动服务！");
+            //启动WebApi服务
+            if (!WebApiServiceManage.Start(ServiceAddress))
             {
-                Logger.Info("日志落地服务启动成功!");
+                this.Stop();
             }
+            //启动日志落地服务
+            //if (LogToDbService.Start())
+            //{
+            //    Logger.Info("日志落地服务启动成功!");
+            //}
         }
 
         protected override void OnStop()
         {
-            //_server.CloseAsync().Wait();
-            //_server.Dispose();
+            //终止WebApi服务
+            WebApiServiceManage.Stop();
             //停止日志落地服务
-            LogToDbService.Stop();
+            //LogToDbService.Stop();
         }
     }
 }

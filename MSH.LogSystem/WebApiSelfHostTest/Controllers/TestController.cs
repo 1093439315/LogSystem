@@ -5,14 +5,14 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web.Http;
 
-namespace MSH.Log.WindowsService.ApiControllers
+namespace WebApiSelfHostTest.Controllers
 {
-    public class LogServiceController
+    public class TestController : ApiController
     {
         [HttpGet]
-        public string Get()
+        public string TestGet()
         {
-            return "Hello from windows service!";
+            return "hello";
         }
     }
 }
