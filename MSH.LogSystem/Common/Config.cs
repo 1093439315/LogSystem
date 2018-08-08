@@ -136,5 +136,49 @@ namespace Common
                 throw new Exception($"{nameof(LogServerPort)}必须为整数");
             }
         }
+
+        /// <summary>
+        /// Socket协议起止符
+        /// </summary>
+        public static byte[] BeginMark
+        {
+            get
+            {
+                var value = ConfigurationManager.AppSettings[$"{nameof(BeginMark)}"];
+                if (string.IsNullOrEmpty(value))
+                    throw new Exception($"请在配置文件中配置{nameof(BeginMark)}");
+                return Encoding.UTF8.GetBytes(value);
+            }
+        }
+
+        /// <summary>
+        /// Socket协议结束符
+        /// </summary>
+        public static byte[] EndMark
+        {
+            get
+            {
+                var value = ConfigurationManager.AppSettings[$"{nameof(EndMark)}"];
+                if (string.IsNullOrEmpty(value))
+                    throw new Exception($"请在配置文件中配置{nameof(EndMark)}");
+                return Encoding.UTF8.GetBytes(value);
+            }
+        }
+
+        public static string BeginMarkStr
+        {
+            get
+            {
+                return Encoding.UTF8.GetString(BeginMark);
+            }
+        }
+
+        public static string EndMarkStr
+        {
+            get
+            {
+                return Encoding.UTF8.GetString(EndMark);
+            }
+        }
     }
 }

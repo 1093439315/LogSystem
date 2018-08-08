@@ -62,6 +62,14 @@
       <Project>{7120044E-E2E5-473A-AF08-BD3C4264FFA0}</Project>
       <Name>Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Configuration\Configuration.csproj">
+      <Project>{3F958A68-E56B-4FB5-9187-FC5E73D98D6F}</Project>
+      <Name>Configuration</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DTO\DTO.csproj">
+      <Project>{CDF9B8F1-268F-448E-8B6D-BCA82EA5F55F}</Project>
+      <Name>DTO</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

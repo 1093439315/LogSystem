@@ -1,4 +1,6 @@
-﻿using SuperSocket.Facility.Protocol;
+﻿using Common;
+using Configuration;
+using SuperSocket.Facility.Protocol;
 using SuperSocket.SocketBase.Protocol;
 using System;
 using System.Collections.Generic;
@@ -10,21 +12,31 @@ namespace SocketService
 {
     public class LogReceiveFilter : BeginEndMarkReceiveFilter<StringRequestInfo>
     {
-        //开始和结束标记也可以是两个或两个以上的字节
-        private readonly static byte[] BeginMark = new byte[] { (byte)'!' };
-        private readonly static byte[] EndMark = new byte[] { (byte)'$' };
-
         public LogReceiveFilter()
-            : base(BeginMark, EndMark)
+            : base(Config.BeginMark, Config.EndMark)
         {
-
         }
-        
+
         protected override StringRequestInfo ProcessMatchedRequest(byte[] readBuffer, int offset, int length)
         {
-            var str = Encoding.UTF8.GetString(readBuffer, offset, length);
-            Console.WriteLine(str);
-            return new StringRequestInfo("InfoLog", "world", null);
+            try
+            {
+                var str = Encoding.UTF8.GetString(readBuffer, offset, length);
+                if (!str.StartsWith(Config.BeginMarkStr) || !str.EndsWith(Config.EndMarkStr))
+                    return new StringRequestInfo(Constants.UnKnow, null, null);
+                str = str.Remove(0, Config.BeginMarkStr.Length);
+                str = str.Remove(str.Length - Config.EndMarkStr.Length, Config.EndMarkStr.Length);
+                var result = str.ToObject<StringRequestInfo>();
+                if (result == null)
+                    return new StringRequestInfo(Constants.UnKnow, null, null);
+                return result;
+            }
+            catch (Exception ex)
+            {
+                Logger.Error($"解析请求出错：{ex}");
+                Console.WriteLine(ex.Message);
+                return null;
+            }
         }
     }
 }

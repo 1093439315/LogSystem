@@ -13,5 +13,12 @@ namespace TestProject
             var dao = new BusinessAccess();
             var id = dao.IfNotInAddReturnId("94687", "订单.新建");
         }
+
+        [TestMethod]
+        public void TT()
+        {
+            var str = "/*qweqwe*/";
+            Assert.IsTrue(str.StartsWith("/*"));
+        }
     }
 }

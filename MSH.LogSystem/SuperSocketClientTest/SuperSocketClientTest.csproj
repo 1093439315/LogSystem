@@ -46,8 +46,18 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <Content Include="AppSetting.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <None Include="LogServiceConfig.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Configuration\Configuration.csproj">
+      <Project>{3f958a68-e56b-4fb5-9187-fc5e73d98d6f}</Project>
+      <Name>Configuration</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MSH.LogSocketClient\MSH.LogSocketClient.csproj">
       <Project>{0B209C12-720C-4BC4-9C31-69901605C9A9}</Project>
       <Name>MSH.LogSocketClient</Name>

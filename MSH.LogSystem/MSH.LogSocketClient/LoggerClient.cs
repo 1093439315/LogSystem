@@ -1,4 +1,6 @@
 ﻿using Common;
+using Configuration;
+using DTO;
 using SuperSocket.ClientEngine;
 using SuperSocket.ProtoBase;
 using System;
@@ -21,8 +23,7 @@ namespace MSH.LogSocketClient
             client.Error += Client_Error;
             client.Connected += Client_Connected;
             client.Closed += Client_Closed;
-            client.Security.Credential = new NetworkCredential("123", "456");
-            client.Initialize(new BeiginEndReceiveFilter(), (request) => 
+            client.Initialize(new BeiginEndReceiveFilter(), (request) =>
             {
                 Console.WriteLine(request.Key);
             });
@@ -40,7 +41,17 @@ namespace MSH.LogSocketClient
         private static void Client_Connected(object sender, EventArgs e)
         {
             Console.WriteLine("客户端连接");
-            client.Send(Encoding.UTF8.GetBytes("!LOGIN kerry$"));
+            var body = new LogRequest()
+            {
+                BusinessPosition="订单.新建",
+                Content="测试日志内容而已",
+                CreatTime=DateTime.Now,
+                TraceInfo="测试堆栈信息",
+            };
+            var pack = new StringPackageInfo(LogLevel.Info.ToString(), body.ToJson(), null);
+            var msg = $"{Config.BeginMarkStr}{pack.ToJson()}{Config.EndMarkStr}";
+            for (int i = 0; i <= 10; i++)
+                client.Send(Encoding.UTF8.GetBytes(msg));
         }
 
         private static void Client_Closed(object sender, EventArgs e)

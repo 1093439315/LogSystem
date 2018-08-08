@@ -1,4 +1,5 @@
-﻿using SuperSocket.SocketBase.Command;
+﻿using Configuration;
+using SuperSocket.SocketBase.Command;
 using SuperSocket.SocketBase.Protocol;
 using System;
 using System.Collections.Generic;
@@ -8,13 +9,13 @@ using System.Threading.Tasks;
 
 namespace SocketService
 {
-    public class InfoLogCommand : CommandBase<LogSession, StringRequestInfo>
+    public class ErrorCommand : CommandBase<LogSession, StringRequestInfo>
     {
-        public override string Name => "InfoLog";
+        public override string Name => LogLevel.Error.ToString();
 
         public override void ExecuteCommand(LogSession session, StringRequestInfo requestInfo)
         {
-            Console.WriteLine("信息日志操作！");
+            Console.WriteLine("Error日志操作！");
         }
     }
 }

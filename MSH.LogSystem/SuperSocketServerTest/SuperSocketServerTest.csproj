@@ -67,6 +67,9 @@
     <Content Include="App.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="AppSetting.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <None Include="Config\log4net.config" />
     <None Include="Config\log4net.unix.config" />
     <None Include="LogServiceConfig.config">
