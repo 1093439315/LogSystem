@@ -20,7 +20,7 @@ namespace MSH.LogClient
         static EasyClient client;
         static Task ReadLogTask;
         static Task WatchSocketTask;
-        private static AutoResetEvent AutoEvent = new AutoResetEvent(false);
+        private static ManualResetEvent ResetEvent = new ManualResetEvent(false);
 
         /// <summary>
         /// 是否连接
@@ -60,21 +60,21 @@ namespace MSH.LogClient
         private static void Client_Error(object sender, ErrorEventArgs e)
         {
             Console.WriteLine($"客户端发生错误：{e.Exception}");
-            AutoEvent.Reset();
+            ResetEvent.Reset();
         }
 
         private static void Client_Connected(object sender, EventArgs e)
         {
             Console.WriteLine("客户端连接");
             //继续读取任务
-            AutoEvent.Set();
+            ResetEvent.Set();
         }
 
         private static void Client_Closed(object sender, EventArgs e)
         {
             Console.WriteLine("客户端关闭");
             //暂停读取日志
-            AutoEvent.Reset();
+            ResetEvent.Reset();
         }
 
         #endregion
@@ -127,18 +127,14 @@ namespace MSH.LogClient
                     {
                         Console.WriteLine("开始读取之前！");
                         //连接成功了才开始读取
-                        AutoEvent.WaitOne();
+                        ResetEvent.WaitOne();
+                        //if (!IsConnected) continue;
                         Console.WriteLine("开始读取！");
                         var item = MSHLogger.LoggingEvents.Take();
                         if (item == null) continue;
                         Console.WriteLine(item.ToJson());
                     }
                 });
-            }
-            else
-            {
-                if (ReadLogTask.Status != TaskStatus.Running)
-                    ReadLogTask.Start();
             }
         }
 
@@ -161,11 +157,6 @@ namespace MSH.LogClient
                           Thread.Sleep(3000);
                       }
                   });
-            }
-            else
-            {
-                if (WatchSocketTask.Status != TaskStatus.Running)
-                    WatchSocketTask.Start();
             }
         }
 
