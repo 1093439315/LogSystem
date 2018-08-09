@@ -25,9 +25,10 @@ namespace MSH.LogClient
 
         public string AppId { get; set; }
         public string Secrect { get; set; }
-        
+
         protected override void Append(LoggingEvent loggingEvent)
         {
+            SocketClientManage.Start(this.ServerHost, int.Parse(this.ServerPort));
             SetLogProperty(loggingEvent);
             MSHLogger.LoggingEvents.Add(loggingEvent);
             var obj = loggingEvent;
@@ -35,7 +36,8 @@ namespace MSH.LogClient
 
         protected override void Append(LoggingEvent[] loggingEvents)
         {
-            loggingEvents.ToList().ForEach(a => 
+            SocketClientManage.Start(this.ServerHost, int.Parse(this.ServerPort));
+            loggingEvents.ToList().ForEach(a =>
             {
                 SetLogProperty(a);
                 MSHLogger.LoggingEvents.Add(a);

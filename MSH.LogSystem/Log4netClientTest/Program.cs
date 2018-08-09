@@ -14,6 +14,7 @@ namespace Log4netClientTest
         {
             MSHLogger.DefaultInfo("测试！");
             MSHLogger.Instance("订单", "新建").Info("业务测试");
+            MSHLogger.Instance("订单", "新建").Info("业务测试");
 
             Console.ReadKey();
 
