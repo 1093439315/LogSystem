@@ -92,7 +92,7 @@ namespace MSH.LogClient
             var msg = $"{Config.BeginMarkStr}{pack.ToJson()}{Config.EndMarkStr}";
             client.Send(Encoding.UTF8.GetBytes(msg));
         }
-        
+
         private static EasyClient CreatClient(string ip, int port)
         {
             var client = new EasyClient();
@@ -121,10 +121,11 @@ namespace MSH.LogClient
         {
             if (ReadLogTask == null)
             {
-                ReadLogTask = Task.Factory.StartNew(() =>
+                ReadLogTask = Task.Run(() =>
                 {
                     while (true)
                     {
+                        Console.WriteLine("开始读取之前！");
                         //连接成功了才开始读取
                         AutoEvent.WaitOne();
                         Console.WriteLine("开始读取！");
@@ -148,36 +149,18 @@ namespace MSH.LogClient
         {
             if (WatchSocketTask == null)
             {
-                Task.Run(() =>
-                {
-                    while (true)
-                    {
-                        if (IsConnected) continue;
+                WatchSocketTask = Task.Run(() =>
+                  {
+                      while (true)
+                      {
+                          if (IsConnected) continue;
 
-                        Console.WriteLine("尝试重连！");
-                        Connect(ip, port);
+                          Console.WriteLine("尝试重连！");
+                          Connect(ip, port);
 
-                        Thread.Sleep(3000);
-                    }
-                });
-            }
-
-            return;
-
-            if (WatchSocketTask == null)
-            {
-                WatchSocketTask = Task.Factory.StartNew(() =>
-                {
-                    while (true)
-                    {
-                        if (IsConnected) continue;
-
-                        Console.WriteLine("尝试重连！");
-                        Connect(ip, port);
-
-                        Thread.Sleep(3000);
-                    }
-                });
+                          Thread.Sleep(3000);
+                      }
+                  });
             }
             else
             {
