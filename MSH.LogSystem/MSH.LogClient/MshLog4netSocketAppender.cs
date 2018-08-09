@@ -1,6 +1,7 @@
 ﻿using log4net.Appender;
 using log4net.Core;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,18 +17,38 @@ namespace MSH.LogClient
         /// <summary>
         /// 日志服务器地址
         /// </summary>
-        public string RemoteAddress { get; set; }
+        public string ServerHost { get; set; }
+        /// <summary>
+        /// 日志服务器端口
+        /// </summary>
+        public string ServerPort { get; set; }
 
+        public string AppId { get; set; }
+        public string Secrect { get; set; }
+        
         protected override void Append(LoggingEvent loggingEvent)
         {
-            Console.WriteLine("日志啊");
+            SetLogProperty(loggingEvent);
+            MSHLogger.LoggingEvents.Add(loggingEvent);
             var obj = loggingEvent;
         }
 
         protected override void Append(LoggingEvent[] loggingEvents)
         {
-            Console.WriteLine("日志啊");
+            loggingEvents.ToList().ForEach(a => 
+            {
+                SetLogProperty(a);
+                MSHLogger.LoggingEvents.Add(a);
+            });
             base.Append(loggingEvents);
+        }
+
+        protected void SetLogProperty(LoggingEvent loggingEvent)
+        {
+            loggingEvent.Properties[nameof(ServerHost)] = ServerHost;
+            loggingEvent.Properties[nameof(ServerPort)] = ServerPort;
+            loggingEvent.Properties[nameof(AppId)] = AppId;
+            loggingEvent.Properties[nameof(Secrect)] = Secrect;
         }
     }
 }

@@ -51,8 +51,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BeiginEndReceiveFilter.cs" />
-    <Compile Include="LoggerClient.cs" />
+    <Compile Include="LogData.cs" />
+    <Compile Include="LoggerSocketClient.cs" />
     <Compile Include="MshLog4netSocketAppender.cs" />
+    <Compile Include="MSHLogger.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -1,9 +1,11 @@
 ﻿using Common;
 using Configuration;
 using DTO;
+using log4net.Core;
 using SuperSocket.ClientEngine;
 using SuperSocket.ProtoBase;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -12,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace MSH.LogClient
 {
-    public class LoggerClient
+    internal class LoggerSocketClient
     {
         static EasyClient client = new EasyClient();
 
@@ -41,22 +43,25 @@ namespace MSH.LogClient
         private static void Client_Connected(object sender, EventArgs e)
         {
             Console.WriteLine("客户端连接");
-            var body = new LogRequest()
-            {
-                BusinessPosition="订单.新建",
-                Content="测试日志内容而已",
-                CreatTime=DateTime.Now,
-                TraceInfo="测试堆栈信息",
-            };
-            var pack = new StringPackageInfo(LogLevel.Info.ToString(), body.ToJson(), null);
-            var msg = $"{Config.BeginMarkStr}{pack.ToJson()}{Config.EndMarkStr}";
-            for (int i = 0; i <= 10; i++)
-                client.Send(Encoding.UTF8.GetBytes(msg));
         }
 
         private static void Client_Closed(object sender, EventArgs e)
         {
             Console.WriteLine("客户端关闭");
+        }
+
+        public static void SendMessage()
+        {
+            var body = new LogRequest()
+            {
+                BusinessPosition = "订单.新建",
+                Content = "测试日志内容而已",
+                CreatTime = DateTime.Now,
+                TraceInfo = "测试堆栈信息",
+            };
+            var pack = new StringPackageInfo(LogLevel.Info.ToString(), body.ToJson(), null);
+            var msg = $"{Config.BeginMarkStr}{pack.ToJson()}{Config.EndMarkStr}";
+            client.Send(Encoding.UTF8.GetBytes(msg));
         }
     }
 }

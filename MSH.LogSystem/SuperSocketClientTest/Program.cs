@@ -11,7 +11,7 @@ namespace SuperSocketClientTest
     {
         static void Main(string[] args)
         {
-            LoggerClient.Connect();
+            //LoggerSocketClient.Connect();
         }
     }
 }

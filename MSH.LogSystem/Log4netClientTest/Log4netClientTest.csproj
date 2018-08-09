@@ -46,7 +46,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Logger.cs" />
-    <Compile Include="MshLog4netSocketAppender.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -59,6 +58,12 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MSH.LogClient\MSH.LogClient.csproj">
+      <Project>{0b209c12-720c-4bc4-9c31-69901605c9a9}</Project>
+      <Name>MSH.LogClient</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

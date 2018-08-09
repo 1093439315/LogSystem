@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace MSH.LogClient
 {
-    public class BeiginEndReceiveFilter : BeginEndMarkReceiveFilter<StringPackageInfo>
+    internal class BeiginEndReceiveFilter : BeginEndMarkReceiveFilter<StringPackageInfo>
     {
         public BeiginEndReceiveFilter()
             : base(new byte[] { (byte)'!' }, new byte[] { (byte)'$' })
