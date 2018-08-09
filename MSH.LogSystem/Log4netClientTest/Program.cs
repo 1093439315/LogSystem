@@ -16,6 +16,15 @@ namespace Log4netClientTest
             MSHLogger.Instance("订单", "新建").Info("业务测试");
 
             Console.ReadKey();
+
+            MSHLogger.DefaultInfo("嘿嘿");
+            Console.ReadKey();
+            MSHLogger.DefaultInfo("嘿嘿");
+            Console.ReadKey();
+            MSHLogger.DefaultInfo("嘿嘿");
+            Console.ReadKey();
+            MSHLogger.DefaultInfo("嘿嘿");
+            Console.ReadKey();
         }
     }
 }

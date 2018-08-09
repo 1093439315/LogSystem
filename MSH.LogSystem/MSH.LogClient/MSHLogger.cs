@@ -31,6 +31,12 @@ namespace MSH.LogClient
         /// </summary>
         internal static BlockingCollection<LoggingEvent> LoggingEvents { get; set; } = new BlockingCollection<LoggingEvent>();
 
+        static MSHLogger()
+        {
+            Console.WriteLine("执行一次！");
+            //LoggerSocketClient.Connect();
+        }
+
         #region Info日志
 
         /// <summary>

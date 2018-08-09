@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace MSH.LogClient
@@ -17,11 +18,23 @@ namespace MSH.LogClient
     internal class LoggerSocketClient
     {
         static EasyClient client = new EasyClient();
+        static Task ReadLogTask;
+        private static AutoResetEvent AutoEvent = new AutoResetEvent(false);
 
-        public static void Connect()
+        /// <summary>
+        /// 是否连接
+        /// </summary>
+        public static bool IsConnected
         {
-            string ip = Config.LogServerIp;
-            int port = Config.LogServerPort;
+            get
+            {
+                if (client == null) return false;
+                return client.IsConnected;
+            }
+        }
+
+        static LoggerSocketClient()
+        {
             client.Error += Client_Error;
             client.Connected += Client_Connected;
             client.Closed += Client_Closed;
@@ -29,9 +42,14 @@ namespace MSH.LogClient
             {
                 Console.WriteLine(request.Key);
             });
-            client.ConnectAsync(new IPEndPoint(IPAddress.Parse(ip), port)).Wait();
-            Console.Read();
+        }
 
+        public static void Connect(string ip, int port)
+        {
+            CreatReadTask();
+            
+            client.ConnectAsync(new IPEndPoint(IPAddress.Parse(ip), port)).Wait();
+            
             client.Close();
         }
 
@@ -43,11 +61,18 @@ namespace MSH.LogClient
         private static void Client_Connected(object sender, EventArgs e)
         {
             Console.WriteLine("客户端连接");
+            //继续读取任务
+            AutoEvent.Reset();
+
+            //连接完成启动读取Task
+
         }
 
         private static void Client_Closed(object sender, EventArgs e)
         {
             Console.WriteLine("客户端关闭");
+            //暂停读取日志
+            AutoEvent.Set();
         }
 
         public static void SendMessage()
@@ -62,6 +87,41 @@ namespace MSH.LogClient
             var pack = new StringPackageInfo(LogLevel.Info.ToString(), body.ToJson(), null);
             var msg = $"{Config.BeginMarkStr}{pack.ToJson()}{Config.EndMarkStr}";
             client.Send(Encoding.UTF8.GetBytes(msg));
+        }
+
+        /// <summary>
+        /// 创建连接任务
+        /// </summary>
+        private static void CreatConnectTask()
+        {
+
+        }
+
+        /// <summary>
+        /// 创建读取任务
+        /// </summary>
+        private static void CreatReadTask()
+        {
+            if (ReadLogTask == null)
+            {
+                ReadLogTask = Task.Factory.StartNew(() =>
+                {
+                    while (!MSHLogger.LoggingEvents.IsCompleted)
+                    {
+                        AutoEvent.WaitOne();
+                        var item = MSHLogger.LoggingEvents.Take();
+                        //读取Ip和port
+
+
+                        Console.WriteLine(item.ToJson());
+                    }
+                });
+            }
+            else
+            {
+                if (ReadLogTask.Status != TaskStatus.Running)
+                    ReadLogTask.Start();
+            }
         }
     }
 }
