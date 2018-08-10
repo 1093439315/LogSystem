@@ -10,37 +10,73 @@ namespace Rabbitmq.Core
 {
     internal class RabbitMqChannelManage
     {
-        private static Dictionary<string, IModel> Channels { get; set; } = new Dictionary<string, IModel>();
+        private static Dictionary<string, IModel> SaveChannels { get; set; } = new Dictionary<string, IModel>();
+        private static Dictionary<string, IModel> ReadChannels { get; set; } = new Dictionary<string, IModel>();
 
-        public static IModel GetChannel(string channelName)
+        /// <summary>
+        /// 获取插入Channel
+        /// </summary>
+        /// <param name="channelName"></param>
+        /// <returns></returns>
+        public static IModel GetSaveChannel(string channelName)
         {
             //队列管道名称为空时使用默认管道
             if (string.IsNullOrEmpty(channelName))
                 channelName = Config.DefaultQueueName;
-            if (Channels == null)
-                Channels = new Dictionary<string, IModel>();
-            if (Channels.Keys.Contains(channelName))
-                return Channels[channelName];
+            if (SaveChannels == null)
+                SaveChannels = new Dictionary<string, IModel>();
+            if (SaveChannels.Keys.Contains(channelName))
+                return SaveChannels[channelName];
 
-            var connection = RabbitMqConnectionManage.Connection;
+            var connection = RabbitMqConnectionManage.CreatConnection();
             if (connection == null)
                 throw new Exception("请先创建队列的连接！");
 
             var channel = connection.CreateModel();
+            //声明交换机
+            channel.ExchangeDeclare(channelName, "direct", true, false, null);
+            //声明队列
             channel.QueueDeclare(channelName, true, false, false, null);
-            Channels.Add(channelName, channel);
+            //声明队列绑定
+            channel.QueueBind(channelName, channelName, $"Log/{channelName}", null);
+            SaveChannels.Add(channelName, channel);
+            return channel;
+        }
+
+        /// <summary>
+        /// 获取读取Channel
+        /// </summary>
+        /// <param name="channelName"></param>
+        /// <returns></returns>
+        public static IModel GetReadChannel(string channelName)
+        {
+            //队列管道名称为空时使用默认管道
+            if (string.IsNullOrEmpty(channelName))
+                channelName = Config.DefaultQueueName;
+            if (ReadChannels == null)
+                ReadChannels = new Dictionary<string, IModel>();
+            if (ReadChannels.Keys.Contains(channelName))
+                return ReadChannels[channelName];
+
+            var connection = RabbitMqConnectionManage.CreatConnection();
+            if (connection == null)
+                throw new Exception("请先创建队列的连接！");
+            
+            var channel = connection.CreateModel();
+            channel.QueueDeclare(channelName, true, false, false, null);
+            ReadChannels.Add(channelName, channel);
             return channel;
         }
 
         public static void Close()
         {
-            if (Channels != null)
+            if (SaveChannels != null)
             {
-                foreach (var item in Channels)
+                foreach (var item in SaveChannels)
                 {
                     item.Value.Close();
                 }
-                Channels = null;
+                SaveChannels = null;
             }
         }
     }

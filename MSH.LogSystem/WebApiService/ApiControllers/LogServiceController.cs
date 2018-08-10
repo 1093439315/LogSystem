@@ -8,7 +8,7 @@ using System.Web.Http;
 using BusinessLayer.Interface;
 using DTO;
 
-namespace WebApiService.ApiControllers
+namespace WebApiService.Core.ApiControllers
 {
     /// <summary>
     /// 日志服务

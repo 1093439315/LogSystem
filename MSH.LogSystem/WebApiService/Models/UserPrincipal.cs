@@ -5,7 +5,7 @@ using System.Linq;
 using System.Security.Principal;
 using System.Web;
 
-namespace WebApiService.Models
+namespace WebApiService.Core.Models
 {
     public class UserPrincipal : IPrincipal
     {

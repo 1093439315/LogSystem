@@ -5,7 +5,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 
-namespace WebApiService.ApiControllers
+namespace WebApiService.Core.ApiControllers
 {
     /// <summary>
     /// 日志客户端控制器

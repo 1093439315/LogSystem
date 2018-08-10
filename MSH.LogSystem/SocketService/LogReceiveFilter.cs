@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SocketService
+namespace SocketService.Core
 {
     public class LogReceiveFilter : BeginEndMarkReceiveFilter<StringRequestInfo>
     {

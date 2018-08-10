@@ -8,6 +8,7 @@ namespace DTO
 {
     public class LogRequest
     {
+        public string AppId { get; set; }
         /// <summary>
         /// 日志内容
         /// </summary>

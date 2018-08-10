@@ -11,25 +11,28 @@ namespace Rabbitmq.Core
     internal class RabbitMqConnectionManage
     {
         private static ConnectionFactory ConnectionFactory { get; set; }
+        private static List<IConnection> AllConnections { get; set; } = new List<IConnection>();
+        private static IConnection IConnection { get; set; }
 
-        public static IConnection Connection { get; private set; }
-
-        public static void CreatConnection()
+        public static IConnection CreatConnection()
         {
             if (ConnectionFactory == null)
             {
                 ConnectionFactory = new ConnectionFactory();
+                ConnectionFactory.AutomaticRecoveryEnabled = true;
                 ConnectionFactory.HostName = Config.RabbitMqHost;
                 ConnectionFactory.UserName = Config.RabbitMqUserName;
                 ConnectionFactory.Password = Config.RabbitMqPassword;
             }
-            if (Connection == null)
-            {
-                Connection = ConnectionFactory?.CreateConnection();
-            }
+            if (IConnection == null || !IConnection.IsOpen)
+                IConnection = ConnectionFactory?.CreateConnection();
+            return IConnection;
+            //var connection= ConnectionFactory?.CreateConnection();
+            //AllConnections.Add(connection);
+            //return connection;
         }
 
-        public static void CreatConnection(string userName,string password)
+        public static IConnection CreatConnection(string userName, string password)
         {
             if (ConnectionFactory == null)
             {
@@ -38,21 +41,26 @@ namespace Rabbitmq.Core
                 ConnectionFactory.UserName = userName;
                 ConnectionFactory.Password = password;
             }
-            if (Connection == null)
-            {
-                Connection = ConnectionFactory?.CreateConnection();
-            }
+            if (IConnection == null || !IConnection.IsOpen)
+                IConnection = ConnectionFactory?.CreateConnection();
+            return IConnection;
+            //var connection = ConnectionFactory?.CreateConnection();
+            //AllConnections.Add(connection);
+            //return connection;
         }
 
         public static void Close()
         {
             if (ConnectionFactory != null)
                 ConnectionFactory = null;
-            if (Connection != null)
+            IConnection?.Close();
+            foreach (var Connection in AllConnections)
             {
-                Connection.Close();
-                Connection.Dispose();
-                Connection = null;
+                if (Connection != null)
+                {
+                    Connection.Close();
+                    Connection.Dispose();
+                }
             }
         }
     }

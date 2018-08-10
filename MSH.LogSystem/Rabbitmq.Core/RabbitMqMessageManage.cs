@@ -28,7 +28,7 @@ namespace Rabbitmq.Core
             if (string.IsNullOrEmpty(queueName))
                 throw new Exception("队列管道名称不能为空！");
 
-            var channel = RabbitMqChannelManage.GetChannel(queueName);
+            var channel = RabbitMqChannelManage.GetSaveChannel(queueName);
             if (channel == null)
                 throw new Exception("请先开启队列管道");
 
@@ -44,12 +44,14 @@ namespace Rabbitmq.Core
             }
         }
 
+        #region 读取通道
+
         public static T Get<T>(string queueName)
             where T : class
         {
             if (string.IsNullOrEmpty(queueName))
                 throw new Exception("队列管道名称不能为空！");
-            var channel = RabbitMqChannelManage.GetChannel(queueName);
+            var channel = RabbitMqChannelManage.GetReadChannel(queueName);
             if (channel == null)
                 throw new Exception("请先开启队列管道");
 
@@ -76,7 +78,7 @@ namespace Rabbitmq.Core
         {
             if (string.IsNullOrEmpty(queueName))
                 throw new Exception("队列管道名称不能为空！");
-            var channel = RabbitMqChannelManage.GetChannel(queueName);
+            var channel = RabbitMqChannelManage.GetReadChannel(queueName);
             if (channel == null)
                 throw new Exception("请先开启队列管道");
 
@@ -92,7 +94,7 @@ namespace Rabbitmq.Core
         {
             if (string.IsNullOrEmpty(queueName))
                 throw new Exception("队列管道名称不能为空！");
-            var channel = RabbitMqChannelManage.GetChannel(queueName);
+            var channel = RabbitMqChannelManage.GetReadChannel(queueName);
             if (channel == null)
                 throw new Exception("请先开启队列管道");
 
@@ -118,7 +120,9 @@ namespace Rabbitmq.Core
             var msg = Encoding.UTF8.GetString(body);
             var obj = msg.ToObject<T>();
             if (obj != null)
-                MessageReceivedEvent?.Invoke(obj, queueName,e.DeliveryTag);
+                MessageReceivedEvent?.Invoke(obj, queueName, e.DeliveryTag);
         }
+
+        #endregion
     }
 }

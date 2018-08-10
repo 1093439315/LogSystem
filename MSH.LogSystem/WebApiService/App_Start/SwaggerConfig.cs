@@ -1,6 +1,6 @@
 using System.Web.Http;
 using WebActivatorEx;
-using WebApiService;
+using WebApiService.Core;
 using Swashbuckle.Application;
 using Swashbuckle.Swagger;
 using System.Web.Http.Description;
@@ -15,7 +15,7 @@ using Common;
 
 //[assembly: PreApplicationStartMethod(typeof(SwaggerConfig), "Register")]
 
-namespace WebApiService
+namespace WebApiService.Core
 {
     public class SwaggerConfig
     {

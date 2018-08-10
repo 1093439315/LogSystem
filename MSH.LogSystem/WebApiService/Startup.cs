@@ -9,8 +9,8 @@ using System.Web.Http;
 using Microsoft.Owin.Cors;
 using MapperConfiguration;
 
-[assembly: OwinStartup(typeof(WebApiService.Startup))]
-namespace WebApiService
+[assembly: OwinStartup(typeof(WebApiService.Core.Startup))]
+namespace WebApiService.Core
 {
     public class Startup
     {

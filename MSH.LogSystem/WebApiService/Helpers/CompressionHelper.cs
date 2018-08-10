@@ -6,7 +6,7 @@ using System.Linq;
 using System.Web;
 using Ionic.Zlib;
 
-namespace WebApiService.Helpers
+namespace WebApiService.Core.Helpers
 {
     public class CompressionHelper
     {

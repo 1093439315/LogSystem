@@ -1,4 +1,4 @@
-﻿using WebApiService.Helpers;
+﻿using WebApiService.Core.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,7 +6,7 @@ using System.Net.Http;
 using System.Web;
 using System.Web.Http.Filters;
 
-namespace WebApiService.Filters
+namespace WebApiService.Core.Filters
 {
     public class DeflateCompressionAttribute : ActionFilterAttribute
     {

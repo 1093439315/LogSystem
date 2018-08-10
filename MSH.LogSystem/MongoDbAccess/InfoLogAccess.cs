@@ -20,13 +20,13 @@ namespace MongoDbAccess
     {
         private BusinessAccess _BusinessAccess = new BusinessAccess();
 
-        public void AddInfoLog(string appId, LogRequest logRequest)
+        public void AddInfoLog(LogRequest logRequest)
         {
             if (logRequest == null || logRequest.Content == null)
                 throw new ArgumentException(nameof(logRequest), "日志内容不能为空！");
 
             //取业务Id 如果没有则新建业务
-            var business = _BusinessAccess.IfNotInAddReturnEntity(appId, logRequest.BusinessPosition);
+            var business = _BusinessAccess.IfNotInAddReturnEntity(logRequest.AppId, logRequest.BusinessPosition);
             var entity = new InfoLog()
             {
                 Content = logRequest.Content.ToJson(),

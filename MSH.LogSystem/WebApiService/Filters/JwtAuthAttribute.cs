@@ -2,7 +2,7 @@
 using BusinessLayer.Interface;
 using Common;
 using Configuration;
-using WebApiService.Models;
+using WebApiService.Core.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +10,7 @@ using System.Web;
 using System.Web.Http;
 using System.Web.Http.Controllers;
 
-namespace WebApiService.Filters
+namespace WebApiService.Core.Filters
 {
     public class JwtAuthAttribute : AuthorizeAttribute
     {

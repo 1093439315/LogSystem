@@ -8,7 +8,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 
-namespace WebApiService.ApiControllers
+namespace WebApiService.Core.ApiControllers
 {
     /// <summary>
     /// 公共数据服务

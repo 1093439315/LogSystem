@@ -5,9 +5,9 @@ using System.Linq;
 using System.Web.Http;
 using System.Web.Http.Cors;
 using System.Web.Http.Filters;
-using WebApiService.Filters;
+using WebApiService.Core.Filters;
 
-namespace WebApiService
+namespace WebApiService.Core
 {
     public static class WebApiConfig
     {

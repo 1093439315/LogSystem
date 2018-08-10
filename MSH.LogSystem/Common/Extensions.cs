@@ -102,7 +102,7 @@ namespace Common
             }
             catch (Exception ex)
             {
-                Logger.Info("Json反序列化发生错误:{0}", ex.Message);
+                Logger.Info($"Json反序列化发生错误:{ex.Message}");
                 return null;
             }
         }

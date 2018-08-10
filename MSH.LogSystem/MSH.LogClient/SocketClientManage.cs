@@ -132,13 +132,16 @@ namespace MSH.LogClient
 
                         var logData = item.MessageObject as LogData;
                         if (logData == null) continue;
+
                         var logRequest = new LogRequest()
                         {
+                            AppId=appId.ToString(),
                             BusinessPosition = logData.BusinessPosition ?? $"{defaultBusinessPosition}",
                             Content = logData.Message,
                             CreatTime = item.TimeStamp,
                             TraceInfo = logData.TraceInfo
                         };
+                        Console.WriteLine($"开始发送日志请求:{logRequest.ToJson()}");
                         SendMessage(MapLogLevel(item.Level), $"{beginMark}", $"{endMark}", logRequest);
                     }
                 });

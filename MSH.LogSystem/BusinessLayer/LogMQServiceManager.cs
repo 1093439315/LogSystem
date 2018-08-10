@@ -78,24 +78,24 @@ namespace BusinessLayer
                 return;
             }
             //将日志写入MogoDb
-            Console.WriteLine($"从队列中读取了消息:{obj.ToJson()}");
-            var res = SaveLog("94687", log);
+            Logger.Info($"从队列中读取了消息:{obj.ToJson()}");
+            var res = SaveLog(log);
             if (res)
                 RabbitMqMessageManage.SendReceivedResult(queueName, msgId, true);
             else
                 RabbitMqMessageManage.SendReceivedResult(queueName, msgId, false);
         }
 
-        private bool SaveLog(string appId, LogRequest logRequest)
+        private bool SaveLog(LogRequest logRequest)
         {
             try
             {
-                _InfoLogAccess.AddInfoLog("94687", logRequest);
+                _InfoLogAccess.AddInfoLog(logRequest);
                 return true;
             }
             catch (Exception ex)
             {
-                Logger.Error($"{nameof(appId)}:{appId} 保存日志发生错误:{ex}  日志内容:{logRequest.ToJson()}");
+                Logger.Error($"{nameof(logRequest.AppId)}:{logRequest.AppId} 保存日志发生错误:{ex}  日志内容:{logRequest.ToJson()}");
                 return false;
             }
         }

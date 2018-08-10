@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web.Http;
 
-namespace WebApiService
+namespace WebApiService.Core
 {
     public static class WebApiServiceManage
     {

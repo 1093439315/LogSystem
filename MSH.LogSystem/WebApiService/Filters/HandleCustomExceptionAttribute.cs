@@ -8,7 +8,7 @@ using System.Net.Http;
 using System.Web;
 using System.Web.Http.Filters;
 
-namespace WebApiService.Filters
+namespace WebApiService.Core.Filters
 {
     public class HandleCustomExceptionAttribute : ExceptionFilterAttribute
     {
@@ -25,7 +25,7 @@ namespace WebApiService.Filters
             }
             else
                 filterContext.Response = filterContext.Request.CreateResponse(HttpStatusCode.ServiceUnavailable, new AjaxReturnInfo(ex.Message));
-            Logger.Error("请求地址:{0}  发生错误:{1}", filterContext.Request.RequestUri, ex);
+            Logger.Error($"请求地址:{filterContext.Request.RequestUri}  发生错误:{ex}");
             base.OnException(filterContext);
         }
     }

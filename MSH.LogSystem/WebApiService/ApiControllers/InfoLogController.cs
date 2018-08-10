@@ -9,7 +9,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 
-namespace WebApiService.ApiControllers
+namespace WebApiService.Core.ApiControllers
 {
     /// <summary>
     /// 信息日志管理

@@ -7,8 +7,8 @@
     <ProjectGuid>{39A60AA8-4C64-4F3F-909F-EFC540A58C0A}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>WebApiService</RootNamespace>
-    <AssemblyName>WebApiService</AssemblyName>
+    <RootNamespace>WebApiService.Core</RootNamespace>
+    <AssemblyName>WebApiService.Core</AssemblyName>
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
@@ -21,7 +21,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\Debug\WebApiService.xml</DocumentationFile>
+    <DocumentationFile>bin\Debug\WebApiService.Core.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -30,7 +30,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\Release\WebApiService.xml</DocumentationFile>
+    <DocumentationFile>bin\Release\WebApiService.Core.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Aop.Autofac, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">

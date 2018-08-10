@@ -9,7 +9,7 @@ using Common;
 using Configuration;
 using DTO;
 
-namespace WebApiService.ApiControllers
+namespace WebApiService.Core.ApiControllers
 {
     /// <summary>
     /// 验证授权服务

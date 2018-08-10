@@ -11,7 +11,7 @@ namespace TestProject
         public void AddInfoLog()
         {
             var dao = new InfoLogAccess();
-            dao.AddInfoLog("94687", new DTO.LogRequest()
+            dao.AddInfoLog(new DTO.LogRequest()
             {
                 BusinessPosition = "订单.删除",
                 Content = "这是一个测试的信息日志",
