@@ -22,12 +22,12 @@ namespace SuperSocketServerTest
         private static ILogMQServiceManager manager = new LogMQServiceManager();
         static void Main(string[] args)
         {
+            RabbitMqServiceManage.Start();
             if (!SocketServiceManage.Start())
             {
                 Console.WriteLine("服务启动失败！");
             }
 
-            RabbitMqServiceManage.Start();
             manager.StartGetMsg(LogLevel.Info);
 
             Console.ReadLine();

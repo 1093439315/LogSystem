@@ -36,7 +36,7 @@ namespace Rabbitmq.Core
             try
             {
                 var body = Encoding.UTF8.GetBytes(msgStr);
-                channel.BasicPublish("", queueName, null, body);
+                channel.BasicPublish(queueName, queueName, null, body);
             }
             catch (Exception ex)
             {
