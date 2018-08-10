@@ -33,8 +33,6 @@ namespace MSH.LogClient
 
         static MSHLogger()
         {
-            Console.WriteLine("执行一次！");
-            //LoggerSocketClient.Connect();
         }
 
         #region Info日志
@@ -46,7 +44,8 @@ namespace MSH.LogClient
         public static void DefaultInfo(object message)
         {
             Log = log4net.LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
-            Log.Info(message);
+            var ss = Log.Logger.Repository;
+            Log.Info(new LogData(null, message));
         }
 
         /// <summary>

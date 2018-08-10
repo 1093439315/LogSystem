@@ -78,21 +78,7 @@ namespace MSH.LogClient
         }
 
         #endregion
-
-        public static void SendMessage()
-        {
-            var body = new LogRequest()
-            {
-                BusinessPosition = "订单.新建",
-                Content = "测试日志内容而已",
-                CreatTime = DateTime.Now,
-                TraceInfo = "测试堆栈信息",
-            };
-            var pack = new StringPackageInfo(LogLevel.Info.ToString(), body.ToJson(), null);
-            var msg = $"{Config.BeginMarkStr}{pack.ToJson()}{Config.EndMarkStr}";
-            client.Send(Encoding.UTF8.GetBytes(msg));
-        }
-
+        
         private static EasyClient CreatClient(string ip, int port)
         {
             var client = new EasyClient();
@@ -125,14 +111,30 @@ namespace MSH.LogClient
                 {
                     while (true)
                     {
-                        Console.WriteLine("开始读取之前！");
                         //连接成功了才开始读取
                         ResetEvent.WaitOne();
-                        //if (!IsConnected) continue;
-                        Console.WriteLine("开始读取！");
+
                         var item = MSHLogger.LoggingEvents.Take();
                         if (item == null) continue;
                         Console.WriteLine(item.ToJson());
+
+                        //将日志发送到服务器
+                        var serverHost = item.Properties["ServerHost"];
+                        var serverPort = item.Properties["ServerPort"];
+                        var appId = item.Properties["AppId"];
+                        var secrect = item.Properties["Secrect"];
+                        var defaultBusinessPosition = item.Properties["DefaultBusinessPosition"];
+
+                        var logData = item.MessageObject as LogData;
+                        if (logData == null) continue;
+                        var logRequest = new LogRequest()
+                        {
+                            BusinessPosition = logData.BusinessPosition ?? $"{defaultBusinessPosition}",
+                            Content = logData.Message,
+                            CreatTime = item.TimeStamp,
+                            //TraceInfo = item.LocationInformation.,
+                        };
+                        SendMessage(logRequest);
                     }
                 });
             }
@@ -171,6 +173,13 @@ namespace MSH.LogClient
             {
                 Logger.Error($"连接Socket服务失败:{ex}");
             }
+        }
+
+        private static void SendMessage(LogRequest logRequest)
+        {
+            var pack = new StringPackageInfo(LogLevel.Info.ToString(), logRequest.ToJson(), null);
+            var msg = $"{Config.BeginMarkStr}{pack.ToJson()}{Config.EndMarkStr}";
+            client.Send(Encoding.UTF8.GetBytes(msg));
         }
     }
 }

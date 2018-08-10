@@ -22,6 +22,10 @@ namespace MSH.LogClient
         /// 日志服务器端口
         /// </summary>
         public string ServerPort { get; set; }
+        /// <summary>
+        /// 默认业务位置
+        /// </summary>
+        public string DefaultBusinessPosition { get; set; }
 
         public string AppId { get; set; }
         public string Secrect { get; set; }
@@ -51,6 +55,7 @@ namespace MSH.LogClient
             loggingEvent.Properties[nameof(ServerPort)] = ServerPort;
             loggingEvent.Properties[nameof(AppId)] = AppId;
             loggingEvent.Properties[nameof(Secrect)] = Secrect;
+            loggingEvent.Properties[nameof(DefaultBusinessPosition)] = DefaultBusinessPosition;
         }
     }
 }
