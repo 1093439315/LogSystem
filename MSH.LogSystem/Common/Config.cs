@@ -180,5 +180,19 @@ namespace Common
                 return Encoding.UTF8.GetString(EndMark);
             }
         }
+
+        /// <summary>
+        /// 日志Socket服务配置文件名
+        /// </summary>
+        public static string LogServiceConfigFileName
+        {
+            get
+            {
+                var value = ConfigurationManager.AppSettings[$"{nameof(LogServiceConfigFileName)}"];
+                if (string.IsNullOrEmpty(value))
+                    throw new Exception($"请在配置文件中配置{nameof(LogServiceConfigFileName)}");
+                return value;
+            }
+        }
     }
 }

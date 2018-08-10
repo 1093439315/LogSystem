@@ -17,27 +17,14 @@ namespace SuperSocketServerTest
     {
         static void Main(string[] args)
         {
-            var bootstrap = BootstrapFactory.CreateBootstrapFromConfigFile("LogServiceConfig.config");
-            if (!bootstrap.Initialize())
+            if (!SocketServiceManage.Start())
             {
-                Console.WriteLine("日志服务初始化失败");
-                Console.ReadKey();
-                return;
+                Console.WriteLine("服务启动失败！");
             }
 
-            var result = bootstrap.Start();
-            Console.WriteLine($"启动结果：{result}");
+            Console.ReadLine();
 
-            if (result == StartResult.Failed)
-            {
-                Console.WriteLine("日志服务启动失败!");
-                Console.ReadKey();
-                return;
-            }
-            
-            Console.Read();
-            
-            bootstrap.Stop();
+            SocketServiceManage.Stop();
 
             Console.WriteLine("The server was stopped!");
             Console.ReadKey();

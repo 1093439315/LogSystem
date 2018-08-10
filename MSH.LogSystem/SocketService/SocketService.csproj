@@ -67,6 +67,7 @@
     <Compile Include="LogServer.cs" />
     <Compile Include="LogSession.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SocketServiceManage.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Config\log4net.config" />

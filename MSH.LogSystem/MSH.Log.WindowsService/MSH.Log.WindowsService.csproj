@@ -70,6 +70,9 @@
     <Content Include="log4net.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <None Include="LogServiceConfig.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="packages.config" />
     <Compile Include="LogToDbService.cs" />
     <Compile Include="ProjectInstaller.cs">
@@ -118,6 +121,10 @@
     <ProjectReference Include="..\Rabbitmq.Core\Rabbitmq.Core.csproj">
       <Project>{F8C28C01-1D7D-41B5-AB0B-A77A855A0D5C}</Project>
       <Name>Rabbitmq.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SocketService\SocketService.csproj">
+      <Project>{2355e535-26ff-417a-a90e-d250310c2713}</Project>
+      <Name>SocketService</Name>
     </ProjectReference>
     <ProjectReference Include="..\WebApiService\WebApiService.csproj">
       <Project>{39a60aa8-4c64-4f3f-909f-efc540a58c0a}</Project>
