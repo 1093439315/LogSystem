@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -43,9 +44,10 @@ namespace MSH.LogClient
         /// <param name="message"></param>
         public static void DefaultInfo(object message)
         {
-            Log = log4net.LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
-            var ss = Log.Logger.Repository;
-            Log.Info(new LogData(null, message));
+            var trace = new StackTrace(true);
+            var frameMethod = trace.GetFrame(1).GetMethod();
+            Log = log4net.LogManager.GetLogger($"{frameMethod.ReflectedType}.{frameMethod.Name}");
+            Log.Info(new LogData(null, message, GetTraceInfo(trace.GetFrames())));
         }
 
         /// <summary>
@@ -54,11 +56,21 @@ namespace MSH.LogClient
         /// <param name="message"></param>
         public void Info(object message)
         {
-            Log = log4net.LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
-            Log.Info(new LogData(this.BusinessPosition, message));
+            var trace = new StackTrace(true);
+            var frameMethod = trace.GetFrame(1).GetMethod();
+            Log = log4net.LogManager.GetLogger($"{frameMethod.ReflectedType}.{frameMethod.Name}");
+            Log.Info(new LogData(this.BusinessPosition, message, GetTraceInfo(trace.GetFrames())));
         }
 
         #endregion
 
+        private static string GetTraceInfo(StackFrame[] frames)
+        {
+            if (frames == null || frames.Length == 0) return null;
+            List<string> traceInfos = new List<string>();
+            foreach (var item in frames)
+                traceInfos.Add($"在类:{item.GetMethod().DeclaringType} 方法:{item.GetMethod()} 行:{item.GetFileLineNumber()}");
+            return string.Join(";\r\n", traceInfos);
+        }
     }
 }

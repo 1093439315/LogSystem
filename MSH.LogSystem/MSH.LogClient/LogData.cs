@@ -16,11 +16,16 @@ namespace MSH.LogClient
         /// 日志本体
         /// </summary>
         public object Message { get; set; }
+        /// <summary>
+        /// 堆栈信息
+        /// </summary>
+        public string TraceInfo { get; set; }
 
-        public LogData(string businessPosition, object data)
+        public LogData(string businessPosition, object data, string traceInfo = null)
         {
             this.BusinessPosition = businessPosition;
             this.Message = data;
+            this.TraceInfo = traceInfo;
         }
     }
 }

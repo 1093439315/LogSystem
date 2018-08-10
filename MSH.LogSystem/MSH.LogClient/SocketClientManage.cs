@@ -1,7 +1,4 @@
-﻿using Common;
-using Configuration;
-using DTO;
-using log4net.Core;
+﻿using log4net.Core;
 using SuperSocket.ClientEngine;
 using SuperSocket.ProtoBase;
 using System;
@@ -78,7 +75,7 @@ namespace MSH.LogClient
         }
 
         #endregion
-        
+
         private static EasyClient CreatClient(string ip, int port)
         {
             var client = new EasyClient();
@@ -116,7 +113,6 @@ namespace MSH.LogClient
 
                         var item = MSHLogger.LoggingEvents.Take();
                         if (item == null) continue;
-                        Console.WriteLine(item.ToJson());
 
                         //将日志发送到服务器
                         var serverHost = item.Properties["ServerHost"];
@@ -124,6 +120,15 @@ namespace MSH.LogClient
                         var appId = item.Properties["AppId"];
                         var secrect = item.Properties["Secrect"];
                         var defaultBusinessPosition = item.Properties["DefaultBusinessPosition"];
+                        var beginMark = item.Properties["BeginMark"];
+                        var endMark = item.Properties["EndMark"];
+
+                        List<string> traceInfos = new List<string>();
+                        if (item.LocationInformation?.StackFrames?.Length >= 1)
+                        {
+                            foreach (var frame in item.LocationInformation?.StackFrames)
+                                traceInfos.Add($"在类:{frame.ClassName} 方法:{frame.Method} 行:{frame.LineNumber}");
+                        }
 
                         var logData = item.MessageObject as LogData;
                         if (logData == null) continue;
@@ -132,9 +137,9 @@ namespace MSH.LogClient
                             BusinessPosition = logData.BusinessPosition ?? $"{defaultBusinessPosition}",
                             Content = logData.Message,
                             CreatTime = item.TimeStamp,
-                            //TraceInfo = item.LocationInformation.,
+                            TraceInfo = logData.TraceInfo
                         };
-                        SendMessage(logRequest);
+                        SendMessage(MapLogLevel(item.Level), $"{beginMark}", $"{endMark}", logRequest);
                     }
                 });
             }
@@ -171,15 +176,24 @@ namespace MSH.LogClient
             }
             catch (Exception ex)
             {
-                Logger.Error($"连接Socket服务失败:{ex}");
+                Console.WriteLine($"连接Socket服务失败:{ex}");
             }
         }
 
-        private static void SendMessage(LogRequest logRequest)
+        private static void SendMessage(LogLevel level, string beginMark, string endMark, LogRequest logRequest)
         {
-            var pack = new StringPackageInfo(LogLevel.Info.ToString(), logRequest.ToJson(), null);
-            var msg = $"{Config.BeginMarkStr}{pack.ToJson()}{Config.EndMarkStr}";
+            var pack = new StringPackageInfo(level.ToString(), logRequest.ToJson(), null);
+            var msg = $"{beginMark}{pack.ToJson()}{endMark}";
             client.Send(Encoding.UTF8.GetBytes(msg));
+        }
+
+        private static LogLevel MapLogLevel(Level level)
+        {
+            if (level == Level.Info) return LogLevel.Info;
+            if (level == Level.Warn) return LogLevel.Warn;
+            if (level == Level.Debug) return LogLevel.Debug;
+            if (level == Level.Error) return LogLevel.Error;
+            return LogLevel.Info;
         }
     }
 }

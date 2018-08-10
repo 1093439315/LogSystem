@@ -30,6 +30,15 @@ namespace MSH.LogClient
         public string AppId { get; set; }
         public string Secrect { get; set; }
 
+        /// <summary>
+        /// Socket协议起止符
+        /// </summary>
+        public string BeginMark { get; set; }
+        /// <summary>
+        /// Socket协议结束符
+        /// </summary>
+        public string EndMark { get; set; }
+
         protected override void Append(LoggingEvent loggingEvent)
         {
             SocketClientManage.Start(this.ServerHost, int.Parse(this.ServerPort));
@@ -56,6 +65,8 @@ namespace MSH.LogClient
             loggingEvent.Properties[nameof(AppId)] = AppId;
             loggingEvent.Properties[nameof(Secrect)] = Secrect;
             loggingEvent.Properties[nameof(DefaultBusinessPosition)] = DefaultBusinessPosition;
+            loggingEvent.Properties[nameof(BeginMark)] = BeginMark;
+            loggingEvent.Properties[nameof(EndMark)] = EndMark;
         }
     }
 }
