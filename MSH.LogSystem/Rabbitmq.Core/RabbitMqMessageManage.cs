@@ -24,6 +24,7 @@ namespace Rabbitmq.Core
         public static void Send<T>(this T obj, string queueName)
             where T : class
         {
+            Logger.Info($"队列名称:{queueName}");
             if (obj == null) return;
             if (string.IsNullOrEmpty(queueName))
                 throw new Exception("队列管道名称不能为空！");

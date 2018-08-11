@@ -194,5 +194,35 @@ namespace Common
                 return value;
             }
         }
+
+        /// <summary>
+        /// 管理站点服务地址
+        /// </summary>
+        public static string ServiceHost
+        {
+            get
+            {
+                var value = ConfigurationManager.AppSettings[$"{nameof(ServiceHost)}"];
+                if (string.IsNullOrEmpty(value))
+                    throw new Exception($"请在配置文件中配置{nameof(ServiceHost)}");
+                return value;
+            }
+        }
+
+        /// <summary>
+        /// 管理站点服务端口
+        /// </summary>
+        public static int ServicePort
+        {
+            get
+            {
+                var value = ConfigurationManager.AppSettings[$"{nameof(ServicePort)}"];
+                if (string.IsNullOrEmpty(value))
+                    throw new Exception($"请在配置文件中配置{nameof(ServicePort)}");
+                if (!int.TryParse(value, out int res))
+                    throw new Exception("管理站点服务端口只能为整数！");
+                return res;
+            }
+        }
     }
 }

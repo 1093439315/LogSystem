@@ -15,7 +15,7 @@ namespace MSH.Log.WindowsService
 {
     public partial class MSHLogService : ServiceBase
     {
-        public const string ServiceAddress = "http://localhost:1345";
+        public string ServiceAddress = $"http://{Config.ServiceHost}:{Config.ServicePort}";
 
         public MSHLogService()
         {

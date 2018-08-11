@@ -22,6 +22,11 @@ namespace WebApiService.Core.Filters
             if (actionContext.ActionDescriptor.GetCustomAttributes<AllowAnonymousAttribute>().Any())
                 return;
 
+            base.OnAuthorization(actionContext);
+        }
+
+        protected override bool IsAuthorized(HttpActionContext actionContext)
+        {
             var headers = actionContext.Request.Headers;
 
             //获取Header
@@ -58,7 +63,12 @@ namespace WebApiService.Core.Filters
                     //Permissions = IVerificationManager.QueryUserObjectOperationPermission(user.Id),
                 };
 
-            base.OnAuthorization(actionContext);
+            return true;
+        }
+
+        protected override void HandleUnauthorizedRequest(HttpActionContext actionContext)
+        {
+            base.HandleUnauthorizedRequest(actionContext);
         }
     }
 }

@@ -114,9 +114,9 @@ namespace WebApiService.Core
                     // more Xml comment files.
                     //
                     if (isWeb)
-                        c.IncludeXmlComments(string.Format(@"{0}\bin\WebApiService.xml", AppDomain.CurrentDomain.BaseDirectory));
+                        c.IncludeXmlComments(string.Format(@"{0}\bin\WebApiService.Core.xml", AppDomain.CurrentDomain.BaseDirectory));
                     else
-                        c.IncludeXmlComments(string.Format(@"{0}\WebApiService.xml", AppDomain.CurrentDomain.BaseDirectory));
+                        c.IncludeXmlComments(string.Format(@"{0}\WebApiService.Core.xml", AppDomain.CurrentDomain.BaseDirectory));
                     //c.IncludeXmlComments(string.Format(@"{0}\App_Data\DTO.XML", System.AppDomain.CurrentDomain.BaseDirectory));
 
                     // Swashbuckle makes a best attempt at generating Swagger compliant JSON schemas for the various types

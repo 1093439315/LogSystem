@@ -19,7 +19,7 @@ namespace WebApiService.Core
             HttpConfiguration config = new HttpConfiguration();
 
             //跨域配置
-            app.UseCors(CorsOptions.AllowAll);
+            //app.UseCors(CorsOptions.AllowAll);
 
             WebApiConfig.Register(config);
             AutofacConfig.Register(config);
