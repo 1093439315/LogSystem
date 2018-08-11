@@ -36,8 +36,9 @@ namespace Rabbitmq.Core
             var msgStr = obj.ToJson();
             try
             {
+
                 var body = Encoding.UTF8.GetBytes(msgStr);
-                channel.BasicPublish(queueName, queueName, null, body);
+                channel.BasicPublish(queueName, $"Log/{queueName}", null, body);
             }
             catch (Exception ex)
             {
