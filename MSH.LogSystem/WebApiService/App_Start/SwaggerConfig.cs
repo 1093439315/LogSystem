@@ -21,7 +21,6 @@ namespace WebApiService.Core
     {
         public static void Register(HttpConfiguration configuration, bool isWeb = false)
         {
-            Logger.Info("¿ªÊ¼×¢²áswagger");
             var thisAssembly = typeof(SwaggerConfig).Assembly;
 
             //GlobalConfiguration.Configuration

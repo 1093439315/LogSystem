@@ -20,7 +20,6 @@ namespace SocketService.Core
             try
             {
                 var configFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, LogServiceConfigFileName);
-                Logger.Info(configFilePath);
                 IBootstrap = BootstrapFactory.CreateBootstrapFromConfigFile(configFilePath);
                 if (!IBootstrap.Initialize())
                 {

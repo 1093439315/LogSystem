@@ -24,7 +24,6 @@ namespace Rabbitmq.Core
         public static void Send<T>(this T obj, string queueName)
             where T : class
         {
-            Logger.Info($"队列名称:{queueName}");
             if (obj == null) return;
             if (string.IsNullOrEmpty(queueName))
                 throw new Exception("队列管道名称不能为空！");
@@ -36,7 +35,6 @@ namespace Rabbitmq.Core
             var msgStr = obj.ToJson();
             try
             {
-
                 var body = Encoding.UTF8.GetBytes(msgStr);
                 channel.BasicPublish(queueName, $"Log/{queueName}", null, body);
             }
@@ -88,14 +86,19 @@ namespace Rabbitmq.Core
             if (isSucceed)
                 channel.BasicAck(msgId, false);
             else
-                channel.BasicNack(msgId, false, true);
+                channel.BasicReject(msgId, true);
         }
 
+        /// <summary>
+        /// 开启消息的订阅
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="queueName"></param>
         public static void StartGet<T>(string queueName)
             where T : class
         {
             if (string.IsNullOrEmpty(queueName))
-                throw new Exception("队列管道名称不能为空！");
+                throw new Exception("队列名称不能为空！");
             var channel = RabbitMqChannelManage.GetReadChannel(queueName);
             if (channel == null)
                 throw new Exception("请先开启队列管道");
@@ -118,11 +121,18 @@ namespace Rabbitmq.Core
         private static void Consumer_Received<T>(object sender, BasicDeliverEventArgs e, string queueName)
             where T : class
         {
-            var body = e.Body;
-            var msg = Encoding.UTF8.GetString(body);
-            var obj = msg.ToObject<T>();
-            if (obj != null)
-                MessageReceivedEvent?.Invoke(obj, queueName, e.DeliveryTag);
+            try
+            {
+                var body = e.Body;
+                var msg = Encoding.UTF8.GetString(body);
+                var obj = msg.ToObject<T>();
+                if (obj != null)
+                    MessageReceivedEvent?.Invoke(obj, queueName, e.DeliveryTag);
+            }
+            catch (Exception ex)
+            {
+                Logger.Error($"队列消息读取失败:{ex}");
+            }
         }
 
         #endregion

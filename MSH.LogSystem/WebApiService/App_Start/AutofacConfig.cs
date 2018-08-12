@@ -18,7 +18,6 @@ namespace WebApiService.Core
     {
         public static void Register(HttpConfiguration config, bool isWeb = false)
         {
-            Logger.Info("开始注册Autofac");
             var contatiner = RegisterService(isWeb);
             contatiner.RegisterWebApiFilterProvider(config);
             config.DependencyResolver = new AutofacWebApiDependencyResolver(contatiner.Build());

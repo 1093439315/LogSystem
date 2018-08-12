@@ -21,7 +21,7 @@ namespace BusinessLayer
 
         public LogMQServiceManager()
         {
-            RabbitMqMessageManage.MessageReceivedEvent += RabbitMqMessageManage_MessageReceivedEvent;
+            MessageConsumer.MessageReceivedEvent += MessageConsumer_MessageReceivedEvent;
         }
 
         #region 向队列插入日志
@@ -52,28 +52,29 @@ namespace BusinessLayer
 
         public LogRequest GetLog(LogLevel level)
         {
-            var queueName = level.ToString();
-            var obj = RabbitMqMessageManage.Get<LogRequest>(queueName);
-            return obj;
+            //var queueName = level.ToString();
+            //var obj = MessageConsumer.Get<LogRequest>(queueName);
+            //return obj;
+            return null;
         }
 
         public void StartGetMsg(LogLevel level)
         {
             var queueName = level.ToString();
-            RabbitMqMessageManage.StartGet<LogRequest>(queueName);
+            MessageConsumer.StartGet<LogRequest>(queueName);
         }
 
         /// <summary>
         /// 处理发送来的日志
         /// </summary>
         /// <param name="obj"></param>
-        private void RabbitMqMessageManage_MessageReceivedEvent(object obj, string queueName, ulong msgId)
+        private void MessageConsumer_MessageReceivedEvent(object obj, string queueName, ulong msgId)
         {
             var log = obj as LogRequest;
             if (log == null)
             {
                 //让消息重新回到队列
-                RabbitMqMessageManage.SendReceivedResult(queueName, msgId, false);
+                MessageConsumer.SendReceivedResult(queueName, msgId, false);
                 Logger.Error($"队列消息反序列化失败:{obj.ToJson()}");
                 return;
             }
@@ -81,9 +82,9 @@ namespace BusinessLayer
             Logger.Info($"从队列中读取了消息:{obj.ToJson()}");
             var res = SaveLog(log);
             if (res)
-                RabbitMqMessageManage.SendReceivedResult(queueName, msgId, true);
+                MessageConsumer.SendReceivedResult(queueName, msgId, true);
             else
-                RabbitMqMessageManage.SendReceivedResult(queueName, msgId, false);
+                MessageConsumer.SendReceivedResult(queueName, msgId, false);
         }
 
         private bool SaveLog(LogRequest logRequest)

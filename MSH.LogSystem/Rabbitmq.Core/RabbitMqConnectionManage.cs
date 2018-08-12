@@ -27,9 +27,6 @@ namespace Rabbitmq.Core
             if (IConnection == null || !IConnection.IsOpen)
                 IConnection = ConnectionFactory?.CreateConnection();
             return IConnection;
-            //var connection= ConnectionFactory?.CreateConnection();
-            //AllConnections.Add(connection);
-            //return connection;
         }
 
         public static IConnection CreatConnection(string userName, string password)
@@ -44,9 +41,6 @@ namespace Rabbitmq.Core
             if (IConnection == null || !IConnection.IsOpen)
                 IConnection = ConnectionFactory?.CreateConnection();
             return IConnection;
-            //var connection = ConnectionFactory?.CreateConnection();
-            //AllConnections.Add(connection);
-            //return connection;
         }
 
         public static void Close()

@@ -47,10 +47,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MessageConsumer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RabbitMqChannelManage.cs" />
     <Compile Include="RabbitMqConnectionManage.cs" />
     <Compile Include="RabbitMqMessageManage.cs" />
+    <Compile Include="RabbitMqProvider.cs" />
     <Compile Include="RabbitMqServiceManage.cs" />
   </ItemGroup>
   <ItemGroup>

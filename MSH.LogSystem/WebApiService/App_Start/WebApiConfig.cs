@@ -13,8 +13,6 @@ namespace WebApiService.Core
     {
         public static void Register(HttpConfiguration config)
         {
-            Logger.Info("开始注册WebApi");
-
             //跨域配置
             config.EnableCors(new EnableCorsAttribute("*", "*", "*"));
 

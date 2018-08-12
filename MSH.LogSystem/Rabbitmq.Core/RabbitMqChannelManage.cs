@@ -63,7 +63,12 @@ namespace Rabbitmq.Core
                 throw new Exception("请先创建队列的连接！");
             
             var channel = connection.CreateModel();
+            //声明交换机
+            channel.ExchangeDeclare(channelName, "direct", true, false, null);
+            //声明队列
             channel.QueueDeclare(channelName, true, false, false, null);
+            //声明队列绑定
+            channel.QueueBind(channelName, channelName, $"Log/{channelName}", null);
             ReadChannels.Add(channelName, channel);
             return channel;
         }
@@ -77,6 +82,15 @@ namespace Rabbitmq.Core
                     item.Value.Close();
                 }
                 SaveChannels = null;
+            }
+
+            if (ReadChannels != null)
+            {
+                foreach (var item in ReadChannels)
+                {
+                    item.Value.Close();
+                }
+                ReadChannels = null;
             }
         }
     }

@@ -29,5 +29,6 @@ namespace Rabbitmq.Core
             RabbitMqChannelManage.Close();
             RabbitMqConnectionManage.Close();
         }
+        
     }
 }
