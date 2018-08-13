@@ -18,9 +18,9 @@ namespace Rabbitmq.Core
         private static IModel _Channel;
 
         /// <summary>
-        /// 消息接收事件
+        /// 消息接收方法
         /// </summary>
-        public static event Action<object, string, ulong> MessageReceivedEvent;
+        public static Action<object, string, ulong> MessageReceivedEvent;
 
         private static ConnectionFactory ConnectionFactory
         {
@@ -45,18 +45,70 @@ namespace Rabbitmq.Core
             if (_Channel == null)
             {
                 var connection = ConnectionFactory.CreateConnection();
-                var channel = connection.CreateModel();
-                if (channel == null)
+                _Channel = connection.CreateModel();
+                if (_Channel == null)
                     throw new Exception("请先开启队列管道");
 
                 //声明交换机
-                channel.ExchangeDeclare(queueName, "direct", true, false, null);
+                _Channel.ExchangeDeclare(queueName, "direct", true, false, null);
                 //声明队列
-                channel.QueueDeclare(queueName, true, false, false, null);
+                _Channel.QueueDeclare(queueName, true, false, false, null);
                 //声明队列绑定
-                channel.QueueBind(queueName, queueName, $"Log/{queueName}", null);
+                _Channel.QueueBind(queueName, queueName, $"Log/{queueName}", null);
+                //不要在同一时间给一个工作者发送多于1个的消息
+                _Channel.BasicQos(0, 1, false);
+            }
+            else
+            {
+                if (_Channel.IsClosed)
+                {
+                    _Channel.Dispose();
+
+                    var connection = ConnectionFactory.CreateConnection();
+                    _Channel = connection.CreateModel();
+                    if (_Channel == null)
+                        throw new Exception("请先开启队列管道");
+
+                    //声明交换机
+                    _Channel.ExchangeDeclare(queueName, "direct", true, false, null);
+                    //声明队列
+                    _Channel.QueueDeclare(queueName, true, false, false, null);
+                    //声明队列绑定
+                    _Channel.QueueBind(queueName, queueName, $"Log/{queueName}", null);
+                    //不要在同一时间给一个工作者发送多于1个的消息
+                    _Channel.BasicQos(0, 1, false);
+                }
             }
             return _Channel;
+        }
+        
+        public static void StartGetByLoop<T>(string queueName)
+            where T : class
+        {
+            if (string.IsNullOrEmpty(queueName))
+                throw new Exception("队列管道名称不能为空！");
+
+            try
+            {
+                Task.Run(() =>
+                {
+                    while (true)
+                    {
+                        var channel = GetChannel(queueName);
+                        var result = channel.BasicGet(queueName, false);
+                        if (result == null) continue;
+                        byte[] body = result.Body;
+                        var msg = Encoding.UTF8.GetString(body);
+                        Console.WriteLine($"读取队列消息:{msg}");
+                        var msgObj = msg.ToObject<T>();
+                        MessageReceivedEvent?.Invoke(msgObj, queueName, result.DeliveryTag);
+                    }
+                });
+            }
+            catch (Exception ex)
+            {
+                Logger.Error($"从队列中获取信息失败:{ex} 队列名称:{queueName}");
+            }
         }
 
         /// <summary>
@@ -77,7 +129,7 @@ namespace Rabbitmq.Core
                 {
                     Consumer_Received<T>(obj, e, queueName);
                 });
-                channel.BasicConsume(queueName, false, consumer);
+                var consumerTag = channel.BasicConsume(queueName, false, consumer);
             }
             catch (Exception ex)
             {
@@ -86,7 +138,7 @@ namespace Rabbitmq.Core
         }
 
         /// <summary>
-        /// 发送接收消息状态
+        /// 发送消息的确认
         /// </summary>
         public static void SendReceivedResult(string queueName, ulong msgId, bool isSucceed = true)
         {
@@ -98,7 +150,7 @@ namespace Rabbitmq.Core
             if (isSucceed)
                 channel.BasicAck(msgId, false);
             else
-                channel.BasicReject(msgId, true);
+                channel.BasicNack(msgId, false, true);
         }
 
         private static void Consumer_Received<T>(object sender, BasicDeliverEventArgs e, string queueName)
@@ -117,6 +169,5 @@ namespace Rabbitmq.Core
                 Logger.Error($"队列消息读取失败:{ex}");
             }
         }
-
     }
 }

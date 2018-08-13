@@ -21,7 +21,7 @@ namespace BusinessLayer
 
         public LogMQServiceManager()
         {
-            MessageConsumer.MessageReceivedEvent += MessageConsumer_MessageReceivedEvent;
+            MessageConsumer.MessageReceivedEvent = MessageConsumer_MessageReceivedEvent;
         }
 
         #region 向队列插入日志
@@ -68,13 +68,13 @@ namespace BusinessLayer
         /// 处理发送来的日志
         /// </summary>
         /// <param name="obj"></param>
-        private void MessageConsumer_MessageReceivedEvent(object obj, string queueName, ulong msgId)
+        private void MessageConsumer_MessageReceivedEvent(object obj, string queueName, ulong deliveryTag)
         {
             var log = obj as LogRequest;
             if (log == null)
             {
                 //让消息重新回到队列
-                MessageConsumer.SendReceivedResult(queueName, msgId, false);
+                MessageConsumer.SendReceivedResult(queueName, deliveryTag, false);
                 Logger.Error($"队列消息反序列化失败:{obj.ToJson()}");
                 return;
             }
@@ -82,9 +82,9 @@ namespace BusinessLayer
             Logger.Info($"从队列中读取了消息:{obj.ToJson()}");
             var res = SaveLog(log);
             if (res)
-                MessageConsumer.SendReceivedResult(queueName, msgId, true);
+                MessageConsumer.SendReceivedResult(queueName, deliveryTag, true);
             else
-                MessageConsumer.SendReceivedResult(queueName, msgId, false);
+                MessageConsumer.SendReceivedResult(queueName, deliveryTag, false);
         }
 
         private bool SaveLog(LogRequest logRequest)

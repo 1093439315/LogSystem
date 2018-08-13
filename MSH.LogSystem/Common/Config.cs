@@ -9,6 +9,17 @@ namespace Common
 {
     public static class Config
     {
+        public static string RabbitMqConnectionString
+        {
+            get
+            {
+                var value = ConfigurationManager.ConnectionStrings[$"{nameof(RabbitMqConnectionString)}"].ConnectionString;
+                if (string.IsNullOrEmpty(value))
+                    throw new Exception($"请在配置文件中配置{nameof(RabbitMqConnectionString)}");
+                return value;
+            }
+        }
+
         /// <summary>
         /// 消息队列Host
         /// </summary>
