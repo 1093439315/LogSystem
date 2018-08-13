@@ -39,7 +39,7 @@ namespace MSH.LogClient
         /// 实例模式直接通过RequestId记录日志(无业务位置)
         /// </summary>
         /// <returns></returns>
-        public static MSHLogger Instance(string requestId)
+        public static MSHLogger Request(string requestId)
         {
             var _MSHLogger = new MSHLogger();
             if (!string.IsNullOrEmpty(requestId))
