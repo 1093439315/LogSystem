@@ -33,5 +33,9 @@ namespace Entity
         /// 平台Id
         /// </summary>
         public ObjectId PlatformId { get; set; }
+        /// <summary>
+        /// 请求Id
+        /// </summary>
+        public string RequestId { get; set; }
     }
 }

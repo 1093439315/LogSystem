@@ -16,7 +16,7 @@ tableColumns.columns = (vue) => {
         {title: '来源平台', align: 'center', key: 'Platform', sortable: true, width: 120},
         {title: '业务位置', key: 'BusinessPosition', sortable: true, width: 120},
         {title: '日志内容', key: 'Content', sortable: false},
-        {title: '堆栈信息', key: 'TraceInfo', sortable: false},
+        {title: '堆栈信息', key: 'TraceInfo', tooltip: true, sortable: false},
         {
             title: '生成时间',
             key: 'CreationTime',

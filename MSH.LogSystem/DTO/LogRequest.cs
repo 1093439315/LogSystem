@@ -10,6 +10,10 @@ namespace DTO
     {
         public string AppId { get; set; }
         /// <summary>
+        /// 请求Id
+        /// </summary>
+        public string RequestId { get; set; }
+        /// <summary>
         /// 日志内容
         /// </summary>
         public object Content { get; set; }

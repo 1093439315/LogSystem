@@ -13,10 +13,8 @@ namespace Log4netClientTest
         static void Main(string[] args)
         {
             MSHLogger.DefaultInfo("测试！");
-            MSHLogger.DefaultInfo("测试！");
-            //MSHLogger.Instance("订单", "新建").Info("业务测试1");
-            //MSHLogger.Instance("订单", "新建").Info("业务测试2");
-
+            MSHLogger.Instance("123", "123213");
+            HH();
             Console.ReadKey();
 
             //MSHLogger.DefaultInfo("嘿嘿");
@@ -27,6 +25,11 @@ namespace Log4netClientTest
             //Console.ReadKey();
             //MSHLogger.DefaultInfo("嘿嘿");
             //Console.ReadKey();
+        }
+
+        static void HH()
+        {
+            MSHLogger.DefaultInfo("测试！");
         }
     }
 }

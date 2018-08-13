@@ -58,6 +58,7 @@
     <Compile Include="Extensions.cs" />
     <Compile Include="LogData.cs" />
     <Compile Include="LogRequest.cs" />
+    <Compile Include="MSHLoggerExtension.cs" />
     <Compile Include="SocketClientManage.cs" />
     <Compile Include="MshLog4netSocketAppender.cs" />
     <Compile Include="MSHLogger.cs" />

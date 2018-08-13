@@ -9,6 +9,10 @@ namespace MSH.LogClient
     internal class LogData
     {
         /// <summary>
+        /// 请求Id
+        /// </summary>
+        public string RequestId { get; set; }
+        /// <summary>
         /// 业务位置
         /// </summary>
         public string BusinessPosition { get; set; }
@@ -26,6 +30,14 @@ namespace MSH.LogClient
             this.BusinessPosition = businessPosition;
             this.Message = data;
             this.TraceInfo = traceInfo;
+        }
+
+        public LogData(string requestId , string businessPosition, object data, string traceInfo = null)
+        {
+            this.BusinessPosition = businessPosition;
+            this.Message = data;
+            this.TraceInfo = traceInfo;
+            this.RequestId = requestId;
         }
     }
 }

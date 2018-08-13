@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using Microsoft.Owin.Cors;
 using MapperConfiguration;
+using Common;
 
 [assembly: OwinStartup(typeof(WebApiService.Core.Startup))]
 namespace WebApiService.Core
@@ -16,6 +17,7 @@ namespace WebApiService.Core
     {
         public void Configuration(IAppBuilder app)
         {
+            Logger.Info("启动配置！");
             HttpConfiguration config = new HttpConfiguration();
 
             //跨域配置

@@ -35,6 +35,7 @@ namespace MongoDbAccess
                 PlatformId = business.PlatformId,
                 TraceInfo = logRequest.TraceInfo,
                 CreationTime = logRequest.CreatTime,
+                RequestId = logRequest.RequestId
             };
             DbProvider.Insert(entity);
         }

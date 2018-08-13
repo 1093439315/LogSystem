@@ -56,7 +56,6 @@ namespace MSH.Log.WindowsService
                 Logger.Info("WebApi服务启动失败！");
                 this.Stop();
             }
-            
         }
 
         protected override void OnStop()

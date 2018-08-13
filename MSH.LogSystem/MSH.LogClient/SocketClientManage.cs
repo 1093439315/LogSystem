@@ -135,11 +135,12 @@ namespace MSH.LogClient
 
                         var logRequest = new LogRequest()
                         {
-                            AppId=appId.ToString(),
+                            AppId = appId.ToString(),
                             BusinessPosition = logData.BusinessPosition ?? $"{defaultBusinessPosition}",
                             Content = logData.Message,
                             CreatTime = item.TimeStamp,
-                            TraceInfo = logData.TraceInfo
+                            TraceInfo = logData.TraceInfo,
+                            RequestId = logData.RequestId,
                         };
                         Console.WriteLine($"开始发送日志请求:{logRequest.ToJson()}");
                         SendMessage(MapLogLevel(item.Level), $"{beginMark}", $"{endMark}", logRequest);

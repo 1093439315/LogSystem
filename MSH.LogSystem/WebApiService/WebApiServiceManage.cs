@@ -18,6 +18,7 @@ namespace WebApiService.Core
         {
             try
             {
+                Logger.Info($"管理端后台站点地址为:{url}");
                 Service = WebApp.Start<Startup>(url);
                 return true;
             }
