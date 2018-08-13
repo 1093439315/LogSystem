@@ -65,6 +65,20 @@ namespace MongoDbAccess
             DbProvider.DeleteByIds<Entity.Platform>(ids);
         }
 
+        public Platform GetPlatformByAppSecrect(string appId, string secrect)
+        {
+            var collection = DbProvider.Collection<Entity.Platform>();
+            var entity = collection.AsQueryable()
+                .FirstOrDefault(a => a.Config.AppId == appId && a.Config.AppSecrect == secrect);
+
+            if (entity == null)
+                return null;
+            return entity.RobotMap<Entity.Platform, DTO.Platform>(cf =>
+            {
+                cf.Bind(x => x.Id.ToString(), y => y.Id);
+            });
+        }
+
         private Expression<Func<Entity.Platform, bool>> CreatCondition(PlatformQuery query)
         {
             var condition = LinqExtension.True<Entity.Platform>();

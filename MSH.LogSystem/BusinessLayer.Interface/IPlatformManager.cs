@@ -19,6 +19,14 @@ namespace BusinessLayer.Interface
         List<Platform> QueryPlatform(PlatformQuery query);
 
         /// <summary>
+        /// 根据AppId和Secrect获取平台
+        /// </summary>
+        /// <param name="appId">AppId</param>
+        /// <param name="secrect">Secrect</param>
+        /// <returns></returns>
+        Platform GetPlatformByAppSecrect(string appId, string secrect);
+
+        /// <summary>
         /// 添加平台
         /// </summary>
         /// <param name="platform"></param>

@@ -27,5 +27,10 @@ namespace BusinessLayer
         {
             _PlatformAccess.DeletePlatform(ids);
         }
+
+        public Platform GetPlatformByAppSecrect(string appId, string secrect)
+        {
+            return _PlatformAccess.GetPlatformByAppSecrect(appId, secrect);
+        }
     }
 }
