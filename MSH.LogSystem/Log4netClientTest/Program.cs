@@ -12,19 +12,11 @@ namespace Log4netClientTest
     {
         static void Main(string[] args)
         {
-            MSHLogger.DefaultInfo("测试！");
-            MSHLogger.Instance("123", "123213");
+            MSHLogger.DefaultInfo("测试2！");
+            MSHLogger.Instance("123", "12321322");
+            MSHLogger.Instance("业务1.业务22").SetRequestId(Guid.NewGuid().ToString()).Info("嘿嘿22！");
             HH();
             Console.ReadKey();
-
-            //MSHLogger.DefaultInfo("嘿嘿");
-            //Console.ReadKey();
-            //MSHLogger.DefaultInfo("嘿嘿");
-            //Console.ReadKey();
-            //MSHLogger.DefaultInfo("嘿嘿");
-            //Console.ReadKey();
-            //MSHLogger.DefaultInfo("嘿嘿");
-            //Console.ReadKey();
         }
 
         static void HH()

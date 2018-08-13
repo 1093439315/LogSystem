@@ -28,6 +28,10 @@ namespace DTO
         /// </summary>
         public string TraceInfo { get; set; }
         /// <summary>
+        /// 请求Id
+        /// </summary>
+        public string RequestId { get; set; }
+        /// <summary>
         /// 日志生成时间
         /// </summary>
         public DateTime CreationTime { get; set; }

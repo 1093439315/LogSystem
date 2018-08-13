@@ -12,7 +12,7 @@ namespace Rabbitmq.Core
     /// <summary>
     /// 消息消费者
     /// </summary>
-    public static class MessageConsumer
+    internal static class MessageConsumer
     {
         private static ConnectionFactory _ConnectionFactory;
         private static IModel _Channel;
@@ -135,6 +135,13 @@ namespace Rabbitmq.Core
             {
                 Logger.Error($"从队列中获取信息失败:{ex} 队列名称:{queueName}");
             }
+        }
+
+        public static void StopReceived(string queueName)
+        {
+            var channel = GetChannel(queueName);
+            channel.Close();
+            _Channel = null;
         }
 
         /// <summary>

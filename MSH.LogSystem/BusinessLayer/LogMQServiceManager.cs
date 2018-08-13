@@ -21,7 +21,7 @@ namespace BusinessLayer
 
         public LogMQServiceManager()
         {
-            MessageConsumer.MessageReceivedEvent = MessageConsumer_MessageReceivedEvent;
+            RabbitMqMessageManage.MessageReceivedEvent = MessageConsumer_MessageReceivedEvent;
         }
 
         #region 向队列插入日志
@@ -53,7 +53,7 @@ namespace BusinessLayer
         public LogRequest GetLog(LogLevel level)
         {
             //var queueName = level.ToString();
-            //var obj = MessageConsumer.Get<LogRequest>(queueName);
+            //var obj = RabbitMqMessageManage.Get<LogRequest>(queueName);
             //return obj;
             return null;
         }
@@ -61,7 +61,7 @@ namespace BusinessLayer
         public void StartGetMsg(LogLevel level)
         {
             var queueName = level.ToString();
-            MessageConsumer.StartGet<LogRequest>(queueName);
+            RabbitMqMessageManage.StartGet<LogRequest>(queueName);
         }
 
         /// <summary>
@@ -74,7 +74,7 @@ namespace BusinessLayer
             if (log == null)
             {
                 //让消息重新回到队列
-                MessageConsumer.SendReceivedResult(queueName, deliveryTag, false);
+                RabbitMqMessageManage.SendReceivedResult(queueName, deliveryTag, false);
                 Logger.Error($"队列消息反序列化失败:{obj.ToJson()}");
                 return;
             }
@@ -82,9 +82,9 @@ namespace BusinessLayer
             Logger.Info($"从队列中读取了消息:{obj.ToJson()}");
             var res = SaveLog(log);
             if (res)
-                MessageConsumer.SendReceivedResult(queueName, deliveryTag, true);
+                RabbitMqMessageManage.SendReceivedResult(queueName, deliveryTag, true);
             else
-                MessageConsumer.SendReceivedResult(queueName, deliveryTag, false);
+                RabbitMqMessageManage.SendReceivedResult(queueName, deliveryTag, false);
         }
 
         private bool SaveLog(LogRequest logRequest)

@@ -69,6 +69,7 @@ namespace Rabbitmq.Core
             channel.QueueDeclare(channelName, true, false, false, null);
             //声明队列绑定
             channel.QueueBind(channelName, channelName, $"Log/{channelName}", null);
+            channel.BasicQos(0, 1, false);
             ReadChannels.Add(channelName, channel);
             return channel;
         }

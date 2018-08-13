@@ -117,6 +117,7 @@ namespace MSH.LogClient
                         //将日志发送到服务器
                         var serverHost = item.Properties["ServerHost"];
                         var serverPort = item.Properties["ServerPort"];
+                        var mode = item.Properties["Mode"];
                         var appId = item.Properties["AppId"];
                         var secrect = item.Properties["Secrect"];
                         var defaultBusinessPosition = item.Properties["DefaultBusinessPosition"];

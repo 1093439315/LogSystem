@@ -11,7 +11,7 @@ namespace Rabbitmq.Core
     /// <summary>
     /// 消息生产者
     /// </summary>
-    public static class MessageProductor
+    internal static class MessageProductor
     {
         private static ConnectionFactory _ConnectionFactory;
         private static IModel _Channel;

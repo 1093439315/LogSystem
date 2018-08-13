@@ -12,9 +12,9 @@ namespace Rabbitmq.Core
     /// <summary>
     /// 消息队列管道
     /// </summary>
-    internal static class RabbitMqMessageManage
+    public static class RabbitMqMessageManage
     {
-        public static event Action<object, string, ulong> MessageReceivedEvent;
+        public static Action<object, string, ulong> MessageReceivedEvent;
 
         /// <summary>
         /// 往队列管道发送消息
@@ -86,7 +86,7 @@ namespace Rabbitmq.Core
             if (isSucceed)
                 channel.BasicAck(msgId, true);
             else
-                channel.BasicReject(msgId, true);
+                channel.BasicNack(msgId, false, true);
         }
 
         /// <summary>
