@@ -16,7 +16,7 @@
         <br/>
 
         <Card>
-            <tables ref="tables" searchable search-place="top"
+            <tables ref="tables" search-place="top"
                     v-model="tableData"
                     :columns="columns"
                     :loading="loading"
