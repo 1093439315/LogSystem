@@ -27,7 +27,7 @@ namespace WebApiService.Core.ApiControllers
         {
             return await Task.Run(() =>
             {
-                request.AppId=HttpContext.Current.User.Identity.Name,
+                request.AppId = HttpContext.Current.User.Identity.Name;
                 LogServiceManager.SendInfoLog(request);
                 return new AjaxReturnInfo();
             });

@@ -276,16 +276,36 @@ namespace WebApiService.Core
                 if (operation.parameters == null) operation.parameters = new List<Parameter>();
                 var filterPipeline = apiDescription.ActionDescriptor.GetFilterPipeline();
                 //判断是否添加权限过滤器
-                var isAuthorized = filterPipeline.Select(filterInfo => filterInfo.Instance).Any(filter => filter is IAuthorizationFilter);
+                var isJwtAuthorized = filterPipeline.Select(filterInfo => filterInfo.Instance).Any(filter => filter is JwtAuthAttribute);
+                var isAppAuthorized = filterPipeline.Select(filterInfo => filterInfo.Instance).Any(filter => filter is AppAuthAttribute);
                 //判断是否允许匿名方法
                 var allowAnonymous = apiDescription.ActionDescriptor.GetCustomAttributes<AllowAnonymousAttribute>().Any();
-                if (isAuthorized && !allowAnonymous)
+                if (isJwtAuthorized && !allowAnonymous)
                 {
                     operation.parameters.Add(new Parameter
                     {
                         name = "token",
                         @in = "header",
                         description = "token",
+                        required = false,
+                        type = "string"
+                    });
+                }
+                if (isAppAuthorized && !allowAnonymous)
+                {
+                    operation.parameters.Add(new Parameter
+                    {
+                        name = "AppId",
+                        @in = "header",
+                        description = "AppId",
+                        required = false,
+                        type = "string"
+                    });
+                    operation.parameters.Add(new Parameter
+                    {
+                        name = "Secrect",
+                        @in = "header",
+                        description = "Secrect",
                         required = false,
                         type = "string"
                     });

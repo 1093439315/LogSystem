@@ -10,7 +10,7 @@ using System.Web;
 using System.Web.Http;
 using System.Web.Http.Controllers;
 
-namespace WebApiService.Core.Filters
+namespace WebApiService.Core
 {
     public class JwtAuthAttribute : AuthorizeAttribute
     {
