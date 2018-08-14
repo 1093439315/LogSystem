@@ -56,8 +56,8 @@
 <script>
 
     import {mapMutations, mapActions} from 'vuex';
-    import minLogo from '@/assets/images/logo-min.jpg';
-    import maxLogo from '@/assets/images/logo.jpg';
+    import minLogo from '@/assets/images/logo-min.png';
+    import maxLogo from '@/assets/images/logo.png';
     import HeaderBar from '../shared/header-bar';
     import TagsNav from '../shared/tags-nav';
     import User from '../shared/user';

@@ -26,8 +26,13 @@ module.exports = merge(webpackBaseConfig, {
             name: 'vendors',
             filename: 'vendors.js'
         }),
+        new webpack.DefinePlugin({
+            'process.env': {
+                NODE_ENV: '"development"'
+            }
+        }),
         new HtmlWebpackPlugin({
-            filename: '../index_dev.html',
+            filename: '../index.html',
             template: './src/template/index.ejs',
             inject: false
         })
