@@ -7,7 +7,9 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
 using BusinessLayer.Interface;
+using Common;
 using DTO;
+using WebApiService.Core.Models;
 
 namespace WebApiService.Core.ApiControllers
 {
@@ -27,7 +29,7 @@ namespace WebApiService.Core.ApiControllers
         {
             return await Task.Run(() =>
             {
-                request.AppId = HttpContext.Current.User.Identity.Name;
+                request.AppId = RequestContext.Principal.Identity.Name;
                 LogServiceManager.SendInfoLog(request);
                 return new AjaxReturnInfo();
             });

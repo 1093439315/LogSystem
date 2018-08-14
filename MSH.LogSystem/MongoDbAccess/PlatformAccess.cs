@@ -73,10 +73,7 @@ namespace MongoDbAccess
 
             if (entity == null)
                 return null;
-            return entity.RobotMap<Entity.Platform, DTO.Platform>(cf =>
-            {
-                cf.Bind(x => x.Id.ToString(), y => y.Id);
-            });
+            return entity.RobotMap<Entity.Platform, DTO.Platform>();
         }
 
         private Expression<Func<Entity.Platform, bool>> CreatCondition(PlatformQuery query)
