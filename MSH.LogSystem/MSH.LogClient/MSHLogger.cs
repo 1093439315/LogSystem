@@ -83,7 +83,35 @@ namespace MSH.LogClient
         }
 
         #endregion
-        
+
+        #region Error日志
+
+        /// <summary>
+        /// 默认业务记录Error日志
+        /// </summary>
+        /// <param name="message"></param>
+        public static void DefaultError(object message)
+        {
+            var trace = new StackTrace(true);
+            var frameMethod = trace.GetFrame(1).GetMethod();
+            Log = log4net.LogManager.GetLogger($"{frameMethod.ReflectedType}.{frameMethod.Name}");
+            Log.Error(new LogData(null, message, GetTraceInfo(trace.GetFrames())));
+        }
+
+        /// <summary>
+        /// 指定业务记录Error日志
+        /// </summary>
+        /// <param name="message"></param>
+        public void Error(object message)
+        {
+            var trace = new StackTrace(true);
+            var frameMethod = trace.GetFrame(1).GetMethod();
+            Log = log4net.LogManager.GetLogger($"{frameMethod.ReflectedType}.{frameMethod.Name}");
+            Log.Error(new LogData(this.RequestId, this.BusinessPosition, message, GetTraceInfo(trace.GetFrames())));
+        }
+
+        #endregion
+
         private static string GetTraceInfo(StackFrame[] frames)
         {
             if (frames == null || frames.Length == 0) return null;

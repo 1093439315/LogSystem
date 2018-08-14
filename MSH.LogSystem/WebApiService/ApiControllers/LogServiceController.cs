@@ -34,5 +34,20 @@ namespace WebApiService.Core.ApiControllers
                 return new AjaxReturnInfo();
             });
         }
+
+        /// <summary>
+        /// 记录Error日志
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
+        public async Task<AjaxReturnInfo> Error([FromBody] LogRequest request)
+        {
+            return await Task.Run(() =>
+            {
+                request.AppId = RequestContext.Principal.Identity.Name;
+                LogServiceManager.SendErrorLog(request);
+                return new AjaxReturnInfo();
+            });
+        }
     }
 }

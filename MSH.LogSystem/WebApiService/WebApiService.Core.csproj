@@ -121,6 +121,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApiControllers\CommonDataController.cs" />
+    <Compile Include="ApiControllers\ErrorLogController.cs" />
     <Compile Include="ApiControllers\InfoLogController.cs" />
     <Compile Include="ApiControllers\LogClientController.cs" />
     <Compile Include="ApiControllers\LogServiceController.cs" />

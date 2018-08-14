@@ -14,6 +14,8 @@ let customMenuList = [
     {name: 'logSetting', parent: 'setting'},
     //日志管理-info日志
     {name: 'infoLog', parent: 'logManage'},
+    //日志管理-Error日志
+    {name: 'errorLog', parent: 'logManage'},
 ];
 
 export const menuListConfig = customMenuList;

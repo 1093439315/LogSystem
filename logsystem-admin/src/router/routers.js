@@ -79,6 +79,16 @@ const routers = [
                     title: 'Info日志'
                 },
                 component: (resolve) => require(['@/views/log-manage/info-log'], resolve)
+            },
+            //info日志
+            {
+                path: 'errorLog',
+                name: 'errorLog',
+                meta: {
+                    icon: 'ios-information-circle-outline',
+                    title: 'Error日志'
+                },
+                component: (resolve) => require(['@/views/log-manage/error-log'], resolve)
             }
         ]
     },

@@ -62,6 +62,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BusinessAccess.cs" />
+    <Compile Include="ErrorLogAccess.cs" />
     <Compile Include="InfoLogAccess.cs" />
     <Compile Include="PlatformAccess.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

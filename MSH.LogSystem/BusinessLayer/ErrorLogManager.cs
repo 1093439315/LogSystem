@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace BusinessLayer
 {
-    public class InfoLogManager : IInfoLogManager
+    public class ErrorLogManager : IErrorLogManager
     {
         public void DeleteLog(long id)
         {
@@ -18,7 +18,7 @@ namespace BusinessLayer
 
         public List<LogInfo> QueryLogInfo(LogQuery logQuery)
         {
-            var dao = new InfoLogAccess();
+            var dao = new ErrorLogAccess();
             return dao.QueryLogRequest(logQuery);
         }
     }

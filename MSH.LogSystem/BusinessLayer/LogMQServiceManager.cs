@@ -15,6 +15,7 @@ namespace BusinessLayer
     public class LogMQServiceManager : ILogMQServiceManager
     {
         private InfoLogAccess _InfoLogAccess = new InfoLogAccess();
+        private ErrorLogAccess _ErrorLogAccess = new ErrorLogAccess();
         public event Action<LogRequest> MessageReceivedEvent;
 
         public string AppId { get; set; }
@@ -80,19 +81,28 @@ namespace BusinessLayer
             }
             //将日志写入MogoDb
             Logger.Info($"从队列中读取了消息:{obj.ToJson()}");
-            var res = SaveLog(log);
+            var res = SaveLog(queueName, log);
             if (res)
                 RabbitMqMessageManage.SendReceivedResult(queueName, deliveryTag, true);
             else
                 RabbitMqMessageManage.SendReceivedResult(queueName, deliveryTag, false);
         }
 
-        private bool SaveLog(LogRequest logRequest)
+        private bool SaveLog(string queueName, LogRequest logRequest)
         {
             try
             {
-                _InfoLogAccess.AddInfoLog(logRequest);
-                return true;
+                if (queueName.Equals(LogLevel.Info.ToString()))
+                {
+                    _InfoLogAccess.AddLog(logRequest);
+                    return true;
+                }
+                if (queueName.Equals(LogLevel.Error.ToString()))
+                {
+                    _ErrorLogAccess.AddLog(logRequest);
+                    return true;
+                }
+                return false;
             }
             catch (Exception ex)
             {
@@ -102,5 +112,5 @@ namespace BusinessLayer
         }
 
         #endregion
-    } 
+    }
 }

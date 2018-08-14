@@ -42,6 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IDependency.cs" />
+    <Compile Include="IErrorLogManager.cs" />
     <Compile Include="IInfoLogManager.cs" />
     <Compile Include="ILogMQServiceManager.cs" />
     <Compile Include="IPlatformManager.cs" />

@@ -41,6 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ErrorLogManager.cs" />
     <Compile Include="InfoLogManager.cs" />
     <Compile Include="LogMQServiceManager.cs" />
     <Compile Include="PlatformManager.cs" />

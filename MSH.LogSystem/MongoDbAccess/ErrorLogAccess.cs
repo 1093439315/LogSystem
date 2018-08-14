@@ -16,7 +16,7 @@ using MongoDB.Driver.Linq;
 
 namespace MongoDbAccess
 {
-    public class InfoLogAccess
+    public class ErrorLogAccess
     {
         private BusinessAccess _BusinessAccess = new BusinessAccess();
 
@@ -27,7 +27,7 @@ namespace MongoDbAccess
 
             //取业务Id 如果没有则新建业务
             var business = _BusinessAccess.IfNotInAddReturnEntity(logRequest.AppId, logRequest.BusinessPosition);
-            var entity = new InfoLog()
+            var entity = new ErrorLog()
             {
                 Content = logRequest.Content.ToJson(),
                 BusinessId = business.Id,
@@ -50,37 +50,19 @@ namespace MongoDbAccess
             if (!query.Pagination.IsPaging)
             {
                 var allResult = queryAble.ToList();
-                return allResult.RobotMap<Entity.InfoLog, LogInfo>();
+                return allResult.RobotMap<Entity.ErrorLog, LogInfo>();
             }
 
             var entities = queryAble
                 .Skip(query.Pagination.Skip)
                 .Take(query.Pagination.Take)
                 .ToList();
-            return entities.RobotMap<Entity.InfoLog, LogInfo>();
+            return entities.RobotMap<Entity.ErrorLog, LogInfo>();
         }
-
-        public Expression<Func<InfoLog, bool>> CreatCondition(LogQuery logQuery)
+        
+        private IMongoQueryable<Entity.ErrorLog> CreatQueryAble(LogQuery query)
         {
-            var condition = LinqExtension.True<InfoLog>();
-            if (!string.IsNullOrEmpty(logQuery.Content))
-                condition.And(a => a.Content.Contains(logQuery.Content));
-            if (logQuery.CreatTimeFrom.HasValue)
-                condition.And(a => a.CreationTime >= logQuery.CreatTimeFrom);
-            if (logQuery.CreatTmeTo.HasValue)
-                condition.And(a => a.CreationTime >= logQuery.CreatTmeTo);
-            if (!string.IsNullOrEmpty(logQuery.PlatformId))
-                condition.And(a => a.PlatformId == new ObjectId(logQuery.PlatformId));
-            if (!string.IsNullOrEmpty(logQuery.BusinessPosition))
-                condition.And(a => $".{a.BusinessPosition}.".Contains($".{logQuery.BusinessPosition}."));
-            if (!string.IsNullOrEmpty(logQuery.TraceInfo))
-                condition.And(a => a.TraceInfo.Contains(logQuery.TraceInfo));
-            return condition;
-        }
-
-        private IMongoQueryable<Entity.InfoLog> CreatQueryAble(LogQuery query)
-        {
-            var collection = DbProvider.Collection<Entity.InfoLog>();
+            var collection = DbProvider.Collection<Entity.ErrorLog>();
             var queryAble = collection.AsQueryable().Where(a => 1 == 1);
             if (!string.IsNullOrEmpty(query.Content))
                 queryAble = queryAble.Where(a => a.Content.Contains(query.Content));

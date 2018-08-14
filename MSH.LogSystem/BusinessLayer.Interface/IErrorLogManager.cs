@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 namespace BusinessLayer.Interface
 {
     /// <summary>
-    /// 日志管理
+    /// 日志管理-error
     /// </summary>
-    public interface IInfoLogManager : IDependency
+    public interface IErrorLogManager : IDependency
     {
         /// <summary>
         /// 删除日志

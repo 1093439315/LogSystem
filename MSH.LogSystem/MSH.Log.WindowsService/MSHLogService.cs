@@ -41,6 +41,7 @@ namespace MSH.Log.WindowsService
 
             //启动日志落地服务 用于将日志从队列转移到Db
             manager.StartGetMsg(LogLevel.Info);
+            manager.StartGetMsg(LogLevel.Error);
 
             //启动Socket服务 用户接收客户端消息
             if (!SocketServiceManage.Start())
