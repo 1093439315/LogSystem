@@ -9,6 +9,7 @@ using System.Net;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Flurl.Http;
 
 namespace MSH.LogClient
 {
@@ -36,7 +37,7 @@ namespace MSH.LogClient
         /// </summary>
         /// <param name="ip"></param>
         /// <param name="port"></param>
-        public static void Start(string ip, int port)
+        public static void StartTcp(string ip, int port)
         {
             //创建socket
             if (client == null)
@@ -51,7 +52,7 @@ namespace MSH.LogClient
             //创建Socket连接监控任务
             CreatSocketWatchTask(ip, port);
         }
-
+        
         #region 客户端事件
 
         private static void Client_Error(object sender, ErrorEventArgs e)
@@ -100,7 +101,7 @@ namespace MSH.LogClient
         /// <summary>
         /// 创建读取任务
         /// </summary>
-        private static void CreatReadTask()
+        public static void CreatReadTask(bool isTcp = true)
         {
             if (ReadLogTask == null)
             {
@@ -109,17 +110,18 @@ namespace MSH.LogClient
                     while (true)
                     {
                         //连接成功了才开始读取
-                        ResetEvent.WaitOne();
+                        if (isTcp)
+                            ResetEvent.WaitOne();
 
                         var item = MSHLogger.LoggingEvents.Take();
                         if (item == null) continue;
 
                         //将日志发送到服务器
-                        var serverHost = item.Properties["ServerHost"];
-                        var serverPort = item.Properties["ServerPort"];
+                        var serverHost = item.Properties["ServerHost"].ToString();
+                        var serverPort = item.Properties["ServerPort"].ToString();
                         var mode = item.Properties["Mode"];
-                        var appId = item.Properties["AppId"];
-                        var secrect = item.Properties["Secrect"];
+                        var appId = item.Properties["AppId"].ToString();
+                        var secrect = item.Properties["Secrect"].ToString();
                         var defaultBusinessPosition = item.Properties["DefaultBusinessPosition"];
                         var beginMark = item.Properties["BeginMark"];
                         var endMark = item.Properties["EndMark"];
@@ -144,7 +146,10 @@ namespace MSH.LogClient
                             RequestId = logData.RequestId,
                         };
                         Console.WriteLine($"开始发送日志请求:{logRequest.ToJson()}");
-                        SendMessage(MapLogLevel(item.Level), $"{beginMark}", $"{endMark}", logRequest);
+                        if (mode.ToString().ToLower().Equals("tcp"))
+                            SendMessage(MapLogLevel(item.Level), $"{beginMark}", $"{endMark}", logRequest);
+                        if (mode.ToString().ToLower().Equals("http"))
+                            SendMessage(MapLogLevel(item.Level), appId, secrect, logRequest, serverHost, serverPort);
                     }
                 });
             }
@@ -185,11 +190,35 @@ namespace MSH.LogClient
             }
         }
 
+        /// <summary>
+        /// 通过Socket发送日志
+        /// </summary>
+        /// <param name="level">日志级别</param>
+        /// <param name="beginMark">Stocket信息头</param>
+        /// <param name="endMark">Socket信息尾</param>
+        /// <param name="logRequest">日志请求</param>
         private static void SendMessage(LogLevel level, string beginMark, string endMark, LogRequest logRequest)
         {
             var pack = new StringPackageInfo(level.ToString(), logRequest.ToJson(), null);
             var msg = $"{beginMark}{pack.ToJson()}{endMark}";
             client.Send(Encoding.UTF8.GetBytes(msg));
+        }
+
+        /// <summary>
+        /// 通过Http发送日志
+        /// </summary>
+        private static void SendMessage(LogLevel level, string appId, string secrect, LogRequest logRequest, string host, string port = "80")
+        {
+            try
+            {
+                var url = $"http://{host}:{port}/api/LogService/{level.ToString()}";
+                url.WithHeaders(new
+                {
+                    AppId = appId,
+                    Secrect = secrect
+                }).PostJsonAsync(logRequest).ReceiveJson();
+            }
+            catch { }
         }
 
         private static LogLevel MapLogLevel(Level level)

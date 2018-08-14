@@ -25,7 +25,7 @@ namespace MSH.LogClient
         /// <summary>
         /// 上传模式
         /// </summary>
-        public string Mode { get; set; }
+        public string Mode { get; set; } = "tcp";
         /// <summary>
         /// 默认业务位置
         /// </summary>
@@ -45,7 +45,7 @@ namespace MSH.LogClient
 
         protected override void Append(LoggingEvent loggingEvent)
         {
-            SocketClientManage.Start(this.ServerHost, int.Parse(this.ServerPort));
+            StartService();
             SetLogProperty(loggingEvent);
             MSHLogger.LoggingEvents.Add(loggingEvent);
             var obj = loggingEvent;
@@ -53,7 +53,7 @@ namespace MSH.LogClient
 
         protected override void Append(LoggingEvent[] loggingEvents)
         {
-            SocketClientManage.Start(this.ServerHost, int.Parse(this.ServerPort));
+            StartService();
             loggingEvents.ToList().ForEach(a =>
             {
                 SetLogProperty(a);
@@ -72,6 +72,15 @@ namespace MSH.LogClient
             loggingEvent.Properties[nameof(DefaultBusinessPosition)] = DefaultBusinessPosition;
             loggingEvent.Properties[nameof(BeginMark)] = BeginMark;
             loggingEvent.Properties[nameof(EndMark)] = EndMark;
+        }
+
+        protected void StartService()
+        {
+            //tcp连接需要启动连接
+            if (this.Mode.ToLower().Equals("tcp"))
+                SocketClientManage.StartTcp(this.ServerHost, int.Parse(this.ServerPort));
+            else
+                SocketClientManage.CreatReadTask(false);
         }
     }
 }
