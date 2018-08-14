@@ -21,7 +21,7 @@ namespace Log4netClientTest
 
         static void HH()
         {
-            MSHLogger.DefaultInfo("测试！");
+            MSHLogger.DefaultInfo("Happy！");
         }
     }
 }
