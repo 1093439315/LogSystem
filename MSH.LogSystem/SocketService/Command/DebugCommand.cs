@@ -25,7 +25,7 @@ namespace SocketService.Core
             if (string.IsNullOrEmpty(body)) return;
             var logRequest = body.ToObject<LogRequest>();
             //将日志内容插入队列
-            LogServiceManager.SendInfoLog(logRequest);
+            LogServiceManager.SendDebugLog(logRequest);
         }
     }
 }
