@@ -1,5 +1,7 @@
 # 欢迎使用“妙生活日志中心系统”
 
+Nuget:  [https://www.nuget.org/packages/MSH.LogClient/](https://www.nuget.org/packages/MSH.LogClient/)
+
 #### **项目介绍**
 
 > 妙生活日志中心系统是上海妙尺商贸有限公司应对各种系统的日志集中式处理的解决方案，可以将多客户端、多系统的日志发送到日志处理中心服务器，对各个系统的日志进行集中式管理。
