@@ -20,12 +20,12 @@ namespace SocketService.Core
 
         public override void ExecuteCommand(LogSession session, StringRequestInfo requestInfo)
         {
-            Console.WriteLine("Error日志操作！");
             var body = requestInfo.Body;
             if (string.IsNullOrEmpty(body)) return;
+            Logger.Info($"服务端接收到Error消息:{body}");
             var logRequest = body.ToObject<LogRequest>();
             //将日志内容插入队列
-            LogServiceManager.SendInfoLog(logRequest);
+            LogServiceManager.SendErrorLog(logRequest);
         }
     }
 }

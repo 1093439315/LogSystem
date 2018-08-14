@@ -12,7 +12,7 @@ namespace Log4netClientTest
     {
         static void Main(string[] args)
         {
-            MSHLogger.DefaultError("测试2！");
+            MSHLogger.DefaultInfo("测试2！");
             MSHLogger.Request(Guid.NewGuid().ToString()).Error("哈哈哈");
             HH();
             Console.ReadKey();
