@@ -1,6 +1,8 @@
 # 欢迎使用“妙生活日志中心系统”
 
-Nuget:  [https://www.nuget.org/packages/MSH.LogClient/](https://www.nuget.org/packages/MSH.LogClient/)
+## ClientReleases
+
+[![NuGet](https://img.shields.io/nuget/v/MSH.LogClient.svg?style=plastic)](https://www.nuget.org/packages/MSH.LogClient/)
 
 #### **项目介绍**
 
